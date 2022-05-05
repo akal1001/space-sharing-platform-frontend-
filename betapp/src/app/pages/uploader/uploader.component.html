@@ -1,0 +1,86 @@
+<div class="row" style="height: 600px;">
+
+
+
+  <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3 col-xl-3">
+
+  </div>
+  <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6 col-xl-6">
+
+
+  
+ 
+
+
+
+
+
+ 
+
+
+     
+
+
+        <form action="/">
+          <div class="">
+
+
+
+
+
+
+
+
+            <label for="email"><b>header</b></label>
+            
+            <!-- <select style="height: 50px; width: 100%; border: 1px solid lightgray;margin-top: 2%;" name='postType'
+              [(ngModel)]='house.HouseRoomeType' placeholder="ዪምረቱጡ">
+              <option value="የሚከራይ ታውን ሃውስ">የሚከራይ ታውን ሃውስ</option>
+              <option value="የሚከራይ ሙሉ ቤት">የሚከራይ ሙሉ ቤት</option>
+              <option value="የሚከራይ ኪፍል">የሚከራይ ኪፍል</option>
+              <option value="የሚከራይ ሙሉ ቤት">የሚከራይ ሙሉ ቤት</option>
+            </select> -->
+          
+             <input placeholder="header.." [(ngModel)]='house.HouseRoomeType' name="HouseRoomeType" type="text">
+            <label for="description"><b>description</b></label>
+            <textarea placeholder="description ..." style="background-color: white;" type="text" name='description' [(ngModel)]='house.Description'
+              rows="4" cols="50">
+
+                   </textarea> <br>
+            <label for="price"><b>Asking price</b></label> <br>
+            <input type="text" placeholder="Asking price.." [(ngModel)]='house.price' name="price" required>
+            <br> 
+
+
+
+
+            <label for="contact"><b>contact</b></label>
+            <input type="text" placeholder="contact .." name='contact' [(ngModel)]='house.phone' required>
+
+
+          </div>
+
+
+        </form>
+
+        
+
+      
+        <button mat-button (click)="contineu()">contineue..</button>
+
+
+ 
+   
+
+
+
+  </div>
+  <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+ 
+    <textarea>
+      {{loc}}
+    </textarea>
+    <p>{{loc}}</p>
+  </div> -->
+</div>

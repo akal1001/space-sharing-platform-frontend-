@@ -1,0 +1,75 @@
+
+
+<!-- <input type="button" value="gei" (click)="GetDetail()"> -->
+<div class="row">
+  <div  style="margin-bottom: 3%; height: 100%;" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+   
+  
+    <mat-card style="width: 100%;">
+      <mat-card-header>
+       
+        <mat-card-title>{{house?.houseRoomeType}}</mat-card-title>
+        <mat-card-subtitle> 
+          
+        .
+          </mat-card-subtitle>
+         
+        
+      </mat-card-header>
+     
+     
+      <mat-card-content style="">
+       
+       
+        <div class="imgcontainer">
+         
+        
+         
+             <ng-image-slider [images]="imageObject">
+           
+          </ng-image-slider>
+        
+
+        </div>
+        
+        <p>
+            {{house.price}} <br>
+            
+            {{house.description}} hkjhjhkjhkjkj
+
+          
+          
+            
+        </p> 
+        <p style="font-weight:600">
+         
+          {{house.address.city}} {{house.address.state}} {{house.address.zipCode}}
+         
+        </p>
+        <p>
+          
+          Posted on  {{house._Date | date:'mediumDate'}}
+        </p>
+        <p>
+          
+            contact  {{house.contact.phone}}
+          </p>
+      </mat-card-content>
+     
+     
+    </mat-card>
+
+   
+  
+  </div>
+  <div class="row" style="text-align: center;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <h1>{{house.imageFiles.length}} Images</h1>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4" *ngFor="let img of house.imageFiles" style="padding: 1%;">
+        <img [src]="img.imageUrl" style="width: 100%; height: auto;">
+    </div>
+</div>
+</div>
+
+<!-- <ngx-json-viewer [json]="house.imageFiles"></ngx-json-viewer> -->

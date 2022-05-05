@@ -1,0 +1,48 @@
+<div class="row">
+
+    <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3 col-xl-3">
+
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6 col-xl-6">
+
+          <h4>{{result.HouseRoomeType}}</h4>         
+          <div class="imgcontainer">
+
+               <ng-image-slider [images]="imageObject" #nav>
+             
+            </ng-image-slider>
+            
+          </div>
+          
+          <p>
+              {{result.price}} <br>
+              
+              {{result.Description}} 
+    
+          </p> 
+          <p style="font-weight:600">
+           
+            {{result.city}} {{result.state}} {{result.zipCode}}
+           
+          </p>
+          <p>
+            
+            Posted on  {{result._Date | date:'mediumDate'}}
+          </p>
+          <p>
+            
+              contact  {{result.phone}}
+            </p>
+      
+            <button mat-button (click)="post()" >Post</button>
+    
+    
+        
+        <!-- <ngx-json-viewer [json]="imgurls"></ngx-json-viewer>
+        <br> -->
+      
+
+  
+    </div>
+
+</div>

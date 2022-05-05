@@ -1,0 +1,86 @@
+
+<!-- <h1>chile page</h1> -->
+<!-- <p>{{inputFromParent}}</p> -->
+
+
+
+ <div class="row">
+
+
+
+    <div *ngIf="inputFromParent" style="position: relative; padding: 0%;" class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 me">
+      <div class="row">
+        <div>
+       
+        </div>
+        <div  style=" padding-bottom: 2%;"
+          class="col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxlg-3">
+  
+  
+          <mat-card>
+            <mat-card-header>
+  
+              <mat-card-title style="font-weight:600;">{{inputFromParent.houseRoomeType}}</mat-card-title>
+  
+  
+            </mat-card-header>
+  
+  
+            <mat-card-content>
+  
+  
+              <div class="imgcontainer">
+  
+  
+  
+                <img mat-card-image id="img" style="
+               height: auto;" mat-card-image [src]=' inputFromParent.imageFiles[0].imageUrl' alt="Photo of a Shiba Inu">
+  
+  
+  
+  
+                <div class="top-left">
+                  <h3>${{inputFromParent.price}}</h3>
+                </div>
+                <div class="top-right">{{inputFromParent.imageFiles.length}} Pic</div>
+  
+              </div>
+  
+              <p style="line-height: 1.5em;
+              height: 3em;     
+              overflow: hidden; font-size: 15px;">
+  
+  
+                {{inputFromParent.description}}
+  
+  
+  
+  
+              </p>
+              <p style="font-weight:600">
+  
+                {{inputFromParent.address.city}} {{inputFromParent.address.state}} {{inputFromParent.address.zipCode}}
+  
+              </p>
+              <p  (click)="gotodetail2(inputFromParent.houseId,inputFromParent.houseRoomeType,inputFromParent.description,inputFromParent.imageFiles[0].imageUrl)">
+  
+                Posted on {{inputFromParent._Date | date:'mediumDate'}} <span style="color:blue; float: right;">more...</span>
+  
+              </p>
+            </mat-card-content>
+  
+          </mat-card>
+  
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-lg-3 col-xl-3 me">
+    
+    </div>
+  
+  
+  
+  </div> 
+
+
+

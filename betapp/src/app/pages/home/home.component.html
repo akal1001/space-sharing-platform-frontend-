@@ -1,0 +1,104 @@
+
+
+
+<div class="row" style="padding: 0%;">
+
+  <input type="button" (click)="GetPublickkey()" value="load xml get key">
+
+  <div style="position: relative; padding: 0%; margin: 0%;" class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 me">
+    <div class="row">
+      <div>
+     
+      </div>
+      <div *ngFor="let d of data" style=" padding-bottom: 2%; padding-top: 0%; padding: 1%;"
+        class="col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxlg-3">
+
+
+        <mat-card>
+          <!-- <mat-card-header>
+
+            <mat-card-title style="font-weight:600;">{{d.houseRoomeType}}</mat-card-title>
+
+
+          </mat-card-header> -->
+
+
+          <mat-card-content>
+
+
+            <div class="imgcontainer">
+
+
+
+              <img  (click)="gotodetail2(d.houseId,d.houseRoomeType,d.description,d.imageFiles[0].imageUrl)" mat-card-image id="img" style="
+             height: auto;" mat-card-image [src]=' d.imageFiles[0].imageUrl' alt="Photo of a Shiba Inu">
+
+
+
+
+              <div class="top-left">
+                <h2><span style="color: gray;">$ </span>{{d.price}}</h2>
+              </div>
+              <div class="top-right">{{d.imageFiles.length}} Pic</div>
+
+            </div>
+
+            <p style="line-height: 1.5em;
+            max-height: 4.5em;     
+            overflow: hidden; font-size: 15px;"  (click)="gotodetail2(d.houseId,d.houseRoomeType,d.description,d.imageFiles[0].imageUrl)">
+
+              <span style="font-weight: bold;">{{d.houseRoomeType}}</span> 
+              {{d.description}}<span style="color:blue;">  more...</span>
+
+
+
+
+            </p>
+            <p style="font-weight:600">
+
+              {{d.address.city}} {{d.address.state}} {{d.address.zipCode}}
+
+            </p>
+            <p style="padding-top: 0%;">
+
+              Posted on {{d._Date | date:'mediumDate'}} 
+
+            </p>
+          </mat-card-content>
+
+        </mat-card>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-xl-3 me">
+    <div class="row" *ngFor="let r of sampleData" style=" width: 100%;height: auto;background-color: white;border-left: 1px solid lightgray;
+       border-right: 1px solid lightgray; padding: 1%;">
+
+      <div style="width: 50px; padding: 1%; float: left;">
+
+        <img [src]="r.img" style="width: 40px;height: 40px; padding: 1%;">
+      </div>
+      <div style="width: 180px; float: left;">
+       
+   
+          
+
+          <p style="line-height: 1.5em;
+          height: 3em;     
+          overflow: hidden; font-size: 13px;;margin: 0%;font-weight: 400; padding: 0%;">
+          <span style="font-weight:bold;"> {{r.type}}</span>  
+          <br>
+          {{r.description}}</p> 
+        
+      
+      </div>
+
+
+
+    </div>
+  </div>
+
+
+
+</div>

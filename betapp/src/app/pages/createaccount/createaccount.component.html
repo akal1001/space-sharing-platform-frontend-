@@ -1,0 +1,30 @@
+
+
+
+
+<div class="row">
+  <div  class="col-sm-12 col-md-2 col-lg-3 col-xl-3" >
+ 
+
+
+
+  </div>
+  <div  class="col-sm-12 col-md-8 col-lg-6 col-xl-6">
+     
+
+    
+    <label for="username"><b>uasername</b></label>
+    <input type="text" placeholder="Enter Email" [(ngModel)]="user.username" name="username" id="" required>
+
+    <label for="useremail"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" [(ngModel)]="user.useremail" name="useremail" id="email" required>
+
+    <label for="userpassword"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" [(ngModel)]="user.userpassword" name="userpassword" id="psw" required>
+    
+    <button type="submit" class="registerbtn" (click)="createaccount()" >Register</button>
+    <p>Already have an account? <a style="color:blue;" (click)="gotologin()">Sign in</a>.</p>
+  
+   
+  </div>
+</div>
