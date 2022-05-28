@@ -8,6 +8,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { DataService } from 'src/app/services/data.service';
 import { RsaService } from 'src/app/services/rsa.service';
+
+
+
 //import xml2js from 'xml2js';  
 
 @Component({
@@ -93,4 +96,10 @@ export class LoginComponent implements OnInit {
   //     });  
   //   }  
   // } 
+
+
+  enc()
+  {
+     
+  }
 }
