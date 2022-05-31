@@ -60,7 +60,10 @@ export class AppComponent {
    
 
   }
-
+  onchange(val:any)
+  {
+     alert(val);
+  }
   ngAfterViewInit() {
     this.router.navigateByUrl("/home")
 

@@ -57,9 +57,11 @@
    top: 0px;
    left: 0px;
    margin: 2%;
+   padding-left: 1%;
+   padding-right: 1%;
    background-color: white;
-   color: green;
-   padding: 1%;
+   color: black;
+
  
    height:30px;
    min-width:50px;

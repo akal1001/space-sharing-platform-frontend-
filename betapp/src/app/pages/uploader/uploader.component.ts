@@ -73,6 +73,11 @@ export class UploaderComponent implements OnInit {
     return result;
   }
 
+  formatString(val:any)
+  {
+      var len = val.length;
+    //  if(len > )
+  }
  
 
 }

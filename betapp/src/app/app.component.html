@@ -69,12 +69,22 @@
     <div style="height: 50px;">
     </div>
 
-    <a style="margin-right: 2%; ;" routerLink="/myposts">
-
-      your post</a> <br> <br>
     <!-- <a style="margin-right: 2%; ;" routerLink="/fileuploader">fileuploader</a> <br> <br> -->
-    <a style="margin-right: 2%;" (click)="upload()">upload</a> <br> <br>
+    <a style="margin-right: 2%;" (click)="upload()">upload</a> <br> 
     <a style="margin-right: 2%;" (click)="account()" git cmm m>Account</a> <br>
+
+    <br>
+
+ <hr>
+    <mat-radio-group aria-label="Select an option"> price <br>
+      <mat-radio-button value="1">low to high</mat-radio-button>
+      <mat-radio-button value="2">high to low</mat-radio-button>
+    </mat-radio-group>
+    <hr>
+    <mat-radio-group aria-label="Select an option"> post <br>
+      <mat-radio-button value="1">newer to older</mat-radio-button>
+      <mat-radio-button value="2">older to newer</mat-radio-button>
+    </mat-radio-group>
   </mat-sidenav>
   <mat-sidenav-content>
     

@@ -34,7 +34,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { ChildComponent } from './pages/child/child.component';
 import { ImagesviewComponent } from './pages/imagesview/imagesview.component'
 
-
+import {MatRadioModule} from '@angular/material/radio';
 
 
 @NgModule({
@@ -57,7 +57,7 @@ import { ImagesviewComponent } from './pages/imagesview/imagesview.component'
     
   ],
   imports: [
-   
+    MatRadioModule,
     FormsModule,
     BrowserModule,
     AppRoutingModule,
