@@ -51,10 +51,14 @@
         <mat-icon>home</mat-icon>
         <span>Home</span>
       </button>
+      <button mat-button class="menu-button" (click)="account()" >
+        <mat-icon></mat-icon>
+        <span>Account</span>
+      </button>
       
       <button mat-button class="menu-button" (click)="upload()">
         <mat-icon>upload</mat-icon>
-        <span>Upload</span>
+        <span>Post</span>
       </button>
       
     </div>
@@ -70,21 +74,35 @@
     </div>
 
     <!-- <a style="margin-right: 2%; ;" routerLink="/fileuploader">fileuploader</a> <br> <br> -->
-    <a style="margin-right: 2%;" (click)="upload()">upload</a> <br> 
-    <a style="margin-right: 2%;" (click)="account()" git cmm m>Account</a> <br>
+    <a style="margin-right: 2%;" (click)="account()" git cmm m>Account</a> <br> <br>
+    <a style="margin-right: 2%; font-weight: bold;" (click)="upload()">Create Post</a> <br> 
+    
 
     <br>
 
  <hr>
-    <mat-radio-group aria-label="Select an option"> price <br>
-      <mat-radio-button value="1">low to high</mat-radio-button>
-      <mat-radio-button value="2">high to low</mat-radio-button>
+    <mat-radio-group  color="primary" aria-label="Select an option" (change)="onChangePrice($event)" name="Sort"> Sort <br>
+      <mat-radio-button  value="lower" >lower to higher</mat-radio-button>
+      <mat-radio-button value="higher">higher to lower</mat-radio-button>
+      <mat-radio-button value="newer">newer to older</mat-radio-button>
+      <mat-radio-button value="older">older to newer</mat-radio-button>
+     
     </mat-radio-group>
     <hr>
-    <mat-radio-group aria-label="Select an option"> post <br>
-      <mat-radio-button value="1">newer to older</mat-radio-button>
-      <mat-radio-button value="2">older to newer</mat-radio-button>
+    <mat-radio-group color="primary" aria-label="Select an option" (change)="onChangePost($event)"name="post"> post <br>
+      <mat-radio-button value="newer">newer to older</mat-radio-button>
+      <mat-radio-button value="older">older to newer</mat-radio-button>
     </mat-radio-group>
+
+    <br>
+    <hr>
+    <h2>Sort selectd </h2>
+    
+    {{selectedPriceValue}}
+    <br>
+    {{selectedPostValue}}
+    <hr>
+  
   </mat-sidenav>
   <mat-sidenav-content>
     

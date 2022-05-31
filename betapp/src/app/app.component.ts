@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
 import { HomeService } from './services/home.service';
 import { DataService } from './services/data.service';
+import { MatRadioButton, MatRadioChange } from '@angular/material/radio';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ import { DataService } from './services/data.service';
 })
 
 export class AppComponent {
- 
+
   control = new FormControl();
   streets: any[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
   filteredStreets: Observable<any[]> | undefined;
@@ -29,41 +30,59 @@ export class AppComponent {
   sampleData: any = [];
   idlist: any = new Array();
   tempList: any = [];
-  public v:any;
+  public v: any;
   public inputFromParent: any;
   title = 'betapp';
   input: any;
-  userselectedvalue:any;
+  userselectedvalue: any;
 
   data: any;
 
-
+  selectedPriceValue: any;
+  selectedPostValue: any;
   @ViewChild(MatSidenav) sidenav!: MatSidenav
 
-  constructor(private service: DataService,  private observer: BreakpointObserver, private homseService:HomeService, private searchsrvice: SearchService, private router: Router, private storage: LoaclstoarageService) {
+  constructor(private service: DataService, private observer: BreakpointObserver, private homseService: HomeService, private searchsrvice: SearchService, private router: Router, private storage: LoaclstoarageService) {
 
   }
   ngOnInit(): void {
 
-     
 
 
-    
+
+
     this.service.data$.subscribe(res => this.data = res)  //read the invoked data or default data
-  
-      console.log("data form child " + this.data);
+
+    console.log("data form child " + this.data);
     this.filteredStreets = this.control.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value)),
     );
 
-   
+
 
   }
-  onchange(val:any)
-  {
-     alert(val);
+
+  myvalue: any;
+  onChangePrice(mrChange: MatRadioChange) {
+    
+    let mrButton: MatRadioButton = mrChange.source;
+    this.myvalue = mrButton;
+    this.selectedPriceValue =mrButton.value;
+    console.log(mrButton.inputId);
+    mrButton = this.myvalue;
   }
+
+
+  onChangePost(mrChange: MatRadioChange) {
+
+    let mrButton: MatRadioButton = mrChange.source;
+    console.log(mrButton.name);
+    this.selectedPostValue = mrButton.value;
+    console.log(mrButton.checked);
+    console.log(mrButton.inputId);
+  }
+ 
   ngAfterViewInit() {
     this.router.navigateByUrl("/home")
 
@@ -91,12 +110,11 @@ export class AppComponent {
     return value.toLowerCase().replace(/\s/g, '');
   }
 
-  home()
-  {
+  home() {
     this.userselectedvalue = null;
-    this.inputFromParent = null;  
+    this.inputFromParent = null;
     this.router.navigateByUrl("/home")
-   
+
   }
   account() {
     this.userselectedvalue = null;
@@ -111,10 +129,9 @@ export class AppComponent {
     }
     console.log(userInfo)
   }
-  upload()
-  {
+  upload() {
     this.userselectedvalue = null;
-    this.inputFromParent = null;  
+    this.inputFromParent = null;
 
     let userInfo = this.storage.GetData(this.storage.usertoken);
 
@@ -165,40 +182,38 @@ export class AppComponent {
 
   slideIndex = 1;
 
-  selectdvalue(id:any,city:any, state:any)
-  { 
+  selectdvalue(id: any, city: any, state: any) {
     console.log(id + "  " + city + "  " + state);
 
     this.userselectedvalue = city + "  " + state;
-    this.homseService.GetHouseService(id).subscribe((resposne)=>{
+    this.homseService.GetHouseService(id).subscribe((resposne) => {
       this.inputFromParent = resposne;
     })
     // this.homseService.GetHouseByCityService(val).subscribe((response)=>{
     //   this.inputFromParent = response;
     // })
-   // this.inputFromParent =
-   this.userselectedvalue = city + "  " + state;
-  
+    // this.inputFromParent =
+    this.userselectedvalue = city + "  " + state;
+
   }
   userSearchinput() {
 
     console.log(this.router.url)
 
-    if(this.router.url !="/home")
-    {
-       this.router.navigateByUrl("/home")
+    if (this.router.url != "/home") {
+      this.router.navigateByUrl("/home")
     }
 
     this.searchsrvice.SearchServe(this.searchinput).subscribe((result) => {
       console.log(JSON.stringify(result))
       console.log(this.searchinput)
       this.serarchResult = result;
-     
+
 
 
     })
     //this.inputFromParent = this.searchinput;
 
-    
+
   }
 }
