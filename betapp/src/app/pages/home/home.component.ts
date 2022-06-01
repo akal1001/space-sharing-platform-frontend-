@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MatRadioButton, MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { HomeService } from 'src/app/services/home.service';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
@@ -34,6 +35,22 @@ export class HomeComponent implements OnInit {
     this.message = this.inputFromParent;
     //this.searchinputFromparent
   }
+
+  selectedPriceValue: any;
+  onChange(mrChange: MatRadioChange) {
+    
+    let mrButton: MatRadioButton = mrChange.source;
+   
+    this.selectedPriceValue =mrButton.value;
+
+    this.dataservice.getDataWithOption(this.selectedPriceValue).subscribe((response) => {
+
+      this.data = response;
+    })
+ 
+  }
+
+
   test() {
     // alert("test")
     this.serarchResult = null;

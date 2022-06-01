@@ -15,6 +15,9 @@ export class HomeService {
   getData(): Observable<any> {
     return this._httpClient.get(this._baseUploadUrl + 'getallhouses')
   }
+  getDataWithOption(val:any): Observable<any> {
+    return this._httpClient.get(this._baseUploadUrl + 'getallhouses?sortOptions='+ val)
+  }
 
   //return all house
   GetAllHouseService(): Observable<House> {

@@ -18,6 +18,8 @@ export class MypostesComponent implements OnInit {
   ngOnInit(): void {
     this.getallmyposts();
   }
+ 
+
   
   getallmyposts()
   { 
