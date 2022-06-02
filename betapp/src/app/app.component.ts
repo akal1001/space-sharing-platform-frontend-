@@ -111,12 +111,14 @@ export class AppComponent {
   }
 
   home() {
+    this.sidenav.open();
     this.userselectedvalue = null;
     this.inputFromParent = null;
     this.router.navigateByUrl("/home")
 
   }
   account() {
+    this.sidenav.close();
     this.userselectedvalue = null;
     this.inputFromParent = null;
     let userInfo = this.storage.GetData(this.storage.usertoken);
@@ -130,6 +132,7 @@ export class AppComponent {
     console.log(userInfo)
   }
   upload() {
+    this.sidenav.close();
     this.userselectedvalue = null;
     this.inputFromParent = null;
 

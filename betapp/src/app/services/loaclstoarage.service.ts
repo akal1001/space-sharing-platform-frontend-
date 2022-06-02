@@ -15,7 +15,9 @@ export class LoaclstoarageService {
 
   tempdata = "sfjq0riqrjweqrqi2roklkfjqwiofjqoj"
 
-  tempdataIds = "itempdataIdssad908435skldfjsaf"
+  tempdataIds = "itempdataIdssad908435skldfjsaf";
+
+  DefaultHomeData = "eirwq0r952492349420391jKlksdf";
   SetData(key:string, val:string)
   {
      Storage.setItem(key,val)

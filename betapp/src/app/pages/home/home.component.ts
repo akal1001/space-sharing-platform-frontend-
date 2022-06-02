@@ -26,9 +26,19 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     this.sampleData = this.storage.GetData(this.storage.tempdataIds);
+    
+    var value =  this.storage.GetData(this.storage.DefaultHomeData);
+    if(value != null || value != undefined)
+    {
+       this.data = value;
+    }
+    //alert(value);
     this.dataservice.getData().subscribe((response) => {
 
+       this.storage.SetData(this.storage.DefaultHomeData,JSON.stringify(response));
       this.data = response;
+
+     // alert(JSON.stringify(this.data));
     })
 
     console.log(this.inputFromParent);
