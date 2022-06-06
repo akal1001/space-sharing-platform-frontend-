@@ -46,10 +46,7 @@ export class AppComponent {
 
   }
   ngOnInit(): void {
-
-
-
-
+   
 
     this.service.data$.subscribe(res => this.data = res)  //read the invoked data or default data
 
@@ -65,8 +62,10 @@ export class AppComponent {
 
   myvalue: any;
   onChangePrice(mrChange: MatRadioChange) {
-    
-    let mrButton: MatRadioButton = mrChange.source;
+   
+        let mrButton: MatRadioButton = mrChange.source;
+      
+
     this.myvalue = mrButton;
     this.selectedPriceValue =mrButton.value;
     console.log(mrButton.inputId);
@@ -82,6 +81,8 @@ export class AppComponent {
     console.log(mrButton.checked);
     console.log(mrButton.inputId);
   }
+
+ 
  
   ngAfterViewInit() {
     this.router.navigateByUrl("/home")
@@ -111,7 +112,11 @@ export class AppComponent {
   }
 
   home() {
-    this.sidenav.open();
+    if(window.innerWidth >= 1024)
+    {
+      this.sidenav.open();
+    }
+  
     this.userselectedvalue = null;
     this.inputFromParent = null;
     this.router.navigateByUrl("/home")
