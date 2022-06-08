@@ -3,7 +3,7 @@
 
 <div class="row" style="padding: 0%;">
 
-  <div  class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 me" style="padding:1%" >
+  <!-- <div  class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 me" style="padding:1%" >
   
     <div class="row" style="border: 1px solid lightgray;background-color: white;">
       <mat-radio-group  color="primary" aria-label="Select an option" (change)="onChange($event)" name="Sort">
@@ -15,10 +15,22 @@
       </mat-radio-group>
     </div>
    
-  </div>
+  </div> -->
   <!-- <input type="button" (click)="GetPublickkey()" value="load xml get key"> -->
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 me" style="padding:1%;">
+    <h1 style="text-align:center;">Sort</h1>
+    <hr>
+    <mat-radio-group  color="primary" aria-label="Select an option" (change)="onChange($event)" name="Sort">
+      <mat-radio-button  value="lower" >lower to higher price</mat-radio-button>
+      <mat-radio-button value="higher">higher to lower price</mat-radio-button>
+      <mat-radio-button value="newer">newer to older post</mat-radio-button>
+      <mat-radio-button value="older">older to newer post</mat-radio-button>
+     
+    </mat-radio-group>
+    <hr>
+  </div>
 
-  <div style="position: relative; padding: 0%; margin: 0%;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 me">
+  <div style="position: relative; padding: 0%; margin: 0%;" class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 me">
     <div class="row">
       <div>
      

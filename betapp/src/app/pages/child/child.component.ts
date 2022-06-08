@@ -13,15 +13,21 @@ export class ChildComponent implements OnInit {
   @Output() inputChange = new EventEmitter<any>();
   constructor(private houseService: HomeService, private storage: LoaclstoarageService, private router: Router) { }
   msg: any;
+  serarched: any;
+  serarchedSelectd: any;
   ngOnInit(): void {
+
     this.msg = this.inputFromParent;
-
-
-    this.inputChange.emit(this.inputFromParent);
+    
     console.log("mes " + this.inputFromParent)
+    this.inputChange.emit(this.inputFromParent);
+
+    this.serarchedSelectd = this.storage.GetData(this.storage.SearchedSelectValueDatakey);
+    this.serarched = this.storage.GetData(this.storage.SearchedDatakey);
+
   }
 
-  // getdata(val:any)
+  // getdata(val:any);
   // {
   //    this.houseService.GetHouseByCityService(val).subscribe((response)=>
   //    {
@@ -68,7 +74,7 @@ export class ChildComponent implements OnInit {
 
     this.inputFromParent = null;
     this.router.navigateByUrl("/detail");
-   
+
 
 
     // this.sampleData = this.storage.GetData(this.storage.id);

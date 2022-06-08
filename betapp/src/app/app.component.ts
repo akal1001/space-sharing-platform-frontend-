@@ -31,7 +31,7 @@ export class AppComponent {
   idlist: any = new Array();
   tempList: any = [];
   public v: any;
-  public inputFromParent: any;
+  public inputFromParent: any = "akal";
   title = 'betapp';
   input: any;
   userselectedvalue: any;
@@ -46,7 +46,7 @@ export class AppComponent {
 
   }
   ngOnInit(): void {
-   
+
 
     this.service.data$.subscribe(res => this.data = res)  //read the invoked data or default data
 
@@ -62,12 +62,12 @@ export class AppComponent {
 
   myvalue: any;
   onChangePrice(mrChange: MatRadioChange) {
-   
-        let mrButton: MatRadioButton = mrChange.source;
-      
+
+    let mrButton: MatRadioButton = mrChange.source;
+
 
     this.myvalue = mrButton;
-    this.selectedPriceValue =mrButton.value;
+    this.selectedPriceValue = mrButton.value;
     console.log(mrButton.inputId);
     mrButton = this.myvalue;
   }
@@ -82,14 +82,14 @@ export class AppComponent {
     console.log(mrButton.inputId);
   }
 
- 
- 
+
+
   ngAfterViewInit() {
     this.router.navigateByUrl("/home")
 
+    //max-width:1024px
 
-
-    this.observer.observe(['(max-width:1024px)']).subscribe((res) => {
+    this.observer.observe(['(max-width:3024px)']).subscribe((res) => {
       if (res.matches) {
         this.sidenav.mode = 'over';
         this.sidenav.close();
@@ -112,11 +112,11 @@ export class AppComponent {
   }
 
   home() {
-    if(window.innerWidth >= 1024)
-    {
-      this.sidenav.open();
-    }
-  
+    // if(window.innerWidth >= 1024)
+    // {
+    //   this.sidenav.open();
+    // }
+
     this.userselectedvalue = null;
     this.inputFromParent = null;
     this.router.navigateByUrl("/home")
@@ -191,17 +191,15 @@ export class AppComponent {
   slideIndex = 1;
 
   selectdvalue(id: any, city: any, state: any) {
-    console.log(id + "  " + city + "  " + state);
-
-    this.userselectedvalue = city + "  " + state;
-    this.homseService.GetHouseService(id).subscribe((resposne) => {
-      this.inputFromParent = resposne;
+   
+    this.homseService.GetHouseService(id).subscribe((resposne) => 
+    {
+ 
+      this.storage.SetData(this.storage.SearchedSelectValueDatakey, JSON.stringify(resposne));
+  
     })
-    // this.homseService.GetHouseByCityService(val).subscribe((response)=>{
-    //   this.inputFromParent = response;
-    // })
-    // this.inputFromParent =
-    this.userselectedvalue = city + "  " + state;
+    
+   this.router.navigateByUrl("/child")
 
   }
   userSearchinput() {
@@ -217,10 +215,12 @@ export class AppComponent {
       console.log(this.searchinput)
       this.serarchResult = result;
 
+      this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
+
 
 
     })
-    //this.inputFromParent = this.searchinput;
+    this.inputFromParent = this.searchinput;
 
 
   }

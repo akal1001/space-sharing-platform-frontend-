@@ -11,7 +11,9 @@
   </div>
   <div  class="col-sm-12 col-md-8 col-lg-6 col-xl-6">
      
+     <form>
 
+   
     
     <label for="username"><b>uasername</b></label>
     <input type="text" placeholder="Enter Email" [(ngModel)]="user.username" name="username" id="" required>
@@ -24,7 +26,7 @@
     
     <button type="submit" class="registerbtn" (click)="createaccount()" >Register</button>
     <p>Already have an account? <a style="color:blue;" (click)="gotologin()">Sign in</a>.</p>
-  
+  </form>
    
   </div>
 </div>
