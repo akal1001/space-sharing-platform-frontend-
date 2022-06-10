@@ -196,10 +196,11 @@ export class AppComponent {
     {
  
       this.storage.SetData(this.storage.SearchedSelectValueDatakey, JSON.stringify(resposne));
+      this.router.navigateByUrl("/child")
   
     })
     
-   this.router.navigateByUrl("/child")
+  
 
   }
   userSearchinput() {

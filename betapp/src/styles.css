@@ -32,7 +32,9 @@
    }
 
 
-
+.btnContinue{
+  float: right;
+}
    /* mat-option.mat-option{
     position: relative;
     height: 24px!important;
