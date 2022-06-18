@@ -1,17 +1,12 @@
+<div class="row">
+  <div>
+
+  </div>
+  <div style=" padding-bottom: 2%;" class="col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxlg-3">
 
 
-
-
-  <div class="row">
-    <div>
-   
-    </div>
-    <div  style=" padding-bottom: 2%;"
-      class="col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxlg-3">
-
-
-      <mat-card>
-        <!-- <mat-card-header>
+    <mat-card>
+      <!-- <mat-card-header>
 
           <mat-card-title style="font-weight:600;">{{serarchedSelectd.houseRoomeType}}</mat-card-title>
 
@@ -19,90 +14,116 @@
         </mat-card-header> -->
 
 
-        <mat-card-content>
+      <mat-card-content>
 
 
-          <div class="imgcontainer">
+        <div class="imgcontainer">
 
 
 
-            <img mat-card-image id="img" style="
+          <img mat-card-image id="img" style="
            height: auto;" mat-card-image [src]=' serarchedSelectd.imageFiles[0].imageUrl' alt="Photo of a Shiba Inu">
 
 
 
 
-            <div class="top-left">
-              <h3>${{serarchedSelectd.price}}</h3>
-            </div>
-            <div class="top-right">{{serarchedSelectd.imageFiles.length}} Pic</div>
-
+          <div class="top-left">
+            <h3>${{serarchedSelectd.price}}</h3>
           </div>
+          <div class="top-right">{{serarchedSelectd.imageFiles.length}} Pic</div>
 
-          <p style="line-height: 1.5em;
+        </div>
+
+        <p style="line-height: 1.5em;
           height: 3em;     
           overflow: hidden; font-size: 15px;">
 
 
-            {{serarchedSelectd.description}}
+          {{serarchedSelectd.description}}
 
 
 
 
-          </p>
-          <p style="font-weight:600">
+        </p>
+        <p style="font-weight:600">
 
-            {{serarchedSelectd.address.city}} {{serarchedSelectd.address.state}} {{serarchedSelectd.address.zipCode}}
+          {{serarchedSelectd.address.city}} {{serarchedSelectd.address.state}} {{serarchedSelectd.address.zipCode}}
 
-          </p>
-          <p  (click)="gotodetail2(serarchedSelectd.houseId,serarchedSelectd.houseRoomeType,serarchedSelectd.description,serarchedSelectd.imageFiles[0].imageUrl)">
+        </p>
+        <p
+          (click)="gotodetail2(serarchedSelectd.houseId,serarchedSelectd.houseRoomeType,serarchedSelectd.description,serarchedSelectd.imageFiles[0].imageUrl)">
 
-            Posted on {{serarchedSelectd._Date | date:'mediumDate'}} <span style="color:blue; float: right;">more...</span>
+          Posted on {{serarchedSelectd._Date | date:'mediumDate'}} <span
+            style="color:blue; float: right;">more...</span>
 
-          </p>
-        </mat-card-content>
+        </p>
+      </mat-card-content>
 
-      </mat-card>
+    </mat-card>
 
-    </div>
   </div>
- <div class="row">
+</div>
+
+
+  <div class="row" >
+     <div style="width:100%">
+      <H1>Additional related result</H1>
+     </div>
    
-  <div  class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 me">
-  
-  </div>
-  <div class="col-md-3 col-lg-3 col-xl-3 me">
-  
-  </div>
-  
-  
-  <div>
-
-
-<div>
-  <h3>select value</h3>
-  <br>
-  {{serarchedSelectd.address.city}}
-  <ngx-json-viewer [json]="serarchedSelectd"></ngx-json-viewer>
-  <br>
-  <h3>search result</h3>
-  <ngx-json-viewer [json]="serarched"></ngx-json-viewer>
-</div>
-  
-
+    <div  *ngFor="let r of serarched"   class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+     <mat-card>
+   
  
-</div>
+ 
+       <mat-card-content>
+ 
+ 
+         <div class="imgcontainer">
+ 
+ 
 
-
-
-
-    </div>
-
-
-    
+           <img mat-card-image id="img" style="
+            height: auto;" mat-card-image [src]=' r.imageurl' alt="Photo of a Shiba Inu">
+ 
   
-  
-
+ 
+ 
+           <div class="top-left">
+             <h3>${{r.price}}</h3>
+           </div>
+           <!-- <div class="top-right">{{r.imageFiles.length}} Pic</div> -->
+ 
+         </div>
+ 
+         <p style="line-height: 1.5em;
+           height: 3em;     
+           overflow: hidden; font-size: 15px;">
+ 
+ 
+           {{r.description}}
+ 
+ 
+ 
+ 
+         </p>
+         <p style="font-weight:600">
+ 
+           {{r.city}} {{r.state}} {{r.zipCode}}
+ 
+         </p>
+         <p
+           (click)="gotodetail2(serarchedSelectd.houseId,serarchedSelectd.houseRoomeType,serarchedSelectd.description,serarchedSelectd.imageFiles[0].imageUrl)">
+ 
+           Posted on {{r._Date | date:'mediumDate'}} <span
+             style="color:blue; float: right;">more...</span>
+ 
+         </p>
+       </mat-card-content>
+ 
+     </mat-card>
+     <br>
+   </div>
+  </div>
 
 
 
