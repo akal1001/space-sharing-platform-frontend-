@@ -116,7 +116,7 @@ export class AppComponent {
     // {
     //   this.sidenav.open();
     // }
-
+     window.scroll(0,0)
     this.userselectedvalue = null;
     this.inputFromParent = null;
     this.router.navigateByUrl("/home")

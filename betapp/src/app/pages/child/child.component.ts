@@ -17,6 +17,7 @@ export class ChildComponent implements OnInit {
   serarchedSelectd: any;
   ngOnInit(): void {
 
+    window.scroll(0,0)
     this.msg = this.inputFromParent;
     
     console.log("mes " + this.inputFromParent)

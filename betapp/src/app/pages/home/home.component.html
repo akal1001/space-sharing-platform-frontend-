@@ -19,7 +19,7 @@
   <!-- <input type="button" (click)="GetPublickkey()" value="load xml get key"> -->
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 me" style="padding:1%;">
  
-    <hr>
+    
     <mat-radio-group  color="primary" aria-label="Select an option" (change)="onChange($event)" name="Sort">
       <mat-radio-button  value="lower" >lower to higher price</mat-radio-button>
       <mat-radio-button value="higher">higher to lower price</mat-radio-button>
@@ -68,7 +68,7 @@
 
             </div>
 
-            <p style="line-height: 1.5em;
+            <!-- <p style="line-height: 1.5em;
             max-height: 4.5em;     
             overflow: hidden; font-size: 15px;"  (click)="gotodetail2(d.houseId,d.houseRoomeType,d.description,d.imageFiles[0].imageUrl)">
 
@@ -78,7 +78,7 @@
 
 
 
-            </p>
+            </p> -->
             <p style="font-weight:600">
 
               {{d.address.city}} {{d.address.state}} {{d.address.zipCode}}
