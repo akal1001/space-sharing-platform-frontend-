@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { House } from 'src/app/interfaces/house';
 import { HomeService } from 'src/app/services/home.service';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-detail',
@@ -10,20 +11,23 @@ import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
 })
 export class DetailComponent implements OnInit {
 
-  constructor(private storage: LoaclstoarageService, private homeservice: HomeService) { }
+  constructor(private storage: LoaclstoarageService,private searchService:SearchService, private homeservice: HomeService) { }
   images: any = new Array<Object>();
   ngOnInit(): void {
     this.GetDetail();
+
   }
 
   imageObject: any = new Array();
   house: any;
   GetDetail() {
     let id = this.storage.GetData(this.storage.id);
-  
-    this.homeservice.GetHouseService(id).subscribe((response) => {
+
+    this.homeservice.GetHouseService(id).subscribe((response: any) => {
       this.house = response;
-      for (var i = 0; i < this.house.imageFiles.length; i++) {
+      this.userSearchinput();
+      for (var i = 0; i < this.house.imageFiles.length; i++)
+      {
         let imageObject: any = {
           image: this.house?.imageFiles[i].imageUrl,
           thumbImage: this.house?.imageFiles[i].imageUrl,
@@ -48,7 +52,7 @@ export class DetailComponent implements OnInit {
 
     for (var i = 0; i < this.tempList.length; i++)
     {
-      if (this.tempList[i].houseId = newdata.houseId) 
+      if (this.tempList[i].houseId = newdata.houseId)
       {
         this.tempList[i].houseId.remove();
         break;
@@ -57,6 +61,27 @@ export class DetailComponent implements OnInit {
     }
     this.tempList.push(newdata);
     this.storage.SetData(this.storage.tempdata, this.tempList);
+  }
+
+  data:any;
+  userSearchinput() {
+
+
+
+    this.searchService.SearchServe(this.house.address.city).subscribe((result: any) => {
+
+      console.log("new result " + JSON.stringify(result))
+
+      this.data = result;
+
+      this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
+
+
+
+    })
+
+
+
   }
 
 }

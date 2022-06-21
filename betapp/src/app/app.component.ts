@@ -48,12 +48,12 @@ export class AppComponent {
   ngOnInit(): void {
 
 
-    this.service.data$.subscribe(res => this.data = res)  //read the invoked data or default data
+    this.service.data$.subscribe((res: any) => this.data = res)  //read the invoked data or default data
 
     console.log("data form child " + this.data);
     this.filteredStreets = this.control.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value)),
+      map((value: string) => this._filter(value)),
     );
 
 
@@ -89,7 +89,7 @@ export class AppComponent {
 
     //max-width:1024px
 
-    this.observer.observe(['(max-width:3024px)']).subscribe((res) => {
+    this.observer.observe(['(max-width:3024px)']).subscribe((res: { matches: any; }) => {
       if (res.matches) {
         this.sidenav.mode = 'over';
         this.sidenav.close();
@@ -191,16 +191,16 @@ export class AppComponent {
   slideIndex = 1;
 
   selectdvalue(id: any, city: any, state: any) {
-   
-    this.homseService.GetHouseService(id).subscribe((resposne) => 
+
+    this.homseService.GetHouseService(id).subscribe((resposne: any) =>
     {
- 
+
       this.storage.SetData(this.storage.SearchedSelectValueDatakey, JSON.stringify(resposne));
       this.router.navigateByUrl("/child")
-  
+
     })
-    
-  
+
+
 
   }
   userSearchinput() {
@@ -211,7 +211,7 @@ export class AppComponent {
       this.router.navigateByUrl("/home")
     }
 
-    this.searchsrvice.SearchServe(this.searchinput).subscribe((result) => {
+    this.searchsrvice.SearchServe(this.searchinput).subscribe((result: any) => {
       console.log(JSON.stringify(result))
       console.log(this.searchinput)
       this.serarchResult = result;

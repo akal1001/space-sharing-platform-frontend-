@@ -22,18 +22,18 @@ export class HomeComponent implements OnInit {
 
   smapleData: any = []
   message:any;
-   
-  
+
+
   ngOnInit(): void {
     this.sampleData = this.storage.GetData(this.storage.tempdataIds);
-    
+
     var value =  this.storage.GetData(this.storage.DefaultHomeData);
     if(value != null || value != undefined)
     {
        this.data = value;
     }
     //alert(value);
-    this.dataservice.getData().subscribe((response) => {
+    this.dataservice.getData().subscribe((response: any) => {
 
        this.storage.SetData(this.storage.DefaultHomeData,JSON.stringify(response));
       this.data = response;
@@ -48,16 +48,16 @@ export class HomeComponent implements OnInit {
 
   selectedPriceValue: any;
   onChange(mrChange: MatRadioChange) {
-    
+
     let mrButton: MatRadioButton = mrChange.source;
-   
+
     this.selectedPriceValue =mrButton.value;
 
-    this.dataservice.getDataWithOption(this.selectedPriceValue).subscribe((response) => {
+    this.dataservice.getDataWithOption(this.selectedPriceValue).subscribe((response: any) => {
 
       this.data = response;
     })
- 
+
   }
 
 
@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit {
     let obj = { id: id, type: houseRoomeType, description: description, img: imageFiles }
     //this.setTempData(JSON.stringify(id));
 
-    
+
 
     let da: any[] = this.storage.GetData(this.storage.tempdataIds);
 
@@ -112,7 +112,7 @@ export class HomeComponent implements OnInit {
   }
 
 
- 
+
 
   tempList: any = [];
   setTempData(id: any) {
@@ -121,24 +121,24 @@ export class HomeComponent implements OnInit {
 
 
   }
-   
+
   ShowImages(id:any)
   {
-     
-     this.storage.SetData("imgrefids", JSON.stringify(id)); 
-     this.router.navigateByUrl("/imageview") 
+
+     this.storage.SetData("imgrefids", JSON.stringify(id));
+     this.router.navigateByUrl("/imageview")
   }
 
   key:any;
   GetPublickkey()
-  { 
-      this.dataservice.GetPublickeySevice().subscribe((response)=>
+  {
+      this.dataservice.GetPublickeySevice().subscribe((response: { houseId: any; })=>
       {
         this.key = response.houseId;
-      
+
         console.log("key" + this.key);
       })
-     
+
   }
 
 }

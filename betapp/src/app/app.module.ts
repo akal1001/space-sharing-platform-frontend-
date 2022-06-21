@@ -1,5 +1,6 @@
 import { APP_BOOTSTRAP_LISTENER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -35,6 +36,7 @@ import { ChildComponent } from './pages/child/child.component';
 import { ImagesviewComponent } from './pages/imagesview/imagesview.component'
 
 import {MatRadioModule} from '@angular/material/radio';
+import { CommonModule } from "@angular/common";
 
 
 @NgModule({
@@ -54,9 +56,10 @@ import {MatRadioModule} from '@angular/material/radio';
     PreviewComponent,
     ChildComponent,
     ImagesviewComponent
-    
+
   ],
   imports: [
+    CommonModule,
     MatRadioModule,
     FormsModule,
     BrowserModule,
@@ -74,7 +77,7 @@ import {MatRadioModule} from '@angular/material/radio';
     MatGridListModule,
     NgxJsonViewerModule,
     NgImageSliderModule,
-    
+
     ReactiveFormsModule,
     MatAutocompleteModule
 
