@@ -37,6 +37,7 @@ import { ImagesviewComponent } from './pages/imagesview/imagesview.component'
 
 import {MatRadioModule} from '@angular/material/radio';
 import { CommonModule } from "@angular/common";
+import { ListsComponent } from './pages/lists/lists.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { CommonModule } from "@angular/common";
     MypostesComponent,
     PreviewComponent,
     ChildComponent,
-    ImagesviewComponent
+    ImagesviewComponent,
+    ListsComponent
 
   ],
   imports: [

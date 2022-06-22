@@ -18,8 +18,8 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6" style="text-align: left;padding: 0%;">
       <form>
-      
-          <input (keyup)="userSearchinput()" [(ngModel)]="searchinput" 
+
+          <input (keyup)="userSearchinput()" [(ngModel)]="searchinput"
           placeholder="Search by city, state or zipcode.." [formControl]="control" [matAutocomplete]="auto">
         <mat-autocomplete class="ac" #auto="matAutocomplete">
           <mat-option style="height: auto; border-top: none;" (click)="selectdvalue(r.houseId, r.city, r.state)" *ngFor="let r of serarchResult "
@@ -27,7 +27,7 @@
 
             <img [src]="r.imageurl" style="width:50px;height:50px; float: left; border-radius: 3%; margin: 1%;margin-left: 0;">
             <p style="padding: 0%;margin: 0%;line-height: 1em;font-size: small;padding: 1%;">
-              <span style="font-weight: bold;">{{r.keyword}}</span> 
+              <span style="font-weight: bold;">{{r.keyword}}</span>
               {{r.city}} {{r.state}}
               {{r.zipCode}}
               <br>
@@ -37,7 +37,7 @@
                 {{r.description}} ....
               </span>
             </p>
-           
+
 
 
           </mat-option>
@@ -45,7 +45,7 @@
         </mat-autocomplete>
       </form>
     </div>
-  
+
     <div class="col-lg-4 col-sm-12 d-none d-lg-block .d-xl-none" style="text-align: right;">
       <button mat-button class="menu-button" (click)="home()" >
         <mat-icon>home</mat-icon>
@@ -55,18 +55,18 @@
         <mat-icon></mat-icon>
         <span>Account</span>
       </button>
-      
+
       <button mat-button class="menu-button" (click)="upload()">
         <mat-icon>upload</mat-icon>
-        <span>Post</span>
+        <span>Create Post</span>
       </button>
-      
+
     </div>
     <div class="col-lg-12 col-sm-12">
       <app-progressbar></app-progressbar>
     </div>
   </div>
- 
+
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav">
@@ -75,21 +75,21 @@
 
     <!-- <a style="margin-right: 2%; ;" routerLink="/fileuploader">fileuploader</a> <br> <br> -->
     <a style="margin-right: 2%;" (click)="account()" git cmm m>Account</a> <br> <br>
-    <a style="margin-right: 2%; font-weight: bold;" (click)="upload()">Create Post</a> <br> 
-    
+    <a style="margin-right: 2%; font-weight: bold;" (click)="upload()">Create Post</a> <br>
+
 
     <br>
 
  <hr>
-  
 
-  
+
+
     <mat-radio-group    color="primary" aria-label="Select an option" (change)="onChangePrice($event)" name="Sort"> Sort <br>
       <mat-radio-button  value="lower" >lower to higher</mat-radio-button>
       <mat-radio-button value="higher">higher to lower</mat-radio-button>
       <mat-radio-button value="newer">newer to older</mat-radio-button>
       <mat-radio-button value="older">older to newer</mat-radio-button>
-     
+
     </mat-radio-group>
     <hr>
     <mat-radio-group color="primary" aria-label="Select an option" (change)="onChangePost($event)"name="post"> post <br>
@@ -100,21 +100,21 @@
     <br>
     <hr>
     <h2>Sort selectd </h2>
-    
+
     {{selectedPriceValue}}
     <br>
     {{selectedPostValue}}
     <hr>
-  
+
   </mat-sidenav>
   <mat-sidenav-content>
-    
-    
+
+
     <!-- <app-child [inputFromParent]="inputFromParent" (inputChange)="inputFromParent=$event"></app-child> -->
-    
+
     <router-outlet>
 
     </router-outlet>
-    
+
   </mat-sidenav-content>
 </mat-sidenav-container>

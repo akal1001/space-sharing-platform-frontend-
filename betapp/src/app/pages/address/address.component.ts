@@ -16,12 +16,12 @@ export class AddressComponent implements OnInit {
   addressdata:any;
   ngOnInit(): void {
     var reselt = this.storage.GetData(this.storage.usertoken);
-  
+
     if(reselt == null || reselt == undefined)
     {
        this.router.navigateByUrl("/login")
     }
-    
+
     this.onback();
   }
   onback()
@@ -41,18 +41,19 @@ export class AddressComponent implements OnInit {
       this.addressdata = this.address;
     }
     this.storage.SetData(this.storage.addressforpostKey, JSON.stringify(this.addressdata));
-    this.router.navigateByUrl("/fileuploader")
+    this.router.navigateByUrl("/list")
 
- 
+
+
 
     // let id = this.makeid(30);
-  
+
     // let mytoken = this.loaclaStorage.GetData(this.loaclaStorage.usertoken);
     //  alert("mytoken " + mytoken.usertoken)
     // this.houseService.PostHouseService(mytoken.usertoken,id,this.house.HouseRoomeType, this.house.Description, this.house.price, "imageurl", this.house.phone, this.house.city, this.house.State, this.house.zipCode).subscribe((response) => {
 
     //  // alert(response + "  " + id) ;
-    //   if (response = true) 
+    //   if (response = true)
     //   {
     //     alert(id);
     //     this.house.houseid = id;

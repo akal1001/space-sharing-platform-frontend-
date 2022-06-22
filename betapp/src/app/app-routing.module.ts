@@ -13,6 +13,7 @@ import { MypostesComponent } from './pages/mypostes/mypostes.component';
 import { PreviewComponent } from './pages/preview/preview.component';
 import { ImagesviewComponent } from './pages/imagesview/imagesview.component';
 import { ChildComponent } from './pages/child/child.component';
+import { ListsComponent } from './pages/lists/lists.component';
 
 
 // const routes: Routes = [
@@ -46,7 +47,8 @@ const routes: Routes = [
   { path: 'address', component: AddressComponent },
   { path: 'myposts', component: MypostesComponent },
   { path: 'preview', component: PreviewComponent },
-   {path: 'imageview', component:ImagesviewComponent}
+   {path: 'imageview', component:ImagesviewComponent},
+   {path:'list',component:ListsComponent}
 
 
 ];

@@ -20,14 +20,14 @@ export class FileuploaderComponent implements OnInit {
   _img: any;
 
   newimage:any;
- 
+
   imageArray:any = new Array();
   constructor(private fileuploadService: FileuploaderService, private router: Router, private houseservice: HomeService, private loaclaStoarage: LoaclstoarageService) { }
 
   ngOnInit(): void {
 
     var reselt = this.loaclaStoarage.GetData(this.loaclaStoarage.usertoken);
-  
+
     if(reselt == null || reselt == undefined)
     {
        this.router.navigateByUrl("/login")
@@ -42,29 +42,29 @@ export class FileuploaderComponent implements OnInit {
     console.log(event.target.files[0]);
     this.fileselected = event.target.files[0];
 
-  
+
       this.reader.readAsDataURL(this.fileselected);
-      this.reader.onload = (_event) => 
+      this.reader.onload = (_event) =>
       {
-  
+
         var image = new Image();
         this.imagepath = this.reader.result;
 
-       
+
         // var canvas = document.createElement('canvas');
         // canvas.width = 100;
         // canvas.height = 100;
-       
+
         // this.newimage = canvas.toDataURL(this.imagepath);
-       
+
       }
-    
-   
+
+
   }
   async handleSelectedFile() {
     this.status = null;
     console.log('eneveoment');
-    
+
     await this.fileuploadService.S3CustomeClient.uploadFile(
       this.fileselected,
       this.fileselected.types,
@@ -87,12 +87,12 @@ export class FileuploaderComponent implements OnInit {
 
         this.loaclaStoarage.SetData(this.loaclaStoarage.filetoken, JSON.stringify(this.imageArray));
 
-        
 
 
 
 
-       
+
+
 
       })
       .catch((err: any) => console.log(err));
@@ -122,7 +122,7 @@ export class FileuploaderComponent implements OnInit {
 
     let refid = this.loaclaStoarage.GetData(this.loaclaStoarage.houseforPostkey);
     //alert("refrance id " + refid.houseid);
-    this.fileuploadService.AddmedialFileService(refid.houseid, imageurl).subscribe((response) => {
+    this.fileuploadService.AddmedialFileService(refid.houseid, imageurl).subscribe((response: any) => {
       console.log(response);
     })
 
@@ -137,7 +137,7 @@ export class FileuploaderComponent implements OnInit {
     let house = this.loaclaStoarage.GetData(this.loaclaStoarage.houseforPostkey);
     let addresse = this.loaclaStoarage.GetData(this.loaclaStoarage.addressforpostKey);
     let mytoken = this.loaclaStoarage.GetData(this.loaclaStoarage.usertoken);
-    this.houseservice.PostHouseService(mytoken.usertoken, house.houseid, house.HouseRoomeType, house.Description, house.price, "imageurl", house.phone, addresse.city, addresse.State, addresse.zipCode).subscribe((response) => {
+    this.houseservice.PostHouseService(mytoken.usertoken, house.houseid, house.HouseRoomeType, house.Description, house.price, "imageurl", house.phone, addresse.city, addresse.State, addresse.zipCode).subscribe((response: any) => {
 
     })
 

@@ -10,64 +10,40 @@
 
 
 
-    <mat-card>
-      <mat-card-header>
 
 
-
-
-        <mat-card-title style="font-weight:600;text-transform: capitalize;"> {{user.username}}</mat-card-title>
-
-      </mat-card-header>
-
-
-      <mat-card-content style="padding: 0% !important">
-
-
-        <div class="imgcontainer">
-          <ngx-json-viewer [json]="user"></ngx-json-viewer>
-
-
-
-        </div>
-
-        <p style="line-height: 1.5em;
-          height: 3em;     
-          overflow: hidden; font-size: 16px;">
-
-
-
-
-
-
-        </p>
-        
-        <p style="font-weight:600">
-
-
-
-        </p>
-
-      </mat-card-content>
-
-      <mat-card-actions>
-        
     <a style="margin-right: 2%; ;" routerLink="/myposts">
 
       your post</a> <br> <br>
         <button mat-button (click)="logout()">logout</button>
 
 
-      </mat-card-actions>
-    </mat-card>
 
-    
+    <div class="imgcontainer">
 
-    <br>
-
+      <h1>{{user.username}}</h1>
+      <ngx-json-viewer [json]="user"></ngx-json-viewer>
 
 
-  </div>
+
+    </div>
+
+    <p style="line-height: 1.5em;
+      height: 3em;
+      overflow: hidden; font-size: 16px;">
+
+
+
+
+
+
+    </p>
+
+    <p style="font-weight:600">
+
+
+
+    </p>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
 
