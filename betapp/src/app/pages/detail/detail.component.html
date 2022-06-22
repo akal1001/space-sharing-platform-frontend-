@@ -1,8 +1,8 @@
 <!-- <input type="button" value="gei" (click)="GetDetail()"> -->
 <div class="row">
   <div class="col-12 col-md-1 col-lg-1">
-   </div>
-  <div class="col-12 col-md-4 col-lg-4" >
+  </div>
+  <div class="col-12 col-md-4 col-lg-4">
     <div class="imgcontainer">
 
 
@@ -11,25 +11,37 @@
 
       </ng-image-slider> -->
 
-        <img [src]="house.imageFiles[0].imageUrl" style="width: 100%; max-height:400px;">
-        <img *ngFor="let img of house.imageFiles" [src]="img.imageUrl" style="width: 50px; height:50px; margin: 1%;">
+      <img [src]="house.imageFiles[0].imageUrl" style="width: 100%; max-height:400px;">
+      <img *ngFor="let img of house.imageFiles" [src]="img.imageUrl" style="width: 50px; height:50px; margin: 1%;">
 
 
 
 
     </div>
   </div>
-  <div class="col-12 col-md-4 col-lg-6"  >
-    <h1>{{house?.houseRoomeType}}</h1>
+  <div class="col-12 col-md-4 col-lg-6">
+    <h2 style="font-weight:bolder">{{house?.houseRoomeType}}</h2>
     <p>
-      {{house.price}} <br>
-
+     
       {{house.description}} hkjhjhkjhkjkj
 
 
 
 
     </p>
+    <h2>An Unordered HTML List</h2>
+
+<ul>
+  <li> ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
+  <li>ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
+  <li>ፏ ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
+  <li> ህኢኢኦኦ ፈፋፌፎፏፏ </li>
+  <li>ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
+  <li>ህኢኢኦኦ ፈፋፌፎፏፏ </li>
+  <li>ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
+  <li>ፏ ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
+  <li> ህኢኢኦኦ ፈፋፌፎፏፏ </li>
+</ul>  
     <p style="font-weight:600">
 
       {{house.address.city}} {{house.address.state}} {{house.address.zipCode}}
@@ -45,72 +57,81 @@
     </p>
   </div>
 </div>
-<hr>
+<br>
+<br>
 <br>
 
 <div class="row me">
-<div class="col-12 col-lg-4 col-md-4">
+  <div class="col-12 col-lg-12 col-md-12" style="text-align:center; font-weight: bolder; font-stretch: expanded;">
+    <h1>Other related item</h1>
+  </div>
+  <div class="col-12 col-lg-1 col-md-12">
 
-</div>
- <div  class="col-6 col-lg-3 col-md-3 me">
-  <mat-card *ngFor="let d of data" >
-    <!-- <mat-card-header>
-
-      <mat-card-title style="font-weight:600;">{{d.houseRoomeType}}</mat-card-title>
-
-
-    </mat-card-header> -->
-
-
-    <mat-card-content>
-
-
-      <div class="imgcontainerlist">
-
+  </div>
+  <div class="col-12 col-lg-10 col-md-12 me">
+    <div class="row me">
+      <div class="col-6 col-lg-3 me" *ngFor="let d of data">
+        <mat-card>
+          <!-- <mat-card-header>
+    
+          <mat-card-title style="font-weight:600;">{{d.houseRoomeType}}</mat-card-title>
+    
+    
+        </mat-card-header> -->
 
 
-        <img   mat-card-image id="img" style="
-       height: auto;" mat-card-image [src]=' d.imageurl' alt="Photo of a Shiba Inu">
+          <mat-card-content>
+
+
+            <div class="imgcontainerlist">
+
+
+
+              <img mat-card-image id="img" style="
+           height: auto;" mat-card-image [src]=' d.imageurl' alt="Photo of a Shiba Inu">
 
 
 
 
-        <div class="top-left">
-          <h2><span style="color: gray;"></span> {{d.price|currency}}</h2>
-        </div>
-        <div class="top-right"> Pic</div>
+              <div class="top-left">
+                <h2><span style="color: gray;"></span> {{d.price|currency}}</h2>
+              </div>
+            
 
+            </div>
+
+            <!-- <p style="line-height: 1.5em;
+          max-height: 4.5em;
+          overflow: hidden; font-size: 15px;"  (click)="gotodetail2(d.houseId,d.houseRoomeType,d.description,d.imageFiles[0].imageUrl)">
+    
+            <span style="font-weight: bold;">{{d.houseRoomeType}}</span>
+            {{d.description}}<span style="color:blue;">  more...</span>
+    
+    
+    
+    
+          </p> -->
+            <p style="font-weight:600">
+
+              {{d.city}} {{d.state}} {{d.zipCode}}
+
+            </p>
+            <p style="padding-top: 0%;">
+
+              Posted on {{d._Date | date:'mediumDate'}}
+
+            </p>
+          </mat-card-content>
+
+        </mat-card>
       </div>
-
-      <!-- <p style="line-height: 1.5em;
-      max-height: 4.5em;
-      overflow: hidden; font-size: 15px;"  (click)="gotodetail2(d.houseId,d.houseRoomeType,d.description,d.imageFiles[0].imageUrl)">
-
-        <span style="font-weight: bold;">{{d.houseRoomeType}}</span>
-        {{d.description}}<span style="color:blue;">  more...</span>
+    </div>
 
 
+  </div>
+  <div class="col-12 col-lg-4 col-md-4">
 
-
-      </p> -->
-      <p style="font-weight:600">
-
-        {{d.city}} {{d.state}} {{d.zipCode}}
-
-      </p>
-      <p style="padding-top: 0%;">
-
-        Posted on {{d._Date | date:'mediumDate'}}
-
-      </p>
-    </mat-card-content>
-
-  </mat-card>
-
- </div>
- <div class="col-12 col-lg-4 col-md-4">
-
-</div>
+  </div>
 </div>
 
 
