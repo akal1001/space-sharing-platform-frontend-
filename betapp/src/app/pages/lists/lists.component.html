@@ -11,19 +11,26 @@
     </h2>
 
 
+     <div *ngFor="let v of choosedLists">
 
+         {{v}}
+
+     </div>
 
     <section class="example-section">
 
 
 
+      <section *ngFor="let item of lists">
 
-      <mat-checkbox #value  (change)="checkCheckBoxvalue($event)" name="checkbox" class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
-      <mat-checkbox class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
-      <mat-checkbox class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
-      <mat-checkbox class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
-      <mat-checkbox class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
-      <mat-checkbox class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
+        <mat-checkbox  name={{item.value}} [checked]="false" (change)="checkCheckBoxvalue($event, item.key)">{{item.value}}</mat-checkbox>
+
+      </section>
+
+
+
+      <br>
+
       <mat-checkbox class="example-margin" [disabled]="true">Disabled</mat-checkbox>
     </section>
 

@@ -150,7 +150,10 @@ export class AppComponent {
       this.router.navigateByUrl("/login")
     }
   }
-
+  upload2() {
+    this.sidenav.close();
+    this.router.navigateByUrl("/list")
+  }
 
   gotodetail(id: any) {
 

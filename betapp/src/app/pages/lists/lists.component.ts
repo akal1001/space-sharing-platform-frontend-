@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-
-import {ThemePalette} from '@angular/material/core';
+import { ThemePalette } from '@angular/material/core';
 
 export interface Task {
   name: string;
@@ -11,60 +10,58 @@ export interface Task {
   subtasks?: Task[];
 }
 
-
 @Component({
   selector: 'app-lists',
   templateUrl: './lists.component.html',
-  styleUrls: ['./lists.component.css']
+  styleUrls: ['./lists.component.css'],
 })
 export class ListsComponent implements OnInit {
 
-  constructor(private router:Router) { }
 
-  ngOnInit(): void {
+  choosedLists:any = new Array();
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {}
+  continue() {
+
+    this.imageArray.push(this.imageurl);
+
+    // alert(this.imageurl + ";;")
+
+    this.loaclaStoarage.SetData(this.loaclaStoarage.filetoken, JSON.stringify(this.imageArray));
+    this.router.navigateByUrl('/fileuploader');
   }
-  continue()
-  {
-    this.router.navigateByUrl("/fileuploader")
-  }
-  task: Task = {
-    name: 'Indeterminate',
-    completed: false,
-    color: 'primary',
-    subtasks: [
-      {name: 'Primary', completed: false, color: 'primary'},
-      {name: 'Accent', completed: false, color: 'accent'},
-      {name: 'Warn', completed: false, color: 'warn'},
-    ],
-  };
+
 
   allComplete: boolean = false;
 
-  updateAllComplete() {
-    this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
-  }
+
+  lists: any = [
+    { key: '1', value: 'two and half bothroom' },
+    { key: '2', value: 'single bedroom' },
+    { key: '3', value: 'enought parking space' },
+  ];
+
+  checkedvalue:any;
+  checkCheckBoxvalue(event: any, val:any) {
+    console.log(event.checked);
 
 
+    if(event.checked == true)
+    {
+       this.checkedvalue = this.checkedvalue + val;
+       this.choosedLists.push(this.checkedvalue);
 
-
-  checkCheckBoxvalue(event:any){
-    console.log(event.checked)
-    console.log(event)
-    alert("chedkedß")
-  }
-  someComplete(): boolean {
-    if (this.task.subtasks == null) {
-      alert("cheked")
-      return false;
+       for(var i = 0;i < this.choosedLists.lenght; i++)
+       {
+            console.log(this.choosedLists[i])
+       }
     }
-    return this.task.subtasks.filter(t => t.completed).length > 0 && !this.allComplete;
+    if(event.checked == false)
+    {
+        this.choosedLists.pop(val)
+    }
+
   }
 
-  setAll(completed: boolean) {
-    this.allComplete = completed;
-    if (this.task.subtasks == null) {
-      return;
-    }
-    this.task.subtasks.forEach(t => (t.completed = completed));
-  }
 }
