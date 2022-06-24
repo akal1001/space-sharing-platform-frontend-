@@ -36,6 +36,7 @@ import { ChildComponent } from './pages/child/child.component';
 import { ImagesviewComponent } from './pages/imagesview/imagesview.component'
 
 import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CommonModule } from "@angular/common";
 import { ListsComponent } from './pages/lists/lists.component';
 
@@ -63,6 +64,7 @@ import { ListsComponent } from './pages/lists/lists.component';
   imports: [
     CommonModule,
     MatRadioModule,
+    MatCheckboxModule,
     FormsModule,
     BrowserModule,
     AppRoutingModule,

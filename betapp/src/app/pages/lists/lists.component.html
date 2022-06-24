@@ -11,40 +11,26 @@
     </h2>
 
 
-    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-    <label for="vehicle1"> I have a bikeI have a bikeI have a bike</label><br>
-    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-    <label for="vehicle2"> have a bikeI have have a bikeI haveI have a bikeI have a bikeI have a bikehave a
-      car</label><br>
-    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-    <label for="vehicle3"> have a bikeI havehave a boat</label><br>
-    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-    <label for="vehicle1"> I have a bikeI have a bikeI have a bike</label><br>
-    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-    <label for="vehicle2"> I have a bikeI have a bikeI have a bikeI have a bikehave a car</label><br>
-    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-    <label for="vehicle3"> have a boat</label><br>
 
-    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-    <label for="vehicle1"> I have a bikeI have a bikeI have a bike</label><br>
-    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-    <label for="vehicle2"> have a bikeI have have a bikeI haveI have a bikeI have a bikeI have a bikehave a
-      car</label><br>
-    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-    <label for="vehicle3"> have a bikeI havehave a boat</label><br>
-    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-    <label for="vehicle1"> I have a bikeI have a bikeI have a bike</label><br>
-    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-    <label for="vehicle2"> I have a bikeI have a bikeI have a bikeI have a bikehave a car</label><br>
-    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-    <label for="vehicle3"> have a boat</label><br>
-    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-    <label for="vehicle1"> I have a bikeI have have a bikeI ha have a bikeI havevea bikeI have a bike</label><br>
+
+    <section class="example-section">
+
+
+
+
+      <mat-checkbox #value  (change)="checkCheckBoxvalue($event)" name="checkbox" class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
+      <mat-checkbox class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
+      <mat-checkbox class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
+      <mat-checkbox class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
+      <mat-checkbox class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
+      <mat-checkbox class="example-margin">Check meCheck meCheck meCheck</mat-checkbox> <br>
+      <mat-checkbox class="example-margin" [disabled]="true">Disabled</mat-checkbox>
+    </section>
+
+
+
+
     <br>
-    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-    <label for="vehicle2"> I have a bikeI have a bikeI have a bikehave a car</label><br>
-
-    <label for="vehicle3"> have a boat</label><br>
     <button mat-button class="btnContinue" (click)="continue()">contineue..</button>
 
 
