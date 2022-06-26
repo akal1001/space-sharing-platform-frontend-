@@ -15,14 +15,13 @@ export class PreviewComponent implements OnInit {
   result: any = {};
   uploadresponse: any;
   imageObject: any = new Array();
-  constructor(private storage: LoaclstoarageService, private router:Router, private houseService: HomeService, private loaclaStorage:LoaclstoarageService) { }
+  constructor(private storage: LoaclstoarageService, private router: Router, private houseService: HomeService, private loaclaStorage: LoaclstoarageService) { }
 
   ngOnInit(): void {
     var reselt = this.loaclaStorage.GetData(this.loaclaStorage.usertoken);
-  
-    if(reselt == null || reselt == undefined)
-    {
-       this.router.navigateByUrl("/login")
+
+    if (reselt == null || reselt == undefined) {
+      this.router.navigateByUrl("/login")
     }
     this.Review();
   }
@@ -68,6 +67,7 @@ export class PreviewComponent implements OnInit {
   }
   post() {
 
+    let detailLists = this.storage.GetData(this.storage.listforpostkey);
     let images = this.storage.GetData(this.storage.filetoken);
     let obj = {
       usertoken: this.storage.GetData(this.storage.usertoken).usertoken,
@@ -78,6 +78,7 @@ export class PreviewComponent implements OnInit {
       State: this.result.State,
       city: this.result.city,
       zipCode: this.result.zipCode,
+      detailLists:detailLists,
       Images: images
     }
     this.houseService.PostHouseServiceTest(obj).subscribe((response) => {

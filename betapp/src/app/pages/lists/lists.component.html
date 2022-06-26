@@ -23,7 +23,7 @@
 
       <section *ngFor="let item of lists">
 
-        <mat-checkbox  name={{item.value}} [checked]="false" (change)="checkCheckBoxvalue($event, item.key)">{{item.value}}</mat-checkbox>
+        <mat-checkbox  name={{item.value}} [checked]="false" (change)="checkCheckBoxvalue($event, item.key)">{{item.key}}</mat-checkbox>
 
       </section>
 

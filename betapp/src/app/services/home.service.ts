@@ -79,8 +79,6 @@ export class HomeService {
   PostHouseServiceTest(val: any): Observable<any> {
     let endpoint = 'postobj?val'
 
-
-
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     return this._httpClient.post<any>(this._baseUploadUrl + endpoint, JSON.stringify(val),
