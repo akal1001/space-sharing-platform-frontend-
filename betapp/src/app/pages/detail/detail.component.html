@@ -23,7 +23,7 @@
     <h2 style="font-weight:bolder">{{house?.houseRoomeType}}</h2>
     <p>
      
-      {{house.description}} hkjhjhkjhkjkj
+      {{house.description}}
 
 
 
@@ -31,16 +31,9 @@
     </p>
     <h2>An Unordered HTML List</h2>
 
-<ul>
-  <li> ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
-  <li>ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
-  <li>ፏ ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
-  <li> ህኢኢኦኦ ፈፋፌፎፏፏ </li>
-  <li>ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
-  <li>ህኢኢኦኦ ፈፋፌፎፏፏ </li>
-  <li>ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
-  <li>ፏ ህኢኢኦኦ ፈፋፌፎፏፏ ህኢኢኦኦ ፈፋፌፎፏፏ </li>
-  <li> ህኢኢኦኦ ፈፋፌፎፏፏ </li>
+<ul *ngFor="let d of house.descriptionlists">
+  <li>{{d.description}}</li>
+ 
 </ul>  
     <p style="font-weight:600">
 

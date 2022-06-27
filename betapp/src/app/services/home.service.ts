@@ -101,5 +101,10 @@ export class HomeService {
    
      return this._httpClient.get<any>(this._baseUploadUrl + 'PublicKey');
   }
+
+  //lsit
+  getDescriptionList(): Observable<any> {
+    return this._httpClient.get(this._baseUploadUrl + 'descriptionlists')
+  }
 }
 

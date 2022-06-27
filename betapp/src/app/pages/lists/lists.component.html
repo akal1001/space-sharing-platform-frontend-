@@ -11,19 +11,15 @@
     </h2>
 
 
-     <div *ngFor="let v of choosedLists">
-
-         {{v}}
-
-     </div>
+    
 
     <section class="example-section">
 
 
 
-      <section *ngFor="let item of lists">
+      <section *ngFor="let item of descList">
 
-        <mat-checkbox  name={{item.value}} [checked]="false" (change)="checkCheckBoxvalue($event, item.key)">{{item.key}}</mat-checkbox>
+        <mat-checkbox  name={{item.id}} [checked]="false" (change)="checkCheckBoxvalue($event, item.id)">{{item.description}}</mat-checkbox>
 
       </section>
 
