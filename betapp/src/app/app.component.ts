@@ -59,7 +59,9 @@ export class AppComponent {
 
 
   }
-
+  myFunction() {
+    alert("Input field lost focus.");
+  }
   myvalue: any;
   onChangePrice(mrChange: MatRadioChange) {
 
@@ -195,9 +197,10 @@ export class AppComponent {
 
   selectdvalue(id: any, city: any, state: any) {
 
+     document.getElementById("txtS")?.blur();//to loss foucs so in small deveice soft kybord will hide
     this.homseService.GetHouseService(id).subscribe((resposne: any) =>
     {
-
+     
       this.storage.SetData(this.storage.SearchedSelectValueDatakey, JSON.stringify(resposne));
       this.router.navigateByUrl("/child")
 

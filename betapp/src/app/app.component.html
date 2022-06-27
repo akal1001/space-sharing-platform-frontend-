@@ -17,14 +17,15 @@
 
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6" style="text-align: left;padding: 0%;">
-      <form>
+      
 
-          <input (keyup)="userSearchinput()" [(ngModel)]="searchinput"
+          <input id="txtS" type="text" (keyup)="userSearchinput()" [(ngModel)]="searchinput"
           placeholder="Search by city, state or zipcode.." [formControl]="control" [matAutocomplete]="auto">
         <mat-autocomplete class="ac" #auto="matAutocomplete">
-          <mat-option style="height: auto; border-top: none;" (click)="selectdvalue(r.houseId, r.city, r.state)" *ngFor="let r of serarchResult "
+          <mat-option style="height: auto; border-top: none;"   (click)="selectdvalue(r.houseId, r.city, r.state)" *ngFor="let r of serarchResult "
             [value]="r.keyword">
-
+            
+ 
             <img [src]="r.imageurl" style="width:50px;height:50px; float: left; border-radius: 3%; margin: 1%;margin-left: 0;">
             <p style="padding: 0%;margin: 0%;line-height: 1em;font-size: small;padding: 1%;">
               <span style="font-weight: bold;">{{r.keyword}}</span>
@@ -43,7 +44,7 @@
           </mat-option>
 
         </mat-autocomplete>
-      </form>
+      
     </div>
 
     <div class="col-lg-4 col-sm-12 d-none d-lg-block .d-xl-none" style="text-align: right;">

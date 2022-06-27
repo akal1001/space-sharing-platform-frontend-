@@ -15,6 +15,7 @@ export class DetailComponent implements OnInit {
   images: any = new Array<Object>();
   ngOnInit(): void {
     this.GetDetail();
+    
 
   }
 
