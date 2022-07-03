@@ -41,7 +41,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'createaccount', component: CreateaccountComponent },
   { path: 'upload', component: UploaderComponent },
-  { path: 'detail', component: DetailComponent },
+  { path: 'detail/:id', component: DetailComponent },
   { path: 'account', component: AccountComponent },
   { path: 'fileuploader', component: FileuploaderComponent },
   { path: 'address', component: AddressComponent },

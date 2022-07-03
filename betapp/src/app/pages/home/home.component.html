@@ -55,12 +55,15 @@
             <div class="imgcontainer">
 
 
+              
+ 
+              
 
-              <img  (click)="gotodetail2(d.houseId,d.houseRoomeType,d.description,d.imageFiles[0].imageUrl)" mat-card-image id="img" style="
+              <img [routerLink]="['/detail', d.houseId]"  mat-card-image id="img" style="
              height: auto;" mat-card-image [src]=' d.imageFiles[0].imageUrl' alt="Photo of a Shiba Inu">
 
 
-
+             
 
               <div class="top-left">
                 <h2><span style="color: gray;"></span> {{d.price|currency}}</h2>

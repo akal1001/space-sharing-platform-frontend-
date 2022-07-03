@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { House } from 'src/app/interfaces/house';
 import { HomeService } from 'src/app/services/home.service';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
@@ -10,19 +11,22 @@ import { SearchService } from 'src/app/services/search.service';
   styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
-
-  constructor(private storage: LoaclstoarageService,private searchService:SearchService, private homeservice: HomeService) { }
+  id:any;
+  constructor(private storage: LoaclstoarageService,private searchService:SearchService, private homeservice: HomeService, private _Activatedroute:ActivatedRoute) { }
   images: any = new Array<Object>();
   ngOnInit(): void {
-    this.GetDetail();
+
+    this.id=this._Activatedroute.snapshot.paramMap.get("id");
+   // alert(this.id)
+    this.GetDetail(this.id);
     
 
   }
 
   imageObject: any = new Array();
   house: any;
-  GetDetail() {
-    let id = this.storage.GetData(this.storage.id);
+  GetDetail(id:any) {
+   // let id = this.storage.GetData(this.storage.id);
 
     this.homeservice.GetHouseService(id).subscribe((response: any) => {
       this.house = response;
@@ -39,6 +43,23 @@ export class DetailComponent implements OnInit {
     });
   }
 
+  GetDetail2(id:any) {
+    // let id = this.storage.GetData(this.storage.id);
+ 
+     this.homeservice.GetHouseService(id).subscribe((response: any) => {
+       this.house = response;
+       this.userSearchinput();
+       for (var i = 0; i < this.house.imageFiles.length; i++)
+       {
+         let imageObject: any = {
+           image: this.house?.imageFiles[i].imageUrl,
+           thumbImage: this.house?.imageFiles[i].imageUrl,
+           // title: 'title of image'
+         }
+         this.imageObject.push(imageObject);
+       }
+     });
+   }
 
   tempList: any = [];
   getTempData() {

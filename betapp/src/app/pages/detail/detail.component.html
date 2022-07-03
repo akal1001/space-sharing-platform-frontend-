@@ -81,7 +81,7 @@
 
 
 
-              <img mat-card-image id="img" style="
+              <img  mat-card-image id="img" style="
            height: auto;" mat-card-image [src]=' d.imageurl' alt="Photo of a Shiba Inu">
 
 
@@ -106,7 +106,7 @@
     
           </p> -->
             <p style="font-weight:600">
-
+              <a  [routerLink]="['/detail', d.houseId]">uuuu</a> <br>
               {{d.city}} {{d.state}} {{d.zipCode}}
 
             </p>

@@ -87,7 +87,7 @@ export class AppComponent {
 
 
   ngAfterViewInit() {
-    this.router.navigateByUrl("/home")
+    // this.router.navigateByUrl("/home")
 
     //max-width:1024px
 

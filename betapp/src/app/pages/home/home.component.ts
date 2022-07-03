@@ -11,8 +11,8 @@ import { SearchService } from 'src/app/services/search.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  @Input() inputFromParent : string | undefined;
-   innerWidth: any;
+  @Input() inputFromParent: string | undefined;
+  innerWidth: any;
   imgHIght: any;
   searchinput: any;
   serarchResult: any = null;
@@ -21,24 +21,23 @@ export class HomeComponent implements OnInit {
   el: any;
 
   smapleData: any = []
-  message:any;
+  message: any;
 
 
   ngOnInit(): void {
     this.sampleData = this.storage.GetData(this.storage.tempdataIds);
 
-    var value =  this.storage.GetData(this.storage.DefaultHomeData);
-    if(value != null || value != undefined)
-    {
-       this.data = value;
+    var value = this.storage.GetData(this.storage.DefaultHomeData);
+    if (value != null || value != undefined) {
+      this.data = value;
     }
     //alert(value);
     this.dataservice.getData().subscribe((response: any) => {
 
-       this.storage.SetData(this.storage.DefaultHomeData,JSON.stringify(response));
+      this.storage.SetData(this.storage.DefaultHomeData, JSON.stringify(response));
       this.data = response;
 
-     // alert(JSON.stringify(this.data));
+      // alert(JSON.stringify(this.data));
     })
 
     console.log(this.inputFromParent);
@@ -51,7 +50,7 @@ export class HomeComponent implements OnInit {
 
     let mrButton: MatRadioButton = mrChange.source;
 
-    this.selectedPriceValue =mrButton.value;
+    this.selectedPriceValue = mrButton.value;
 
     this.dataservice.getDataWithOption(this.selectedPriceValue).subscribe((response: any) => {
 
@@ -84,9 +83,8 @@ export class HomeComponent implements OnInit {
     if (this.idlist != null) {
       console.log("length : " + this.idlist.length)
 
-      if(this.idlist.length >=7)
-      {
-         this.idlist.splice(6,1)
+      if (this.idlist.length >= 7) {
+        this.idlist.splice(6, 1)
       }
       for (var i = 0; i < this.idlist.length; i++) {
         console.log(this.idlist[i]);
@@ -101,8 +99,8 @@ export class HomeComponent implements OnInit {
     this.idlist.unshift(obj);
     this.storage.SetData(this.storage.tempdataIds, JSON.stringify(this.idlist));
     // this.sampleData = this.storage.GetData(this.storage.tempdataIds);
-
-   this.router.navigateByUrl("/detail");
+  
+    this.router.navigateByUrl('/detail');
 
 
 
@@ -122,22 +120,19 @@ export class HomeComponent implements OnInit {
 
   }
 
-  ShowImages(id:any)
-  {
+  ShowImages(id: any) {
 
-     this.storage.SetData("imgrefids", JSON.stringify(id));
-     this.router.navigateByUrl("/imageview")
+    this.storage.SetData("imgrefids", JSON.stringify(id));
+    this.router.navigateByUrl("/imageview")
   }
 
-  key:any;
-  GetPublickkey()
-  {
-      this.dataservice.GetPublickeySevice().subscribe((response: { houseId: any; })=>
-      {
-        this.key = response.houseId;
+  key: any;
+  GetPublickkey() {
+    this.dataservice.GetPublickeySevice().subscribe((response: { houseId: any; }) => {
+      this.key = response.houseId;
 
-        console.log("key" + this.key);
-      })
+      console.log("key" + this.key);
+    })
 
   }
 
