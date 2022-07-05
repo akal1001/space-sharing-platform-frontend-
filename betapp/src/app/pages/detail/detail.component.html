@@ -65,7 +65,7 @@
     <div class="row me">
       <hr>
       <div class="col-6 col-lg-3 me" *ngFor="let d of data">
-        <mat-card>
+        <mat-card (click)="reload(d.houseId)" [routerLink]="['/detail', d.houseId]">
           <!-- <mat-card-header>
     
           <mat-card-title style="font-weight:600;">{{d.houseRoomeType}}</mat-card-title>
@@ -105,8 +105,8 @@
     
     
           </p> -->
-            <p style="font-weight:600">
-              <a  [routerLink]="['/detail', d.houseId]">uuuu</a> <br>
+            <p style="font-weight:600" >
+            
               {{d.city}} {{d.state}} {{d.zipCode}}
 
             </p>

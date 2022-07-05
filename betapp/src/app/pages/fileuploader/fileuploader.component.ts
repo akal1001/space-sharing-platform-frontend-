@@ -133,16 +133,7 @@ export class FileuploaderComponent implements OnInit {
 
   public h: any;
   //cnstract post
-  ConstractPost() {
-    let house = this.loaclaStoarage.GetData(this.loaclaStoarage.houseforPostkey);
-    let addresse = this.loaclaStoarage.GetData(this.loaclaStoarage.addressforpostKey);
-    let mytoken = this.loaclaStoarage.GetData(this.loaclaStoarage.usertoken);
-    this.houseservice.PostHouseService(mytoken.usertoken, house.houseid, house.HouseRoomeType, house.Description, house.price, "imageurl", house.phone, addresse.city, addresse.State, addresse.zipCode).subscribe((response: any) => {
 
-    })
-
-    this.setnull();
-  }
 
   clear() {
     this.loaclaStoarage.ClearStorage();

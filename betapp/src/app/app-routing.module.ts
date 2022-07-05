@@ -12,7 +12,7 @@ import { AddressComponent } from './pages/address/address.component';
 import { MypostesComponent } from './pages/mypostes/mypostes.component';
 import { PreviewComponent } from './pages/preview/preview.component';
 import { ImagesviewComponent } from './pages/imagesview/imagesview.component';
-import { ChildComponent } from './pages/child/child.component';
+
 import { ListsComponent } from './pages/lists/lists.component';
 
 
@@ -36,7 +36,6 @@ import { ListsComponent } from './pages/lists/lists.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'child', component: ChildComponent },
   { path: 'edit', component: EditComponent },
   { path: 'login', component: LoginComponent },
   { path: 'createaccount', component: CreateaccountComponent },

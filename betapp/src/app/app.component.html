@@ -22,7 +22,7 @@
           <input id="txtS" type="text" (keyup)="userSearchinput()" [(ngModel)]="searchinput"
           placeholder="Search by city, state or zipcode.." [formControl]="control" [matAutocomplete]="auto">
         <mat-autocomplete class="ac" #auto="matAutocomplete">
-          <mat-option style="height: auto; border-top: none;"   (click)="selectdvalue(r.houseId, r.city, r.state)" *ngFor="let r of serarchResult "
+          <mat-option style="height: auto; border-top: none;" [routerLink]="['/detail', r.houseId]" *ngFor="let r of serarchResult "
             [value]="r.keyword">
             
  

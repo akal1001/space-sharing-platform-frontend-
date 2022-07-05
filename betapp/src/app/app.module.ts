@@ -32,7 +32,7 @@ import { MypostesComponent } from './pages/mypostes/mypostes.component';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { PreviewComponent } from './pages/preview/preview.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { ChildComponent } from './pages/child/child.component';
+
 import { ImagesviewComponent } from './pages/imagesview/imagesview.component'
 
 import {MatRadioModule} from '@angular/material/radio';
@@ -56,7 +56,7 @@ import { ListsComponent } from './pages/lists/lists.component';
     AddressComponent,
     MypostesComponent,
     PreviewComponent,
-    ChildComponent,
+  
     ImagesviewComponent,
     ListsComponent
 

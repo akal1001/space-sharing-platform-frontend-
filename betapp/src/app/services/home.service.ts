@@ -40,22 +40,6 @@ export class HomeService {
 
   // public IActionResult Post(string usertoken, string type, string description, string imageurl, string phone, string city, string state, int zip)
 
-  PostHouseService(usertoken: string, id: string, type: string, description: string, price: number, imageurl: any,
-    phone: string, city: string, state: string, zip: number): Observable<boolean> {
-    let endpoint = "PostHouse?usertoken=" + usertoken
-      + "&id=" + id
-      + "&type=" + type
-      + "&description=" + description
-      + "&price=" + price
-      + "&imageurl=" + "null"
-      + "&phone=" + phone
-      + "&city=" + city
-      + "&state=" + state
-      + "&zip=" + zip
-
-    return this._httpClient.post<boolean>(this._baseUploadUrl + endpoint, "");
-
-  }
   //edit house
   PutAddressService(_house: House): Observable<Boolean> {
     return this._httpClient.put<boolean>(

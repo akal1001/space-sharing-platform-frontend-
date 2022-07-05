@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HomeService } from 'src/app/services/home.service';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
+import { RsaService } from 'src/app/services/rsa.service';
 
 @Component({
   selector: 'app-preview',
@@ -15,7 +16,7 @@ export class PreviewComponent implements OnInit {
   result: any = {};
   uploadresponse: any;
   imageObject: any = new Array();
-  constructor(private storage: LoaclstoarageService, private router: Router, private houseService: HomeService, private loaclaStorage: LoaclstoarageService) { }
+  constructor( private rsaservice: RsaService, private storage: LoaclstoarageService, private router: Router, private houseService: HomeService, private loaclaStorage: LoaclstoarageService) { }
 
   ngOnInit(): void {
     var reselt = this.loaclaStorage.GetData(this.loaclaStorage.usertoken);
@@ -81,6 +82,7 @@ export class PreviewComponent implements OnInit {
       detailLists:detailLists,
       Images: images
     }
+   
     this.houseService.PostHouseServiceTest(obj).subscribe((response) => {
       this.uploadresponse = response
     })
