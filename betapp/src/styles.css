@@ -48,3 +48,6 @@
 p{
   margin-bottom: 0% !important;
 }
+mat-radio-group{
+  font-variant-caps: all-petite-caps;
+}

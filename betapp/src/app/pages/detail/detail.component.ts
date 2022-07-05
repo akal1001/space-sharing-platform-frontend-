@@ -83,6 +83,7 @@ export class DetailComponent implements OnInit {
     this.id=this._Activatedroute.snapshot.paramMap.get("id");
    // alert(this.id)
     this.GetDetail(this.id);
+   
     
 
   }
@@ -91,11 +92,12 @@ export class DetailComponent implements OnInit {
   imageObject: any = new Array();
   house: any;
   GetDetail(id:any) {
+    window.scroll(0,0);
    // let id = this.storage.GetData(this.storage.id);
 
     this.homeservice.GetHouseService(id).subscribe((response: any) => {
       this.house = response;
-      this.userSearchinput();
+     
       for (var i = 0; i < this.house.imageFiles.length; i++)
       {
         let imageObject: any = {
@@ -105,7 +107,9 @@ export class DetailComponent implements OnInit {
         }
         this.imageObject.push(imageObject);
       }
+      this.userSearchinput();
     });
+   
   }
   reload(id:any)
   {
@@ -114,30 +118,7 @@ export class DetailComponent implements OnInit {
   }
  
 
-  tempList: any = [];
-  getTempData() {
-    this.storage.GetData(this.storage.tempdata)
-    {
-
-    }
-  }
-  setTempData(newdata: any) {
-    //detail house obj
-    let result = this.storage.GetData(this.storage.tempdata)
-
-    for (var i = 0; i < this.tempList.length; i++)
-    {
-      if (this.tempList[i].houseId = newdata.houseId)
-      {
-        this.tempList[i].houseId.remove();
-        break;
-      }
-
-    }
-    this.tempList.push(newdata);
-    this.storage.SetData(this.storage.tempdata, this.tempList);
-  }
-
+  
   data:any;
   userSearchinput() {
 
