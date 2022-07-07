@@ -13,6 +13,7 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class DetailComponent implements OnInit {
   id:any;
+  bigimg:any;
   constructor( router: Router,private storage: LoaclstoarageService,private searchService:SearchService, private homeservice: HomeService, private _Activatedroute:ActivatedRoute) {
 
 
@@ -81,7 +82,7 @@ export class DetailComponent implements OnInit {
   ngOnInit(): void {
 
     this.id=this._Activatedroute.snapshot.paramMap.get("id");
-   // alert(this.id)
+  
     this.GetDetail(this.id);
    
     
@@ -97,7 +98,7 @@ export class DetailComponent implements OnInit {
 
     this.homeservice.GetHouseService(id).subscribe((response: any) => {
       this.house = response;
-     
+      this.bigimg = this.house?.imageFiles[0].imageUrl
       for (var i = 0; i < this.house.imageFiles.length; i++)
       {
         let imageObject: any = {
@@ -111,10 +112,15 @@ export class DetailComponent implements OnInit {
     });
    
   }
+  CHANGEimqge(val:any)
+  {
+     this.bigimg = val;
+  }
   reload(id:any)
   {
    
     this.GetDetail(id)
+   
   }
  
 

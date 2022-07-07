@@ -11,8 +11,8 @@
 
       </ng-image-slider> -->
 
-      <img [src]="house.imageFiles[0].imageUrl" style="width: 100%; max-height:400px;">
-      <img *ngFor="let img of house.imageFiles" [src]="img.imageUrl" style="width: 50px; height:50px; margin: 1%;">
+      <img [src]="bigimg" style="width: 100%; max-height:400px;">
+      <img  (click)="CHANGEimqge(img.imageUrl)" *ngFor="let img of house.imageFiles" [src]="img.imageUrl" style="width: 50px; height:50px; margin: 1%;">
 
 
 
@@ -29,7 +29,7 @@
 
 
     </p>
-    <h2>An Unordered HTML List</h2>
+    <h2></h2>
 
 <ul *ngFor="let d of house.descriptionlists">
   <li>{{d.description}}</li>
@@ -56,14 +56,14 @@
 
 <div class="row me">
   <div class="col-12 col-lg-12 col-md-12" style="text-align:center; font-weight: bolder; font-stretch: expanded;">
-    <h1>Other related item</h1>
+    <h1></h1>
   </div>
   <div class="col-12 col-lg-1 col-md-12">
 
   </div>
   <div class="col-12 col-lg-10 col-md-12 me">
     <div class="row me">
-      <hr>
+   
       <div class="col-6 col-lg-3 me" *ngFor="let d of data">
         <mat-card (click)="reload(d.houseId)" [routerLink]="['/detail', d.houseId]">
           <!-- <mat-card-header>
