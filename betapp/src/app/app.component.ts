@@ -146,7 +146,7 @@ export class AppComponent {
     let userInfo = this.storage.GetData(this.storage.usertoken);
 
     if (userInfo != null) {
-      this.router.navigateByUrl("/upload")
+      this.router.navigateByUrl("/catagory")
     }
     if (userInfo == null) {
       this.router.navigateByUrl("/login")

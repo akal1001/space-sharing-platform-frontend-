@@ -39,6 +39,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CommonModule } from "@angular/common";
 import { ListsComponent } from './pages/lists/lists.component';
+import { CatagoryComponent } from './pages/catagory/catagory.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { ListsComponent } from './pages/lists/lists.component';
     PreviewComponent,
   
     ImagesviewComponent,
-    ListsComponent
+    ListsComponent,
+    CatagoryComponent
 
   ],
   imports: [

@@ -51,3 +51,9 @@ p{
 mat-radio-group{
   font-variant-caps: all-petite-caps;
 }
+.btnContinue{
+  background-color: green;
+}
+h2{
+  text-transform: capitalize;
+}
