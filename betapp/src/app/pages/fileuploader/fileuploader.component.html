@@ -11,7 +11,7 @@
 
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="min-height: 100px;">
 
- 
+
       <img *ngFor="let a of imageArray" [src]='a' style="width: 60px; height:60px; margin: 1%;display:inline-block;">
 
 
@@ -19,7 +19,7 @@
     <br>
 
     <div *ngIf="status == null" style="text-align: center;">
-      <p>Uploding please wait.. </p>
+      <h2>Uploding please wait.. </h2>
     </div>
 
     <img mat-card-image [src]='imagepath' style="width:200px; height: 200px;">
@@ -28,8 +28,7 @@
     <input style="border:1px solid lightgray;" class="custom-file-input" (change)="onChangeFile($event)" type="file">
     <br>
     <br>
-    <button style="background-color: white; width: 150px;  border: 1px solid lightgray;  color: black;" mat-button
-      (click)="handleSelectedFile()">add</button>
+
 
 
 
@@ -37,7 +36,7 @@
     <br>
 
 
-    <button mat-button class="btnContinue" (click)="continue()">contineue..</button>
+
 
 
 
@@ -49,11 +48,14 @@
 
 
   </div>
+  <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6">
+    <button mat-button class="btnContinue" (click)="continue()">contineue..</button>
+  </div>
 </div>
 
 
 
-<!-- 
+<!--
 <div class="row" style="height: 600px;">
   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" style="min-height: 100px;">
 

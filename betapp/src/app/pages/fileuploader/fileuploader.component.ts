@@ -57,6 +57,8 @@ export class FileuploaderComponent implements OnInit {
 
         // this.newimage = canvas.toDataURL(this.imagepath);
 
+        this.handleSelectedFile();
+
       }
 
 
