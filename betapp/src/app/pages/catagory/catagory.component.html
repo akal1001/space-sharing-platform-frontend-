@@ -18,14 +18,14 @@
 
 
 
-            <section *ngFor="let item of descList">
+            <section *ngFor="let item of lists">
 
 
                 <!-- <mat-checkbox  name={{item.id}} [checked]="false" (change)="checkCheckBoxvalue($event, item.id)">{{item.description}}</mat-checkbox>
    -->
                 <mat-radio-group color="primary" aria-label="Select an option"
-                    (change)="checkCheckBoxvalue($event, item.id)" name="Sort">
-                    <mat-radio-button  name={{item.id}} value="lower">{{item.description}}</mat-radio-button> <br>
+                    (change)="checkRadioBoxvalue(item.value)" name="Sort">
+                    <mat-radio-button  name={{item.key}} value={{item.value}}>{{item.value}}</mat-radio-button> <br>
 
 
                 </mat-radio-group>

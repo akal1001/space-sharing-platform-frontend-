@@ -72,7 +72,8 @@ export class PreviewComponent implements OnInit {
     let images = this.storage.GetData(this.storage.filetoken);
     let obj = {
       usertoken: this.storage.GetData(this.storage.usertoken).usertoken,
-      HouseRoomeType: this.result.HouseRoomeType,
+      catagory:this.result.catagory,
+      Header: this.result.Header,
       Description: this.result.Description,
       phone: this.result.phone,
       price: this.result.price,

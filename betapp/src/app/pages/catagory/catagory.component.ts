@@ -18,31 +18,25 @@ export class CatagoryComponent implements OnInit {
     this.GetDesc();
   }
   continue() {
-    this.loaclaStoarage.SetData(this.loaclaStoarage.listforpostkey, JSON.stringify(this.choosedLists));
+    this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey, JSON.stringify(this.choosedLists));
     this.router.navigateByUrl('/upload');
   }
-  allComplete: boolean = false;
+ 
   lists: any = [
-    { key: '1', value: 'value one' },
-    { key: '2', value: 'value two' },
-    { key: '3', value: 'value three' },
+    { key: '1', value: 'የሚከርይ ክፊለ' },
+    { key: '2', value: 'የሚከራይ ሙሉ ባት' },
+    { key: '3', value: 'ሽቲ ባት' },
+    { key: '5', value: 'ሚከርይ ክፊለ' },
+    { key: '6', value: 'የይ ሙሉ ባት' },
+    { key: '7', value: 'ት' },
   ];
-  checkedvalue: any;
-  checkCheckBoxvalue(event: any, val: any) {
-    console.log(event.checked);
+ 
+  checkRadioBoxvalue(val: any) {
+  
+    this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey,val)
+   
 
-
-    if (event.checked == true) {
-      this.checkedvalue =  val;
-      this.choosedLists.push(this.checkedvalue);
-
-      for (var i = 0; i < this.choosedLists.lenght; i++) {
-        console.log(this.choosedLists[i])
-      }
-    }
-    if (event.checked == false) {
-      this.choosedLists.pop(val)
-    }
+  
 
   }
 
