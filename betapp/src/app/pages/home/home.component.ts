@@ -16,13 +16,14 @@ export class HomeComponent implements OnInit {
   imgHIght: any;
   searchinput: any;
   serarchResult: any = null;
+  choosedLists: any = new Array();
   constructor(private dataservice: HomeService, private storage: LoaclstoarageService, private router: Router) { }
   public data: any;
   el: any;
 
   smapleData: any = []
   message: any;
-
+  catagorylists:any;
 
   ngOnInit(): void {
     this.sampleData = this.storage.GetData(this.storage.tempdataIds);
@@ -42,6 +43,8 @@ export class HomeComponent implements OnInit {
 
     console.log(this.inputFromParent);
     this.message = this.inputFromParent;
+
+    this.GetCatagoryList();
     //this.searchinputFromparent
   }
 
@@ -96,4 +99,30 @@ export class HomeComponent implements OnInit {
 
   }
 
+  GetCatagoryList()
+  {
+     this.dataservice.getCatagories().subscribe((list)=>{
+    this.catagorylists = list;
+
+     })
+  }
+
+  checkedvalue: any;
+  checkCheckBoxvalue(event: any, val: any) {
+    console.log(event.checked);
+
+
+    if (event.checked == true) {
+      this.checkedvalue =  val;
+      this.choosedLists.push(this.checkedvalue);
+
+      for (var i = 0; i < this.choosedLists.lenght; i++) {
+        console.log(this.choosedLists[i])
+      }
+    }
+    if (event.checked == false) {
+      this.choosedLists.pop(val)
+    }
+
+  }
 }

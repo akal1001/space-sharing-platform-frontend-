@@ -18,7 +18,7 @@ export class CatagoryComponent implements OnInit {
     this.GetDesc();
   }
   continue() {
-    this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey, JSON.stringify(this.choosedLists));
+   // this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey, JSON.stringify(this.choosedLists));
     this.router.navigateByUrl('/upload');
   }
  
@@ -33,9 +33,11 @@ export class CatagoryComponent implements OnInit {
  
   checkRadioBoxvalue(val: any) {
   
-    this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey,val)
+    this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey,JSON.stringify(val));
+    console.log(val);
    
-
+   var value =  this.loaclaStoarage.GetData(this.loaclaStoarage.catogorykey);
+   console.log(value);
   
 
   }

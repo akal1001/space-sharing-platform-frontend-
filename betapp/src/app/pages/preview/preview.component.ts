@@ -70,20 +70,22 @@ export class PreviewComponent implements OnInit {
 
     let detailLists = this.storage.GetData(this.storage.listforpostkey);
     let images = this.storage.GetData(this.storage.filetoken);
+    let catagory = this.storage.GetData(this.storage.catogorykey)
     let obj = {
       usertoken: this.storage.GetData(this.storage.usertoken).usertoken,
-      catagory:this.result.catagory,
-      Header: this.result.Header,
+      catagory:catagory,
+      header: this.result.header,
       Description: this.result.Description,
       phone: this.result.phone,
       price: this.result.price,
       State: this.result.State,
       city: this.result.city,
       zipCode: this.result.zipCode,
+      street:this.result.street,
       detailLists:detailLists,
       Images: images
     }
-   
+    
     this.houseService.PostHouseServiceTest(obj).subscribe((response) => {
       this.uploadresponse = response
     })

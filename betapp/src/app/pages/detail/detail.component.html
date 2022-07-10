@@ -20,9 +20,12 @@
     </div>
   </div>
   <div class="col-12 col-md-4 col-lg-6">
-    <h2 style="font-weight:bolder">{{house?.houseRoomeType}}</h2>
+    
+    <h2 style="font-weight:bolder">{{house?.catagory}}</h2>
+    
+    <h2 style="color: green;"> {{house?.price|currency}}</h2>
     <p>
-     
+      <span style="font-weight:bolder">{{house?.header}}</span><br>
       {{house.description}}
 
 
@@ -37,8 +40,9 @@
 </ul>  
     <p style="font-weight:600">
 
-      {{house.address.city}} {{house.address.state}} {{house.address.zipCode}}
+      {{house.address.city}} {{house.address.state}} {{house.address.zipCode}} <br>
 
+ {{house.address.street}}
     </p>
     <p>
 

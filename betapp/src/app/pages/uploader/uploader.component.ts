@@ -44,7 +44,7 @@ export class UploaderComponent implements OnInit {
     if (myobj != null) {
 
       this.house.houseid = myobj.houseid;
-      this.house.HouseRoomeType = myobj.HouseRoomeType;
+      this.house.header = myobj.header;
       this.house.Description = myobj.Description;
       this.house.price = myobj.price;
       this.house.phone = myobj.phone;

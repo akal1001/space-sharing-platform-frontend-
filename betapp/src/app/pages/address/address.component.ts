@@ -32,6 +32,7 @@ export class AddressComponent implements OnInit {
       this.address.city = myobj.city;
       this.address.State = myobj.State;
       this.address.zipCode = myobj.zipCode;
+      this.address.street = myobj.street;
     }
   }
   continue() {

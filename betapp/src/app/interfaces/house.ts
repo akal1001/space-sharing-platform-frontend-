@@ -7,8 +7,9 @@ export class House {
 
   public houseid?: any;
   public userId?: any;
-  public HouseRoomeType?: any;
+  public header?: any;
   public Description?: any;
+  public catagory?:any;
 
   public price?: any;
   public city?: any;
