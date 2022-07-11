@@ -5,7 +5,7 @@
     </div>
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6 col-xl-6">
 
-          <h4>{{result.HouseRoomeType}}</h4>
+        
           <div class="imgcontainer">
 
                <ng-image-slider [images]="imageObject" #nav>
@@ -13,16 +13,22 @@
             </ng-image-slider>
 
           </div>
-
+        
+          <h2 style="color: green;"> {{house?.price|currency}}</h2>
+          <h2>{{result.header}}</h2>
           <p>
-              {{result.price}} <br>
-
+            
               {{result.Description}}
 
           </p>
+          <ul *ngFor="let d of house.descriptionlists">
+            <li>{{d.description}}</li>
+           
+          </ul>  
           <p style="font-weight:600">
 
-            {{result.city}} {{result.state}} {{result.zipCode}}
+            {{result.city}} {{result.state}} {{result.zipCode}} <br>
+            {{result.street}}
 
           </p>
           <p>
