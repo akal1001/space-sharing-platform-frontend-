@@ -8,7 +8,7 @@
     </div>
     <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6" style=" font-stretch: extra-expanded;font-size: large;">
         <h2 style="font-weight:bold;">
-            choose what do you want post
+            መለተፍ ዮመፈሊጊትን ዪምርት
         </h2>
 
 
@@ -18,14 +18,15 @@
 
 
 
-            <section *ngFor="let item of lists">
+            <section *ngFor="let item of catagorylists">
+
 
 
                 <!-- <mat-checkbox  name={{item.id}} [checked]="false" (change)="checkCheckBoxvalue($event, item.id)">{{item.description}}</mat-checkbox>
    -->
                 <mat-radio-group color="primary" aria-label="Select an option"
-                    (change)="checkRadioBoxvalue(item.value)" name="Sort">
-                    <mat-radio-button  name={{item.key}} value={{item.value}}>{{item.value}}</mat-radio-button> <br>
+                    (change)="checkRadioBoxvalue(item.catagoryId, item._Catagory)" name="Sort">
+                    <mat-radio-button  name={{item.catagoryId}} value={{item._Catagory}}>{{item._Catagory}}</mat-radio-button> <br>
 
 
                 </mat-radio-group>

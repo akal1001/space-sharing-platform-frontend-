@@ -70,10 +70,13 @@ export class PreviewComponent implements OnInit {
 
     let detailLists = this.storage.GetData(this.storage.listforpostkey);
     let images = this.storage.GetData(this.storage.filetoken);
-    let catagory = this.storage.GetData(this.storage.catogorykey)
+    let val = this.storage.GetData(this.storage.catogorykey)
+
+  
     let obj = {
       usertoken: this.storage.GetData(this.storage.usertoken).usertoken,
-      catagory:catagory,
+      catagory:val.catagory,
+      catagoryReferenceId:val.catagoryrefereceId,
       header: this.result.header,
       Description: this.result.Description,
       phone: this.result.phone,

@@ -23,7 +23,7 @@
     
     <h2>Catagory</h2>
     <div *ngFor="let v of catagorylists">
-      <mat-checkbox name={{v}} [checked]="false" (change)="checkCheckBoxvalue($event,v)">{{v}}</mat-checkbox>
+      <mat-checkbox name={{v.catagoryId}} [checked]="false" (change)="checkCheckBoxvalue($event,v.catagoryId, v._Catagory)">{{v._Catagory}}</mat-checkbox>
 
     </div>
     <!-- <mat-checkbox  name={{item.id}} [checked]="false" (change)="checkCheckBoxvalue($event, item.id)">{{item.description}}</mat-checkbox> -->

@@ -108,12 +108,15 @@ export class HomeComponent implements OnInit {
   }
 
   checkedvalue: any;
-  checkCheckBoxvalue(event: any, val: any) {
-    console.log(event.checked);
+  checkCheckBoxvalue(event: any, id:any, value:any) {
+ 
+    let list:any = 
+    console.log(event);
 
 
     if (event.checked == true) {
-      this.checkedvalue =  val;
+      this.checkedvalue =  id;
+      
       this.choosedLists.push(this.checkedvalue);
 
       for (var i = 0; i < this.choosedLists.lenght; i++) {
@@ -121,7 +124,7 @@ export class HomeComponent implements OnInit {
       }
     }
     if (event.checked == false) {
-      this.choosedLists.pop(val)
+      this.choosedLists.pop(id)
     }
 
   }

@@ -10,43 +10,44 @@ import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
 })
 export class CatagoryComponent implements OnInit {
 
-  descList:any;
+  descList: any;
   choosedLists: any = new Array();
-  constructor(private router: Router, private houseService:HomeService, private loaclaStoarage: LoaclstoarageService) { }
+  catagorylists:any;
+  constructor(private router: Router, private houseService: HomeService, private loaclaStoarage: LoaclstoarageService) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.GetDesc();
+    this.GetCatagoryList();
   }
   continue() {
-   // this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey, JSON.stringify(this.choosedLists));
+    // this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey, JSON.stringify(this.choosedLists));
     this.router.navigateByUrl('/upload');
   }
- 
-  lists: any = [
-    { key: '1', value: 'የሚከርይ ክፊለ' },
-    { key: '2', value: 'የሚከራይ ሙሉ ባት' },
-    { key: '3', value: 'ሽቲ ባት' },
-    { key: '5', value: 'ሚከርይ ክፊለ' },
-    { key: '6', value: 'የይ ሙሉ ባት' },
-    { key: '7', value: 'ት' },
-  ];
- 
-  checkRadioBoxvalue(val: any) {
-  
-    this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey,JSON.stringify(val));
-    console.log(val);
-   
-   var value =  this.loaclaStoarage.GetData(this.loaclaStoarage.catogorykey);
-   console.log(value);
-  
+
+
+  GetCatagoryList()
+  {
+     this.houseService.getCatagories().subscribe((list)=>{
+    this.catagorylists = list;
+
+     })
+  }
+
+  checkRadioBoxvalue(key: any, val: any) {
+    let obj = { catagoryrefereceId: key, catagory: val };
+
+    this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey, JSON.stringify(obj));
+
+    // var value = this.loaclaStoarage.GetData(this.loaclaStoarage.catogorykey);
+    // alert(value.catagoryrefereceId + " " + value.catagory)
+
 
   }
 
-  GetDesc()
-  {
-     this.houseService.getDescriptionList().subscribe((response)=>{
+  GetDesc() {
+    this.houseService.getDescriptionList().subscribe((response) => {
       this.descList = response;
-     })
+    })
   }
 
 }
