@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
 
   smapleData: any = []
   message: any;
-  catagorylists:any;
+  catagorylists: any;
 
   ngOnInit(): void {
     this.sampleData = this.storage.GetData(this.storage.tempdataIds);
@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
 
   sampleData: any = [];
   idlist: any = new Array();
- 
+
 
 
 
@@ -99,33 +99,41 @@ export class HomeComponent implements OnInit {
 
   }
 
-  GetCatagoryList()
-  {
-     this.dataservice.getCatagories().subscribe((list)=>{
-    this.catagorylists = list;
+  GetCatagoryList() {
+    this.dataservice.getCatagories().subscribe((list) => {
+      this.catagorylists = list;
 
-     })
+    })
   }
 
   checkedvalue: any;
-  checkCheckBoxvalue(event: any, id:any, value:any) {
- 
-    let list:any = 
+  checkCheckBoxvalue(event: any, catagoryrefereceId: any, value: any) {
+
     console.log(event);
-
-
     if (event.checked == true) {
-      this.checkedvalue =  id;
-      
+      this.checkedvalue = catagoryrefereceId;
+
       this.choosedLists.push(this.checkedvalue);
 
-      for (var i = 0; i < this.choosedLists.lenght; i++) {
-        console.log(this.choosedLists[i])
+      for (var i = 0; i < this.choosedLists.length; i++) {
+        console.log("checked catagory list " + this.choosedLists[i])
       }
     }
     if (event.checked == false) {
-      this.choosedLists.pop(id)
+      this.choosedLists.pop(catagoryrefereceId)
     }
+    
+    this.dataservice.GetHouseByCatagory(this.choosedLists).subscribe((resposne)=>
+    {
+
+     
+      if(resposne.length > 0)
+      {
+        this.data = resposne;
+      }
+     
+      // console.log(JSON.stringify(resposne))
+    })
 
   }
 }

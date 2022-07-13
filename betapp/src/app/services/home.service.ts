@@ -15,12 +15,11 @@ export class HomeService {
   getData(): Observable<any> {
     return this._httpClient.get(this._baseUploadUrl + 'getallhouses')
   }
-  getDataWithOption(val:any): Observable<any> {
-    return this._httpClient.get(this._baseUploadUrl + 'getallhouses?sortOptions='+ val)
+  getDataWithOption(val: any): Observable<any> {
+    return this._httpClient.get(this._baseUploadUrl + 'getallhouses?sortOptions=' + val)
   }
-  getCatagories():Observable<any>
-  {
-    return this._httpClient.get(this._baseUploadUrl +'Catagories' )
+  getCatagories(): Observable<any> {
+    return this._httpClient.get(this._baseUploadUrl + 'Catagories')
   }
   //return all house
   GetAllHouseService(): Observable<House> {
@@ -79,19 +78,26 @@ export class HomeService {
     return this._httpClient.post<boolean>(this._baseUploadUrl + endpoint, "")
   }
 
-  GetHouseImages(id: any):Observable<any> {
+  GetHouseImages(id: any): Observable<any> {
     let endpoint = "houseimages?refid=" + id;
     return this._httpClient.get<any>(this._baseUploadUrl + endpoint)
   }
-  GetPublickeySevice():Observable<any>
-  {
-   
-     return this._httpClient.get<any>(this._baseUploadUrl + 'PublicKey');
+  GetPublickeySevice(): Observable<any> {
+
+    return this._httpClient.get<any>(this._baseUploadUrl + 'PublicKey');
   }
 
   //lsit
   getDescriptionList(): Observable<any> {
     return this._httpClient.get(this._baseUploadUrl + 'descriptionlists')
+  }
+
+  //get house by catagories
+  GetHouseByCatagory(val: any): Observable<any> {
+    // alert(JSON.stringify(val))
+    // var x = JSON.stringify(val);
+    let endpoint = 'gethousebycataogries?values=' + val;
+    return this._httpClient.get(this._baseUploadUrl + endpoint);
   }
 }
 
