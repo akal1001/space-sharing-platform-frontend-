@@ -21,20 +21,19 @@
 
  
     
-    <h2>Catagory</h2>
-    <div *ngFor="let v of catagorylists">
+    <h2>ምድብ</h2>
+    <div *ngFor="let v of catagorylists" style="margin:0">
       <mat-checkbox name={{v.catagoryId}} [checked]="false" (change)="checkCheckBoxvalue($event,v.catagoryId, v._Catagory)">{{v._Catagory}}</mat-checkbox>
 
     </div>
     <!-- <mat-checkbox  name={{item.id}} [checked]="false" (change)="checkCheckBoxvalue($event, item.id)">{{item.description}}</mat-checkbox> -->
    <hr>
-   <h2>Sort</h2>
+   <h2>መደርደር</h2>
    <mat-radio-group color="primary" aria-label="Select an option" (change)="onChange($event)" name="Sort">
-    <mat-radio-button value="newer">Default</mat-radio-button><br>
-   <mat-radio-button value="lower">lower to higher price</mat-radio-button>
-   <mat-radio-button value="higher">higher to lower price</mat-radio-button>
-  
-   <mat-radio-button value="older">older to newer post</mat-radio-button>
+    <!-- <mat-radio-button value="newer">ነባሪ</mat-radio-button><br> -->
+   <mat-radio-button value="lower">ከዝቅተኛ ወደ ከፍተኛ ዋጋ</mat-radio-button> <br>
+   <mat-radio-button value="higher">ከከፍተኛ ወደ ዝቅተኛ ዋጋ</mat-radio-button><br>
+     <mat-radio-button value="older">ከአሮጌ ወደ አዲስ ልጥፍ</mat-radio-button>
 
  </mat-radio-group>
   

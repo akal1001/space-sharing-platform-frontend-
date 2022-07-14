@@ -21,6 +21,11 @@ export class HomeService {
   getCatagories(): Observable<any> {
     return this._httpClient.get(this._baseUploadUrl + 'Catagories')
   }
+
+  getCatagoriesForHome(): Observable<any> {
+    return this._httpClient.get(this._baseUploadUrl + 'Catagoriesforhome')
+  }
+  
   //return all house
   GetAllHouseService(): Observable<House> {
     return this._httpClient.get<House>(this._baseUploadUrl);

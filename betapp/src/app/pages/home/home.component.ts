@@ -26,6 +26,13 @@ export class HomeComponent implements OnInit {
   catagorylists: any;
 
   ngOnInit(): void {
+   
+    this.onpageload();
+    //this.searchinputFromparent
+  }
+
+  onpageload()
+  {
     this.sampleData = this.storage.GetData(this.storage.tempdataIds);
 
     var value = this.storage.GetData(this.storage.DefaultHomeData);
@@ -45,7 +52,6 @@ export class HomeComponent implements OnInit {
     this.message = this.inputFromParent;
 
     this.GetCatagoryList();
-    //this.searchinputFromparent
   }
 
   selectedPriceValue: any;
@@ -100,11 +106,12 @@ export class HomeComponent implements OnInit {
   }
 
   GetCatagoryList() {
-    this.dataservice.getCatagories().subscribe((list) => {
+    this.dataservice.getCatagoriesForHome().subscribe((list) => {
       this.catagorylists = list;
 
     })
   }
+
 
   checkedvalue: any;
   checkCheckBoxvalue(event: any, catagoryrefereceId: any, value: any) {
@@ -122,18 +129,25 @@ export class HomeComponent implements OnInit {
     if (event.checked == false) {
       this.choosedLists.pop(catagoryrefereceId)
     }
-    
-    this.dataservice.GetHouseByCatagory(this.choosedLists).subscribe((resposne)=>
+
+   
+    if(this.choosedLists.length > 0)
     {
+      this.dataservice.GetHouseByCatagory(this.choosedLists).subscribe((resposne) => {
 
-     
-      if(resposne.length > 0)
-      {
-        this.data = resposne;
-      }
-     
-      // console.log(JSON.stringify(resposne))
-    })
 
+        if (resposne.length > 0) {
+          this.data = resposne;
+        }
+  
+        // console.log(JSON.stringify(resposne))
+      })
+  
+    }
+    if(this.choosedLists.length == 0)
+    {
+        this.onpageload();
+    }
+   
   }
 }

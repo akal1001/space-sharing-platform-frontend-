@@ -49,8 +49,13 @@ p{
   margin-bottom: 0% !important;
 }
 mat-radio-group{
-  font-variant-caps: all-petite-caps;
+  /* font-variant-caps: all-petite-caps;
+  margin-bottom: 0%;
+  margin-top: 0%; */
+
+  /* border: 1px solid red; */
 }
+
 .btnContinue{
   background-color: green;
 }
@@ -58,5 +63,7 @@ h2{
   text-transform: capitalize;
   margin-bottom: 0%;
   margin-top: 0%;
- 
+  font-weight: bold;
+  /* border: 1px solid red; */
+
 }
