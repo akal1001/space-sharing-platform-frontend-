@@ -9,10 +9,12 @@ import { environment } from 'src/environments/environment.prod';
 export class SearchService {
 
   private _baseUploadUrl = environment.baseurl + "search/"
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
+
+  d: any = [{ "name": "John", "age": 30, "car": null }];
 
 
-  SearchServe(input:any): Observable<any> {
+  SearchServe(input: any): Observable<any> {
 
 
     let result = this.httpClient.get<any>(this._baseUploadUrl + "search", {
@@ -23,4 +25,6 @@ export class SearchService {
 
     return result;
   }
+
+
 }

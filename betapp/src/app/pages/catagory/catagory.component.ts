@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatRadioButton, MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { HomeService } from 'src/app/services/home.service';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
@@ -12,7 +13,7 @@ export class CatagoryComponent implements OnInit {
 
   descList: any;
   choosedLists: any = new Array();
-  catagorylists:any;
+  catagorylists: any;
   constructor(private router: Router, private houseService: HomeService, private loaclaStoarage: LoaclstoarageService) { }
 
   ngOnInit(): void {
@@ -20,20 +21,45 @@ export class CatagoryComponent implements OnInit {
     this.GetCatagoryList();
   }
   continue() {
-    // this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey, JSON.stringify(this.choosedLists));
-    this.router.navigateByUrl('/upload');
+    
+
+    if(this.checkedValue == undefined|| null)
+    {
+       alert("እባክዎን ከላይ ካለው ዝርዝር ውስጥ አስቀድመው ይምረጡ")
+    }
+    else
+    {
+      this.router.navigateByUrl('/upload');
+    }
+  
   }
 
+  enableandDisableButtons() {
+    // const input = document.getElementById('submit') as HTMLInputElement | null;
 
-  GetCatagoryList()
-  {
-     this.houseService.getCatagories().subscribe((list)=>{
-    this.catagorylists = list;
 
-     })
+    // // ✅ Set disabled attribute
+    // input?.setAttribute('disabled', '');
+
+
+    // ✅ Remove disabled attribute
+    // input?.removeAttribute('disabled')
+
   }
 
-  checkRadioBoxvalue(key: any, val: any) {
+  GetCatagoryList() {
+    this.houseService.getCatagories().subscribe((list) => {
+      this.catagorylists = list;
+
+    })
+  }
+
+  checkedValue:any;
+  checkRadioBoxvalue(mrChange: MatRadioChange, key: any, val: any) {
+    let mrButton: MatRadioButton = mrChange.source;
+    this.checkedValue = mrButton.value;
+   
+
     let obj = { catagoryrefereceId: key, catagory: val };
 
     this.loaclaStoarage.SetData(this.loaclaStoarage.catogorykey, JSON.stringify(obj));

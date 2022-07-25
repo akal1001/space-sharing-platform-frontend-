@@ -112,7 +112,13 @@ export class FileuploaderComponent implements OnInit {
     return result;
   }
   continue() {
-    this.router.navigateByUrl("/preview")
+    if(this.imageArray.length > 0)
+    {
+      this.router.navigateByUrl("/preview")
+    }
+    else{
+      alert("add image");
+    }
   }
 
 

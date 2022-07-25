@@ -104,5 +104,7 @@ export class HomeService {
     let endpoint = 'gethousebycataogries?values=' + val;
     return this._httpClient.get(this._baseUploadUrl + endpoint);
   }
+
+ 
 }
 

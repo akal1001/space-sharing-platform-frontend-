@@ -7,9 +7,17 @@
   </div>
   <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6" style=" font-stretch: extra-expanded;font-size: large;">
     <h2 style="font-weight:bold;">
-      Selcet any of those
+      {{header}}
     </h2>
 
+    <div *ngIf="isShown">
+      <label>ስንት መኝታ ቤት አለው</label>
+      <input type="text">
+      <label>ስንት መታጠቢያ ቤት አለው</label>
+      <input type="text">
+      <label> ስፋት (ስንት በስንት)</label>
+      <input type="text">
+    </div>
 
 
 
@@ -19,9 +27,16 @@
 
       <section *ngFor="let item of descList">
 
-        <mat-checkbox  name={{item.id}} [checked]="false" (change)="checkCheckBoxvalue($event, item.id)">{{item.description}}</mat-checkbox>
+        <mat-checkbox name={{item.id}} [checked]="false" (change)="checkCheckBoxvalue($event, item.id)">
+          {{item.description}}</mat-checkbox>
 
       </section>
+      <br>
+      <label for="description"><b>ተጭማሪ መረጃ (Description)</b></label>
+      <textarea placeholder="description ..." style="background-color: white;" type="text" name='description' rows="4"
+        cols="50">
+
+             </textarea> <br>
 
 
 

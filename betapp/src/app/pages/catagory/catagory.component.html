@@ -25,8 +25,9 @@
                 <!-- <mat-checkbox  name={{item.id}} [checked]="false" (change)="checkCheckBoxvalue($event, item.id)">{{item.description}}</mat-checkbox>
    -->
                 <mat-radio-group color="primary" aria-label="Select an option"
-                    (change)="checkRadioBoxvalue(item.catagoryId, item._Catagory)" name="Sort">
-                    <mat-radio-button  name={{item.catagoryId}} value={{item._Catagory}}>{{item._Catagory}}</mat-radio-button> <br>
+                    (change)="checkRadioBoxvalue($event,item.catagoryId, item._Catagory)" name="Sort">
+                    <mat-radio-button name={{item.catagoryId}} value={{item._Catagory}}>{{item._Catagory}}
+                    </mat-radio-button> <br>
 
 
                 </mat-radio-group>
@@ -50,7 +51,7 @@
 
     </div>
     <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6">
-      <button mat-button class="btnContinue" (click)="continue()">contineue..</button>
+        <button mat-button id="submit" class="btnContinue" (click)="continue()">contineue..</button>
     </div>
 </div>
 

@@ -118,10 +118,21 @@ export class AppComponent {
     // {
     //   this.sidenav.open();
     // }
-     window.scroll(0,0)
-    this.userselectedvalue = null;
-    this.inputFromParent = null;
-    this.router.navigateByUrl("/home")
+
+
+    if (this.router.url == "/home") {
+      window.location.reload();
+
+    }
+    else {
+      window.scroll(0, 0)
+      this.userselectedvalue = null;
+      this.inputFromParent = null;
+      //window.location.reload();
+      this.router.navigateByUrl("/home")
+    }
+
+
 
   }
   account() {
@@ -197,19 +208,39 @@ export class AppComponent {
 
   selectdvalue(id: any, city: any, state: any) {
 
-     document.getElementById("txtS")?.blur();//to loss foucs so in small deveice soft kybord will hide
-    this.homseService.GetHouseService(id).subscribe((resposne: any) =>
-    {
-     
+    document.getElementById("txtS")?.blur();//to loss foucs so in small deveice soft kybord will hide
+    this.homseService.GetHouseService(id).subscribe((resposne: any) => {
+
       this.storage.SetData(this.storage.SearchedSelectValueDatakey, JSON.stringify(resposne));
-     // this.router.navigateByUrl("/child")
+      // this.router.navigateByUrl("/child")
 
     })
 
 
 
   }
+  BindWord(val: any) {
+    return val;
+  }
+
+  headerString = "ViewHouse mobile phones";
+
+  userSearchinput_Test() {
+    var newword = "";
+    var userkeyworkd = this.searchinput;
+    for (var i = 0; i < this.searchinput.length; i++) {
+      newword = newword + this.headerString[i];
+    }
+
+    console.log("new workd " + newword);
+    if (newword == userkeyworkd) {
+      console.log("search found ")
+    }
+  }
+
   userSearchinput() {
+
+
 
     console.log(this.router.url)
 
@@ -221,11 +252,7 @@ export class AppComponent {
       console.log(JSON.stringify(result))
       console.log(this.searchinput)
       this.serarchResult = result;
-
       this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
-
-
-
     })
     this.inputFromParent = this.searchinput;
 

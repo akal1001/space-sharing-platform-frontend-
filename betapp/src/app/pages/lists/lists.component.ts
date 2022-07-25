@@ -28,7 +28,7 @@ export class ListsComponent implements OnInit {
   }
   continue() {
     this.loaclaStoarage.SetData(this.loaclaStoarage.listforpostkey, JSON.stringify(this.choosedLists));
-    this.router.navigateByUrl('/fileuploader');
+    this.router.navigateByUrl('/upload');
   }
   allComplete: boolean = false;
   lists: any = [
@@ -54,12 +54,26 @@ export class ListsComponent implements OnInit {
     }
 
   }
-
+  header:any;
+  isShown: boolean = false ;
   GetDesc()
   {
-     this.houseService.getDescriptionList().subscribe((response)=>{
-      this.descList = response;
-     })
+   
+    let val = this.loaclaStoarage.GetData(this.loaclaStoarage.catogorykey);
+   
+    if(val.catagoryrefereceId == 'idone')
+    {
+        this.isShown = true; 
+    }
+    else
+    {
+     
+      this.houseService.getDescriptionList().subscribe((response)=>{
+        this.header = "ያለውን ይምረጡ";
+        this.descList = response;
+       })
+    }
+     
   }
 
 }

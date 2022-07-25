@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { House } from 'src/app/interfaces/house';
 import { HomeService } from 'src/app/services/home.service';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
+import { ValidatorService } from 'src/app/services/validator.service';
 
 @Component({
   selector: 'app-uploader',
@@ -11,31 +13,29 @@ import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
 })
 export class UploaderComponent implements OnInit {
   public house: House = new House();
-  constructor(private router: Router, private houseService: HomeService, private loaclaStorage: LoaclstoarageService) { }
-  public loc:any;
+  constructor(private router: Router, private validator: ValidatorService, private houseService: HomeService, private loaclaStorage: LoaclstoarageService) { }
+  public loc: any;
   public housedata: any;
   ngOnInit(): void {
     var reselt = this.loaclaStorage.GetData(this.loaclaStorage.usertoken);
-  
-    if(reselt == null || reselt == undefined)
-    {
-       this.router.navigateByUrl("/login")
+
+    if (reselt == null || reselt == undefined) {
+      this.router.navigateByUrl("/login")
     }
     this.onback();
     {
-       navigator.geolocation.getCurrentPosition((response)=>
-       {
-        let al =   response.coords.altitude
-        let lat= response.coords.latitude;
+      navigator.geolocation.getCurrentPosition((response) => {
+        let al = response.coords.altitude
+        let lat = response.coords.latitude;
         let lon = response.coords.longitude;
-         
-        console.log("alt : " + al + "lat ; " + lat  + " long " + lon);
 
-        this.loc = "altitude :  " + al + " lat : "+ lat + lon + " long " + lon;
-        
+        console.log("alt : " + al + "lat ; " + lat + " long " + lon);
 
-       });
-       
+        this.loc = "altitude :  " + al + " lat : " + lat + lon + " long " + lon;
+
+
+      });
+
     }
   }
 
@@ -51,15 +51,23 @@ export class UploaderComponent implements OnInit {
     }
 
   }
-  contineu() {
-    if (this.house != null) {
-      this.house.houseid = this.makeid(10);
-      this.housedata = this.house;
 
-      // alert(JSON.stringify(this.housedata));
+  contineu() {
+
+    if (this.validator.IsVaNotlEmpty(this.house.header) == true && this.validator.IsVaNotlEmpty(this.house.Description) == true && this.validator.IsVaNotlEmpty(this.house.price) == true && this.validator.IsVaNotlEmpty(this.house.phone) == true) {
+
+      if (this.house != null) {
+        this.house.houseid = this.makeid(10);
+        this.housedata = this.house;
+      }
+      this.loaclaStorage.SetData(this.loaclaStorage.houseforPostkey, JSON.stringify(this.housedata))
+      this.router.navigateByUrl("/address");
     }
-    this.loaclaStorage.SetData(this.loaclaStorage.houseforPostkey, JSON.stringify(this.housedata))
-    this.router.navigateByUrl("/address");
+    else
+    {
+        alert("All field required!")
+    }
+
   }
   //create random id
   makeid(length: number) {
@@ -73,11 +81,10 @@ export class UploaderComponent implements OnInit {
     return result;
   }
 
-  formatString(val:any)
-  {
-      var len = val.length;
+  formatString(val: any) {
+    var len = val.length;
     //  if(len > )
   }
- 
+
 
 }

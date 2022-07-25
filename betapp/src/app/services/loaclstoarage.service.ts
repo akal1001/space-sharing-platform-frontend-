@@ -22,19 +22,22 @@ export class LoaclstoarageService {
 
   SearchedDatakey = "XS16O7Y2DG49M9HA5U8WO6XOOXS16O7Y2DG49MKTUJ0X9P";
 
-  SearchedSelectValueDatakey = "M9HA5U8WO6XOOXS16O7Y2DG49MKTUQWI7Y2DG49";
+  SearchedSelectValueDatakey = "M9HA5U8WO66O7Y2DG49MKTUQWI7Y2DG49";
   catogorykey = "catM9HA5U8WO6XOOXS16O7Y2DPRMYQUWLOTL6XOOUJ0X9PXS16O7Y2DG49";
 
   catagoryListKey = "catagoryListKeycatM9HA5U8WO6XOOXS16O7Y2DPRMYQUWLOTL6XOOUJ0X9PXS16O7Y2DG49"
+  KEYPRIVATEPUBLICADDRESS = "Y2DPRMYQUWLOTL6XOOUJ0X9PXS16O9080987Y2D"
   SetData(key:string, val:string)
   {
      Storage.setItem(key,val)
   }
   GetData(key:string)
   {
+
+
      var data = Storage.getItem(key);
 
-
+  
      if(data !== null)
      {
         return JSON.parse(data);

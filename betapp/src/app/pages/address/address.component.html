@@ -4,28 +4,39 @@
 
 
     <div class="row" style="height: 600px;">
+     
         <div  class="col-sm-12 col-md-2 col-lg-3 col-xl-3" >
 
 
-
+        
 
         </div>
         <div  class="col-sm-12 col-md-8 col-lg-6 col-xl-6">
-                    <label for="city"><b>City</b></label>
+          <h2>አካባቢ</h2>
+                    <label for="city"><b>ከተማ</b></label>
                     <input type="text" placeholder="city.."   [(ngModel)]='address.city'
                     name= "city" required>
 
-                    <label for="city"><b>State</b></label>
+                    <label for="city"><b>ግዛት</b></label>
                     <input type="text" placeholder="State" [(ngModel)]='address.State' name="State"  required>
 
-                    <label for="zipCode"><b>zip code</b></label>
+                    <label for="zipCode"><b>አካባቢያዊ መለያ ቁጥር</b></label>
                     <input type="text" placeholder="zipCode"name='zipCode' [(ngModel)]='address.zipCode' required>
 
-                    <label for="street"><b>Street address or area</b></label>
+                    <fieldset style="border: 1px solid lightgray;padding: 2%;">
+                      
+                    <label for="street"><b>የመንገድ አድራሻ ወይም አካባቢ</b></label>
                     <input type="text" placeholder="street address or area"name='street' [(ngModel)]='address.street' required>
+                    <mat-radio-group color="primary" aria-label="Select an option" (change)="onChange($event)" name="Sort">
+                      <!-- <mat-radio-button value="newer">ነባሪ</mat-radio-button><br> -->
+                  
+                     <mat-radio-button  style="margin-right: 2%;" value="public">Public</mat-radio-button>
+                      
+                     <mat-radio-button value="private">Private</mat-radio-button> 
+                   </mat-radio-group>
+                    </fieldset>
 
-
-
+                   
                     <!-- <label for="contact"><b>contact</b></label>
                     <input type="text" placeholder="contact .."name='contact' [(ngModel)]='address.phone' required>
              -->

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { Address } from 'src/app/interfaces/address';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
+import { ValidatorService } from 'src/app/services/validator.service';
 
 @Component({
   selector: 'app-address',
@@ -10,22 +12,21 @@ import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
 })
 export class AddressComponent implements OnInit {
 
-  constructor(private router:Router, private storage:LoaclstoarageService) { }
+  constructor(private router: Router, private storage: LoaclstoarageService, private validator: ValidatorService) { }
 
-  address:Address = new Address();
-  addressdata:any;
+  address: Address = new Address();
+  addressdata: any;
+  IsRadioButtonChedked: any;
   ngOnInit(): void {
     var reselt = this.storage.GetData(this.storage.usertoken);
 
-    if(reselt == null || reselt == undefined)
-    {
-       this.router.navigateByUrl("/login")
+    if (reselt == null || reselt == undefined) {
+      this.router.navigateByUrl("/login")
     }
 
     this.onback();
   }
-  onback()
-  {
+  onback() {
     let myobj = this.storage.GetData(this.storage.addressforpostKey)
     if (myobj != null) {
 
@@ -36,13 +37,26 @@ export class AddressComponent implements OnInit {
     }
   }
   continue() {
-
-
-    if (this.address != null) {
-      this.addressdata = this.address;
+    if (this.validator.IsVaNotlEmpty(this.address.city) == true &&
+      this.validator.IsVaNotlEmpty(this.address.State) == true &&
+      this.validator.IsVaNotlEmpty(this.address.zipCode) == true &&
+      this.validator.IsVaNotlEmpty(this.address.street) == true) 
+      {
+      
+        if(this.IsRadioButtonChedked == true)
+        {
+          this.storage.SetData(this.storage.addressforpostKey, JSON.stringify(this.address));
+          this.router.navigateByUrl("/fileuploader")
+        }
+        else{
+          alert("checked radion button")
+        }
+         
     }
-    this.storage.SetData(this.storage.addressforpostKey, JSON.stringify(this.addressdata));
-    this.router.navigateByUrl("/list")
+    else {
+      alert("all field required")
+    }
+
 
 
 
@@ -63,5 +77,11 @@ export class AddressComponent implements OnInit {
     //   }
     //})
 
+  }
+
+  onChange(val: MatRadioChange) {
+    this.IsRadioButtonChedked = val.source.checked;
+    console.log(val.source.checked);
+    this.storage.SetData(this.storage.KEYPRIVATEPUBLICADDRESS, val.value)
   }
 }
