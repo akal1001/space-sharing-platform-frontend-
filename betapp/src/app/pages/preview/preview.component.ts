@@ -16,7 +16,7 @@ export class PreviewComponent implements OnInit {
   result: any = {};
   uploadresponse: any;
   imageObject: any = new Array();
-  constructor( private rsaservice: RsaService, private storage: LoaclstoarageService, private router: Router, private houseService: HomeService, private loaclaStorage: LoaclstoarageService) { }
+  constructor(private rsaservice: RsaService, private storage: LoaclstoarageService, private router: Router, private houseService: HomeService, private loaclaStorage: LoaclstoarageService) { }
 
   ngOnInit(): void {
     var reselt = this.loaclaStorage.GetData(this.loaclaStorage.usertoken);
@@ -71,12 +71,13 @@ export class PreviewComponent implements OnInit {
     let detailLists = this.storage.GetData(this.storage.listforpostkey);
     let images = this.storage.GetData(this.storage.filetoken);
     let val = this.storage.GetData(this.storage.catogorykey)
+    let addressPublicOrPrivate = this.storage.GetData(this.storage.KEYPRIVATEPUBLICADDRESS);
 
-  
+    alert(addressPublicOrPrivate)
     let obj = {
       usertoken: this.storage.GetData(this.storage.usertoken).usertoken,
-      catagory:val.catagory,
-      catagoryReferenceId:val.catagoryrefereceId,
+      catagory: val.catagory,
+      catagoryReferenceId: val.catagoryrefereceId,
       header: this.result.header,
       Description: this.result.Description,
       phone: this.result.phone,
@@ -84,11 +85,12 @@ export class PreviewComponent implements OnInit {
       State: this.result.State,
       city: this.result.city,
       zipCode: this.result.zipCode,
-      street:this.result.street,
-      detailLists:detailLists,
-      Images: images
+      street: this.result.street,
+      detailLists: detailLists,
+      Images: images,
+      IsAddressPublic: addressPublicOrPrivate,
     }
-    
+
     this.houseService.PostHouseServiceTest(obj).subscribe((response) => {
       this.uploadresponse = response
     })

@@ -28,11 +28,11 @@
             <label for="price"><b>Asking price</b></label> <br>
 
           
-            <input type="text" placeholder="Asking price.." [(ngModel)]='house.price' name="price" required>
+            <input class="numberinput" type="number" placeholder="Asking price..$" [(ngModel)]='house.price' name="price" required>
             <br> 
 
 
-
+          <br>
 
             <label for="contact"><b>contact</b></label>
             <input type="text" placeholder="contact .." name='contact' [(ngModel)]='house.phone' required>

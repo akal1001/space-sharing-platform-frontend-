@@ -82,6 +82,6 @@ export class AddressComponent implements OnInit {
   onChange(val: MatRadioChange) {
     this.IsRadioButtonChedked = val.source.checked;
     console.log(val.source.checked);
-    this.storage.SetData(this.storage.KEYPRIVATEPUBLICADDRESS, val.value)
+    this.storage.SetData(this.storage.KEYPRIVATEPUBLICADDRESS, JSON.stringify(val.value))
   }
 }
