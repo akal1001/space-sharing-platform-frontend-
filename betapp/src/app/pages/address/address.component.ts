@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { Address } from 'src/app/interfaces/address';
+import { MyAlert } from 'src/app/interfaces/MyAlert';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
 import { ValidatorService } from 'src/app/services/validator.service';
 
@@ -17,6 +18,7 @@ export class AddressComponent implements OnInit {
   address: Address = new Address();
   addressdata: any;
   IsRadioButtonChedked: any;
+  public myalert:MyAlert={message:""};
   ngOnInit(): void {
     var reselt = this.storage.GetData(this.storage.usertoken);
 
@@ -49,12 +51,15 @@ export class AddressComponent implements OnInit {
           this.router.navigateByUrl("/fileuploader")
         }
         else{
-          alert("checked radion button")
+
+          this.myalert.message = "radio button not checked!";
+         
         }
          
     }
     else {
-      alert("all field required")
+      this.myalert.message = "all field required";
+ 
     }
 
 

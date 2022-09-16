@@ -5,11 +5,12 @@
   <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3 col-xl-3">
 
   </div>
+
   <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6 col-xl-6">
 
         <form action="/">
           <div class="">
-            <label for="email"><b>header</b></label>
+            <label for="email" ><h2>{{house.header}}</h2></label> <br>
             
             <!-- <select style="height: 50px; width: 100%; border: 1px solid lightgray;margin-top: 2%;" name='postType'
               [(ngModel)]='house.HouseRoomeType' placeholder="ዪምረቱጡ">
@@ -19,8 +20,8 @@
               <option value="የሚከራይ ሙሉ ቤት">የሚከራይ ሙሉ ቤት</option>
             </select> -->
           
-             <input placeholder="header.." [(ngModel)]='house.header' name="header" type="text">
-            <label for="description"><b>description</b></label>
+             <!-- <input placeholder="header.." [(ngModel)]='house.header' name="header" type="text"> -->
+            <label for="description">description</label>
             <textarea placeholder="description ..." style="background-color: white;" type="text" name='description' [(ngModel)]='house.Description'
               rows="4" cols="50">
 
@@ -45,7 +46,10 @@
 
         
 
-      
+        <div>
+          <h2 style="color:red">{{myalert.message}}</h2>  
+        </div>
+
         <button mat-button class="btnContinue" (click)="contineu()">contineue..</button>
 
 

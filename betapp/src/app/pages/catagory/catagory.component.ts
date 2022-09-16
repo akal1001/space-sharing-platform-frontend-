@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatRadioButton, MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
+import { MyAlert } from 'src/app/interfaces/MyAlert';
 import { HomeService } from 'src/app/services/home.service';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
 
@@ -14,7 +15,8 @@ export class CatagoryComponent implements OnInit {
   descList: any;
   choosedLists: any = new Array();
   catagorylists: any;
-  constructor(private router: Router, private houseService: HomeService, private loaclaStoarage: LoaclstoarageService) { }
+  public myalert:MyAlert={message:""};
+  constructor( private router: Router, private houseService: HomeService, private loaclaStoarage: LoaclstoarageService) { }
 
   ngOnInit(): void {
     this.GetDesc();
@@ -25,7 +27,9 @@ export class CatagoryComponent implements OnInit {
 
     if(this.checkedValue == undefined|| null)
     {
-       alert("እባክዎን ከላይ ካለው ዝርዝር ውስጥ አስቀድመው ይምረጡ")
+    
+       this.myalert.message = "እባክዎን ከላይ ካለው ዝርዝር ውስጥ አስቀድመው ይምረጡ";
+    
     }
     else
     {

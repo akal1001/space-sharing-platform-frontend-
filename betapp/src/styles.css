@@ -35,6 +35,7 @@
 
 .btnContinue{
   float: right;
+  background-color: #42ba96 !important;
 }
    /* mat-option.mat-option{
     position: relative;
@@ -60,15 +61,23 @@ mat-radio-group{
   background-color: green;
 }
 h2{
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   margin-bottom: 0%;
   margin-top: 0%;
-  font-weight: bold;
+  font-weight: bold !important;
   /* border: 1px solid red; */
 
+}
+
+h2:first-letter{
+  text-transform: capitalize
 }
 .numberinput{
   border: 1px solid lightgray;
   height: 50px;
   width: 100%;
+}
+footer{
+  border: 1px solid lightgray;
+  background-color: white;
 }

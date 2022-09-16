@@ -73,7 +73,7 @@ export class PreviewComponent implements OnInit {
     let val = this.storage.GetData(this.storage.catogorykey)
     let addressPublicOrPrivate = this.storage.GetData(this.storage.KEYPRIVATEPUBLICADDRESS);
 
-    alert(addressPublicOrPrivate)
+    // alert(addressPublicOrPrivate)
     let obj = {
       usertoken: this.storage.GetData(this.storage.usertoken).usertoken,
       catagory: val.catagory,

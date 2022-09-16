@@ -5,6 +5,7 @@ import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
 import { HomeService } from 'src/app/services/home.service';
 import { House } from 'src/app/interfaces/house';
 import { Router } from '@angular/router';
+import { MyAlert } from 'src/app/interfaces/MyAlert';
 
 @Component({
   selector: 'app-fileuploader',
@@ -20,7 +21,7 @@ export class FileuploaderComponent implements OnInit {
   _img: any;
 
   newimage:any;
-
+  public myalert:MyAlert={message:""};
   imageArray:any = new Array();
   constructor(private fileuploadService: FileuploaderService, private router: Router, private houseservice: HomeService, private loaclaStoarage: LoaclstoarageService) { }
 
@@ -117,7 +118,8 @@ export class FileuploaderComponent implements OnInit {
       this.router.navigateByUrl("/preview")
     }
     else{
-      alert("add image");
+      this.myalert.message = "image required";
+     
     }
   }
 

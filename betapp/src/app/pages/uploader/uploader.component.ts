@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+
+import { MyAlert } from 'src/app/interfaces/MyAlert';
 import { House } from 'src/app/interfaces/house';
 import { HomeService } from 'src/app/services/home.service';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
@@ -13,12 +14,21 @@ import { ValidatorService } from 'src/app/services/validator.service';
 })
 export class UploaderComponent implements OnInit {
   public house: House = new House();
-  constructor(private router: Router, private validator: ValidatorService, private houseService: HomeService, private loaclaStorage: LoaclstoarageService) { }
+  constructor( private router: Router, private validator: ValidatorService, private houseService: HomeService, private loaclaStorage: LoaclstoarageService) { }
   public loc: any;
   public housedata: any;
+  public myalert:MyAlert={message:""};
+  value:any;
   ngOnInit(): void {
-    var reselt = this.loaclaStorage.GetData(this.loaclaStorage.usertoken);
 
+
+     this.value = this.loaclaStorage.GetData(this.loaclaStorage.catogorykey);
+   // alert(value.catagoryrefereceId + " " + value.catagory)
+    this.house.header = this.value.catagory;
+    var reselt = this.loaclaStorage.GetData(this.loaclaStorage.usertoken);
+   
+
+   
     if (reselt == null || reselt == undefined) {
       this.router.navigateByUrl("/login")
     }
@@ -44,7 +54,7 @@ export class UploaderComponent implements OnInit {
     if (myobj != null) {
 
       this.house.houseid = myobj.houseid;
-      this.house.header = myobj.header;
+      this.house.header = this.value.catagory;
       this.house.Description = myobj.Description;
       this.house.price = myobj.price;
       this.house.phone = myobj.phone;
@@ -52,6 +62,7 @@ export class UploaderComponent implements OnInit {
 
   }
 
+   message:any
   contineu() {
 
     if (this.validator.IsVaNotlEmpty(this.house.header) == true && this.validator.IsVaNotlEmpty(this.house.Description) == true && this.validator.IsVaNotlEmpty(this.house.price) == true && this.validator.IsVaNotlEmpty(this.house.phone) == true) {
@@ -65,7 +76,11 @@ export class UploaderComponent implements OnInit {
     }
     else
     {
-        alert("All field required!")
+      
+       // = "All field required!";
+        //alert("All field required!")
+       this.message = "All field required!";
+       this.myalert.message = "All field required!";
     }
 
   }
