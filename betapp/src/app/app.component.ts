@@ -47,7 +47,12 @@ export class AppComponent {
   }
   ngOnInit(): void {
 
+      //alert(this.router.url)
 
+      if(this.router.url == "/")
+      {
+         this.router.navigateByUrl("/home")
+      }
     this.service.data$.subscribe((res: any) => this.data = res)  //read the invoked data or default data
 
     console.log("data form child " + this.data);
