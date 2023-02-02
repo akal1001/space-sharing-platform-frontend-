@@ -15,7 +15,6 @@ export class FileuploaderService {
   fileselected: any = null;
   config = {
     bucketName: 'sm-image-bucket',
-    dirName: "imagefiles",
     region: 'us-east-1',
     accessKeyId: environment.aws_access_key,
     secretAccessKey: environment.aws_secret_key,

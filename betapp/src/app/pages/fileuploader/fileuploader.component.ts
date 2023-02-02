@@ -20,18 +20,17 @@ export class FileuploaderComponent implements OnInit {
   fileselected: any = null;
   _img: any;
 
-  newimage:any;
-  public myalert:MyAlert={message:""};
-  imageArray:any = new Array();
+  newimage: any;
+  public myalert: MyAlert = { message: "" };
+  imageArray: any = new Array();
   constructor(private fileuploadService: FileuploaderService, private router: Router, private houseservice: HomeService, private loaclaStoarage: LoaclstoarageService) { }
 
   ngOnInit(): void {
 
     var reselt = this.loaclaStoarage.GetData(this.loaclaStoarage.usertoken);
 
-    if(reselt == null || reselt == undefined)
-    {
-       this.router.navigateByUrl("/login")
+    if (reselt == null || reselt == undefined) {
+      this.router.navigateByUrl("/login")
     }
     //this.addimagetoLoclastoraget();
   }
@@ -44,23 +43,22 @@ export class FileuploaderComponent implements OnInit {
     this.fileselected = event.target.files[0];
 
 
-      this.reader.readAsDataURL(this.fileselected);
-      this.reader.onload = (_event) =>
-      {
+    this.reader.readAsDataURL(this.fileselected);
+    this.reader.onload = (_event) => {
 
-        var image = new Image();
-        this.imagepath = this.reader.result;
+      var image = new Image();
+      this.imagepath = this.reader.result;
 
 
-        // var canvas = document.createElement('canvas');
-        // canvas.width = 100;
-        // canvas.height = 100;
+      // var canvas = document.createElement('canvas');
+      // canvas.width = 100;
+      // canvas.height = 100;
 
-        // this.newimage = canvas.toDataURL(this.imagepath);
+      // this.newimage = canvas.toDataURL(this.imagepath);
 
-        this.handleSelectedFile();
+      this.handleSelectedFile();
 
-      }
+    }
 
 
   }
@@ -77,14 +75,22 @@ export class FileuploaderComponent implements OnInit {
     )
       .then((data: UploadResponse) => {
 
+
         this.status = data.status;
         console.log(data.status);
         console.log(data.location);
-        this.imageurl = data.location;
+        // this.imageurl = data.location;
         //this.addimages(data.location);
-        //  alert(this.imageurl);
+        // alert(data.key);
 
+        //original image url
+        //this.imageArray.push(this.imageurl);
+        //custm image url
+        var imgUrlCustom = "https://putbucketde-demo1.s3.amazonaws.com/" + data.key;
+        this.imageurl = imgUrlCustom;
         this.imageArray.push(this.imageurl);
+
+
 
         // alert(this.imageurl + ";;")
 
@@ -113,13 +119,12 @@ export class FileuploaderComponent implements OnInit {
     return result;
   }
   continue() {
-    if(this.imageArray.length > 0)
-    {
+    if (this.imageArray.length > 0) {
       this.router.navigateByUrl("/preview")
     }
-    else{
+    else {
       this.myalert.message = "image required";
-     
+
     }
   }
 

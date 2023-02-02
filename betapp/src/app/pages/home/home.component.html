@@ -61,8 +61,7 @@
 
           <mat-card-content>
             <div class="imgcontainer">
-              <img [routerLink]="['/detail', d.houseId]" mat-card-image id="img" style="
-             height: auto;" mat-card-image [src]=' d.imageFiles[0].imageUrl' alt="Photo of a Shiba Inu">
+              <img [routerLink]="['/detail', d.houseId]" mat-card-image id="img" style="width:200; height: inherit;" mat-card-image [src]=' d.imageFiles[0].imageUrl' alt="Photo of a Shiba Inu">
 
               <div class="top-left">
                 <h2><span style="color: gray;"></span> {{d.price|currency}}</h2>
