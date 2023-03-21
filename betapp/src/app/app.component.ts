@@ -47,12 +47,11 @@ export class AppComponent {
   }
   ngOnInit(): void {
 
-      //alert(this.router.url)
+    //alert(this.router.url)
 
-      if(this.router.url == "/")
-      {
-         this.router.navigateByUrl("/home")
-      }
+    if (this.router.url == "/") {
+      this.router.navigateByUrl("/home")
+    }
     this.service.data$.subscribe((res: any) => this.data = res)  //read the invoked data or default data
 
     console.log("data form child " + this.data);
@@ -168,6 +167,14 @@ export class AppComponent {
       this.router.navigateByUrl("/login")
     }
   }
+
+
+  uploadForm() {
+    this.sidenav.close();
+    this.router.navigateByUrl("/uploadForm")
+  }
+
+
   upload2() {
     this.sidenav.close();
     this.router.navigateByUrl("/list")

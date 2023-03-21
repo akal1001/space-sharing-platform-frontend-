@@ -25,7 +25,7 @@
     <img mat-card-image [src]='imagepath' style="width:200px; height: 200px;">
     <br>
     <br>
-    <input style="border:1px solid lightgray;" class="custom-file-input" (change)="onChangeFile($event)" type="file">
+    <input style="border:1px solid lightgray;" class="custom-file-input" multiple (change)="onChangeFile($event)" type="file">
     <br>
     <br>
 

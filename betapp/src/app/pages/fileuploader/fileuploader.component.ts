@@ -41,20 +41,12 @@ export class FileuploaderComponent implements OnInit {
   onChangeFile(event: any) {
     console.log(event.target.files[0]);
     this.fileselected = event.target.files[0];
-
-
     this.reader.readAsDataURL(this.fileselected);
-    this.reader.onload = (_event) => {
+    this.reader.onload = (_event) => 
+    {
 
       var image = new Image();
       this.imagepath = this.reader.result;
-
-
-      // var canvas = document.createElement('canvas');
-      // canvas.width = 100;
-      // canvas.height = 100;
-
-      // this.newimage = canvas.toDataURL(this.imagepath);
 
       this.handleSelectedFile();
 
@@ -64,7 +56,6 @@ export class FileuploaderComponent implements OnInit {
   }
   async handleSelectedFile() {
     this.status = null;
-    console.log('eneveoment');
 
     await this.fileuploadService.S3CustomeClient.uploadFile(
       this.fileselected,
@@ -75,33 +66,11 @@ export class FileuploaderComponent implements OnInit {
     )
       .then((data: UploadResponse) => {
 
-
         this.status = data.status;
-        console.log(data.status);
-        console.log(data.location);
-        // this.imageurl = data.location;
-        //this.addimages(data.location);
-        // alert(data.key);
-
-        //original image url
-        //this.imageArray.push(this.imageurl);
-        //custm image url
         var imgUrlCustom = "https://putbucketde-demo1.s3.amazonaws.com/" + data.key;
         this.imageurl = imgUrlCustom;
         this.imageArray.push(this.imageurl);
-
-
-
-        // alert(this.imageurl + ";;")
-
         this.loaclaStoarage.SetData(this.loaclaStoarage.filetoken, JSON.stringify(this.imageArray));
-
-
-
-
-
-
-
 
       })
       .catch((err: any) => console.log(err));

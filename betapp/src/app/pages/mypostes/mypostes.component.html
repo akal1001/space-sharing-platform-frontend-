@@ -1,66 +1,65 @@
+<div class="row">
+  <div *ngFor="let d of houses" id={{d.houseId}} class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3"
+    style="margin-bottom: 2%;">
 
-    
-<div class="row" >
-    <div   *ngFor="let d of houses" id={{d.houseId}} class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3" style="margin-bottom: 2%;">
-     
-    
-      <mat-card>
-        <mat-card-header style="margin-bottom: 1%;">
-         
-          <mat-card-title>{{d.houseRoomeType}}</mat-card-title>
-          <mat-card-subtitle> 
-            
-            {{d._Date }}</mat-card-subtitle>
-           
-          
-        </mat-card-header>
-       
-       
-        <mat-card-content>
-         
-         
-          <div class="imgcontainer">
-            <!-- <video muted autoplay  controls>
+
+    <mat-card>
+      <mat-card-header style="margin-bottom: 1%;">
+
+        <mat-card-title>{{d.houseRoomeType}}</mat-card-title>
+        <mat-card-subtitle>
+
+          {{d._Date }}</mat-card-subtitle>
+
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+
+        <div class="imgcontainer">
+          <!-- <video muted autoplay  controls>
               <source [src]=' d.imageFiles[0].imageUrl' type="video/mp4">
              
               Your browser does not support the video tag.
             </video> -->
-          
-           
-            <img style="max-height: 200px;"  mat-card-image [src]=' d.imageFiles[0].imageUrl' alt="Photo of a Shiba Inu"> -->
-    
-           
-          
-            <div class="top-left"><h1>${{d.price}}</h1></div>
-            <div class="top-right">{{d.imageFiles.length}} Pic</div>
-  
+
+
+          <img style="max-height: 200px;" mat-card-image [src]=' d.imageFiles[0].imageUrl' alt="Photo of a Shiba Inu">
+          -->
+
+
+
+          <div class="top-left">
+            <h1>${{d.price}}</h1>
           </div>
-          
-          <p style="line-height: 1.5em;
+          <div class="top-right">{{d.imageFiles.length}} Pic</div>
+
+        </div>
+
+        <p style="line-height: 1.5em;
           height: 3em;     
           overflow: hidden">
-            
-              
-              {{d.description}}
-              
-          </p>
-        </mat-card-content>
-       
-        <mat-card-actions>
-          <button mat-button>Edit</button>
-       
-         
-           <button  style="float: right;" mat-button type="button" mat-button (click)="delete(d.houseId)"  >remove..</button>
-      
-        </mat-card-actions>
-      </mat-card>
-    
-    </div>
-    
-  </div>
-  <div  class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3" style="margin-bottom: 2%;">
-    <ngx-json-viewer [json]="houses"></ngx-json-viewer>
-  </div>
-  
 
-  
+
+          {{d.description}}
+
+        </p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button>Edit</button>
+
+
+        <button style="float: right;" mat-button type="button" mat-button (click)="delete(d.houseId)">remove..</button>
+
+      </mat-card-actions>
+    </mat-card>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3" style="margin-bottom: 2%;">
+      <ngx-json-viewer [json]="houses"></ngx-json-viewer>
+    </div>
+
+  </div>
+
+</div>

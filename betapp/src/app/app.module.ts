@@ -40,7 +40,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CommonModule } from "@angular/common";
 import { ListsComponent } from './pages/lists/lists.component';
 import { CatagoryComponent } from './pages/catagory/catagory.component';
-
+import { UploadFormComponent } from './pages/upload-form/upload-form.component';
+import {MatNativeDateModule} from '@angular/material/core';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { CatagoryComponent } from './pages/catagory/catagory.component';
   
     ImagesviewComponent,
     ListsComponent,
-    CatagoryComponent
+    CatagoryComponent,
+    UploadFormComponent
 
   ],
   imports: [
@@ -85,7 +88,9 @@ import { CatagoryComponent } from './pages/catagory/catagory.component';
     NgImageSliderModule,
 
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatNativeDateModule,
+    LayoutModule
 
   ],
   providers: [

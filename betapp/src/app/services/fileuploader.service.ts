@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import AWSS3UploadAshClient from 'aws-s3-upload-ash';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,5 +29,10 @@ export class FileuploaderService {
     return this.httpclient.post<any>(this._baseUploadUrl + endpoint, "")
   }
 
- 
+  //send fiel to s3 bucket(test)
+  SendFileToS3(forma: any): Observable<any> {
+    // alert(forma);
+    const endpoint = environment.baseurl2;// "https://localhost:60715/api/values/putfile?id=" + "base64";
+    return this.httpclient.post<any>(endpoint, forma);
+  }
 }

@@ -15,6 +15,7 @@ import { ImagesviewComponent } from './pages/imagesview/imagesview.component';
 
 import { ListsComponent } from './pages/lists/lists.component';
 import { CatagoryComponent } from './pages/catagory/catagory.component';
+import { UploadFormComponent } from './pages/upload-form/upload-form.component';
 
 
 // const routes: Routes = [
@@ -49,7 +50,8 @@ const routes: Routes = [
   { path: 'preview', component: PreviewComponent },
    {path: 'imageview', component:ImagesviewComponent},
    {path:'list',component:ListsComponent},
-   {path: 'catagory', component:CatagoryComponent}
+   {path: 'catagory', component:CatagoryComponent},
+   {path: 'uploadForm', component:UploadFormComponent}
 
 
 ];

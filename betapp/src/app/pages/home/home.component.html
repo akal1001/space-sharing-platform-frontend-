@@ -47,7 +47,7 @@
 
       </div>
       <div *ngFor="let d of data" style=" padding-bottom: 2%; padding-top: 0%; padding: 5px;"
-        class="col-6 col-md-6 col-lg-3 col-xl-3 col-xxlg-2">
+        class="col-6 col-md-4 col-lg-4 col-xl-3 col-xxlg-2">
 
 
         <mat-card>
@@ -61,7 +61,7 @@
 
           <mat-card-content>
             <div class="imgcontainer">
-              <img [routerLink]="['/detail', d.houseId]" mat-card-image id="img" style="width:200; height: inherit;" mat-card-image [src]=' d.imageFiles[0].imageUrl' alt="Photo of a Shiba Inu">
+              <img [routerLink]="['/detail', d.houseId]" mat-card-image id="img" style="width:inherit; height: inherit;margin:0;" mat-card-image [src]=' d.imageFiles[0].imageUrl' alt="Photo of a Shiba Inu">
 
               <div class="top-left">
                 <h2><span style="color: gray;"></span> {{d.price|currency}}</h2>
