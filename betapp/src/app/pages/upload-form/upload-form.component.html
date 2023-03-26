@@ -1,24 +1,22 @@
 <div class="d-flex justify-content-center align-items-center">
     <div id="myinnerdiv1">
         <div id="innerContainer">
-
-
-
-            <label for="select"><b>ይምረጡ</b></label>
-            <select name="select"
-                style="width:100%; height:40px; border: 1px solid lightgray; border-radius: 0%;background-color: #F8F8F8;"
-                (change)="setValue($event)">
+            <h2 id="pro" style="margin-top: 10px; color: red;">{{selectvaluePrompt}}</h2>
+                <label for="select1"><b>ይምረጡ</b><b >*</b></label>
+          
+                <select id="ddSelect"  name="select1" 
+                
+                (change)="setValue($event)" >
                 <option [value]="_title.value" *ngFor="let _title of title">
                     {{_title.viewValue}}
                 </option>
             </select>
-
-
-
-
+            
+           
+            
+            
             <br>
-
-            <h2 style="margin-top: 10px;">{{selectvalue}}</h2>
+            <h2  style="margin-top: 10px;">{{selectvalue}}</h2>
             <!-- <input id="btn" type="button" value="Take Pricture" (click)="onclick()"> -->
 
             <label for="description"><b>መግለጫ</b></label>
@@ -26,6 +24,7 @@
                 [(ngModel)]='content.description' (input)="KeyFoucsOn_description($event)">
 
             </textarea>
+            
 
             <label for="price"><b>ዋጋ ያስገቡ</b></label>
             <input id="price" name="price" class="inputTxt" type="text" placeholder="asking price.."
@@ -42,28 +41,38 @@
             <input id="city" name="city" class="inputTxt" type="text" placeholder="city.." [(ngModel)]='content.city'
                 (focus)="KeyFoucsOn_city()">
 
-            <p style="font-weight:bold; padding:1%">
 
+
+            <div *ngIf="timbimageurl != null">
+                <label for="check">
+                    <input id="check" type="checkbox">
+                    Make this cover image
+                </label>
+                <img [src]="timbimageurl" style="width: 100%;height: auto">
+
+                <!-- <button mat-button (click)="removeimage()">delete</button> -->
+            </div>
+            <p style="font-weight:bold; padding:1%">
                 {{myprompt}}
             </p>
-
-            <div id="myimagediv" *ngIf="imageurls.length >= 1"
-                style="width:100%; height:auto; text-align: left;border:1px solid lightgray">
-
-                <img [src]="d" style="width:105px;height:100px; display:inline; margin: 1%; border-radius: 2%;"
-                    *ngFor="let d of imageurls">
+            <div style="width:100%;height: auto; padding:0%" *ngIf="imageurls.length >= 1">
+                <div *ngFor="let d of imageurls" class="container1">
+                    <img [src]="d.imageUrl" class="imgs" [id]="d.id" (click)="onImageclick($event, d.id)">
+                    <input type="button" value="x" class="btn" (click)="removeimage(d.id, d.imageUrl)">
+                </div>
             </div>
             <br>
-
             <div *ngIf="imageurls.length == 0">
-                <img [src]="iconimage" style="width: 140px;height: 100px;">
+                <img [src]="iconimage" style="width: 160px;height: 110px;">
             </div>
-
-            <label class="lblFile" for="file-input">Add Pictures</label>
-            <input type="file" id="file-input" alife-file-to-base64 multiple (input)="onChangeFile($event)">
+            <div>
+                <label class="lblFile" for="file-input">Add Pictures</label>
+                <input type="file" id="file-input" alife-file-to-base64 multiple (input)="onChangeFile($event)">
+               
+            </div>
             <br>
             <br>
-            <button mat-button id="btn" class="btnContinue" (click)="puhlish()" type="button">ለመለጠፍ ጠቅ ያድርጉ</button>
+            <button mat-button id="btn" class="btnContinue" (click)="PublishContent()" type="button">ለመለጠፍ ጠቅ ያድርጉ</button>
 
             <br>
             <!-- <input id="btn" (click)="test()" type="button" value="test tumbnail"> <br>
@@ -112,6 +121,9 @@
         padding: 1%;
         color: black;
 
+    }
+    #ddSelect{
+        width:100%; height:40px; border: 1px solid lightgray; border-radius: 0%;background-color: #F8F8F8;
     }
 
     #container {
@@ -220,12 +232,61 @@
 
     input[type="file"] {
         opacity: 0;
-        position: absolute;
+        position: relative;
         top: 0;
         left: 0;
         width: 100%;
         /* height: 100%; */
-     
+
         cursor: pointer;
+    }
+
+
+
+
+
+
+    .container1 {
+        position: relative;
+        width: 31%;
+
+        display: inline-block;
+        margin: 1%;
+        /* border:1px solid red; */
+
+    }
+
+    .container1 img {
+        width: 100%;
+        height: 100px;
+        /* height: auto; */
+    }
+
+    .container1 .btn {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        padding: 0%;
+
+        display: table-cell;
+        vertical-align: middle;
+        top: 20%;
+        left: 85%;
+
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        background-color: transparent;
+
+        color: white;
+        /* font-size: 16px;
+        padding: 12px 24px; */
+        border: 1px solid gray;
+        cursor: pointer;
+        border-radius: 50%;
+        text-align: center;
+    }
+
+    .container1 .btn:hover {
+        background-color: black;
     }
 </style>

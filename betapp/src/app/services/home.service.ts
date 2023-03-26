@@ -25,7 +25,7 @@ export class HomeService {
   getCatagoriesForHome(): Observable<any> {
     return this._httpClient.get(this._baseUploadUrl + 'Catagoriesforhome')
   }
-  
+
   //return all house
   GetAllHouseService(): Observable<House> {
     return this._httpClient.get<House>(this._baseUploadUrl);
@@ -77,6 +77,17 @@ export class HomeService {
 
 
   }
+  async AsyncPostHouseServiceTest(val: any): Promise<any> {
+    let endpoint = 'postobj?val'
+    alert("serveic callded")
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this._httpClient.post<any>(this._baseUploadUrl + endpoint, JSON.stringify(val),
+      { headers: headers });
+
+
+  }
 
   PostHousekeyowerdService(key: any, refid: any): Observable<boolean> {
     let endpoint = "keyword?key=" + key + "&refid=" + refid;
@@ -105,6 +116,6 @@ export class HomeService {
     return this._httpClient.get(this._baseUploadUrl + endpoint);
   }
 
- 
+
 }
 

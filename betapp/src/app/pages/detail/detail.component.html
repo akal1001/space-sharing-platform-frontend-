@@ -58,6 +58,17 @@
 <br>
 <br>
 
+
+
+
+
+
+
+<!-- <ngx-json-viewer [json]="house.imageFiles"></ngx-json-viewer> -->
+
+
+
+<!-- 
 <div class="row me">
   <div class="col-12 col-lg-12 col-md-12" style="text-align:center; font-weight: bolder; font-stretch: expanded;">
     <h1></h1>
@@ -70,12 +81,7 @@
    
       <div class="col-6 col-lg-3 me" *ngFor="let d of data">
         <mat-card (click)="reload(d.houseId)" [routerLink]="['/detail', d.houseId]">
-          <!-- <mat-card-header>
-    
-          <mat-card-title style="font-weight:600;">{{d.houseRoomeType}}</mat-card-title>
-    
-    
-        </mat-card-header> -->
+        
 
 
           <mat-card-content>
@@ -98,17 +104,7 @@
 
             </div>
 
-            <!-- <p style="line-height: 1.5em;
-          max-height: 4.5em;
-          overflow: hidden; font-size: 15px;"  (click)="gotodetail2(d.houseId,d.houseRoomeType,d.description,d.imageFiles[0].imageUrl)">
-    
-            <span style="font-weight: bold;">{{d.houseRoomeType}}</span>
-            {{d.description}}<span style="color:blue;">  more...</span>
-    
-    
-    
-    
-          </p> -->
+       
             <p style="font-weight:600" >
             
               {{d.city}} {{d.state}} {{d.zipCode}}
@@ -130,10 +126,4 @@
   <div class="col-12 col-lg-4 col-md-4">
 
   </div>
-</div>
-
-
-
-
-
-<!-- <ngx-json-viewer [json]="house.imageFiles"></ngx-json-viewer> -->
+</div> -->

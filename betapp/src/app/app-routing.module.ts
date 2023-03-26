@@ -6,15 +6,13 @@ import { DetailComponent } from './pages/detail/detail.component';
 import { EditComponent } from './pages/edit/edit.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
-import { UploaderComponent } from './pages/uploader/uploader.component';
-import { FileuploaderComponent } from './pages/fileuploader/fileuploader.component';
-import { AddressComponent } from './pages/address/address.component';
+
 import { MypostesComponent } from './pages/mypostes/mypostes.component';
-import { PreviewComponent } from './pages/preview/preview.component';
+
 import { ImagesviewComponent } from './pages/imagesview/imagesview.component';
 
 import { ListsComponent } from './pages/lists/lists.component';
-import { CatagoryComponent } from './pages/catagory/catagory.component';
+
 import { UploadFormComponent } from './pages/upload-form/upload-form.component';
 
 
@@ -41,16 +39,15 @@ const routes: Routes = [
   { path: 'edit', component: EditComponent },
   { path: 'login', component: LoginComponent },
   { path: 'createaccount', component: CreateaccountComponent },
-  { path: 'upload', component: UploaderComponent },
+
   { path: 'detail/:id', component: DetailComponent },
   { path: 'account', component: AccountComponent },
-  { path: 'fileuploader', component: FileuploaderComponent },
-  { path: 'address', component: AddressComponent },
+
   { path: 'myposts', component: MypostesComponent },
-  { path: 'preview', component: PreviewComponent },
+ 
    {path: 'imageview', component:ImagesviewComponent},
    {path:'list',component:ListsComponent},
-   {path: 'catagory', component:CatagoryComponent},
+
    {path: 'uploadForm', component:UploadFormComponent}
 
 
