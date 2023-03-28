@@ -1,22 +1,22 @@
 <div class="d-flex justify-content-center align-items-center">
+    
     <div id="myinnerdiv1">
         <div id="innerContainer">
             <h2 id="pro" style="margin-top: 10px; color: red;">{{selectvaluePrompt}}</h2>
-                <label for="select1"><b>ይምረጡ</b><b >*</b></label>
-          
-                <select id="ddSelect"  name="select1" 
-                
-                (change)="setValue($event)" >
+            <label for="select1"><b>ይምረጡ</b><b>*</b></label>
+
+            <select id="ddSelect" name="select1" (change)="setValue($event)">
+                <option disabled selected value>--- ይምረጡ ---</option>
                 <option [value]="_title.value" *ngFor="let _title of title">
                     {{_title.viewValue}}
                 </option>
             </select>
-            
-           
-            
-            
+
+
+
+
             <br>
-            <h2  style="margin-top: 10px;">{{selectvalue}}</h2>
+            <h2 style="margin-top: 10px;">{{selectvalue}}</h2>
             <!-- <input id="btn" type="button" value="Take Pricture" (click)="onclick()"> -->
 
             <label for="description"><b>መግለጫ</b></label>
@@ -24,16 +24,16 @@
                 [(ngModel)]='content.description' (input)="KeyFoucsOn_description($event)">
 
             </textarea>
-            
+
 
             <label for="price"><b>ዋጋ ያስገቡ</b></label>
-            <input id="price" name="price" class="inputTxt" type="text" placeholder="asking price.."
+            <input id="price" name="price" class="inputTxt" type="number" placeholder="asking price.."
                 [(ngModel)]='content.price' (focus)="KeyFoucsOn_price()">
 
 
 
             <label for="contact"><b>ስልክ ቁጥርዎን ያስገቡ</b></label>
-            <input id="phone" name="contact" class="inputTxt" type="text" placeholder="phone.."
+            <input id="phone" name="contact" class="inputTxt" type="tel" placeholder="phone.."
                 [(ngModel)]='content.phone' (focus)="KeyFoucsOn_phone()">
 
 
@@ -48,7 +48,7 @@
                     <input id="check" type="checkbox">
                     Make this cover image
                 </label>
-                <img [src]="timbimageurl" style="width: 100%;height: auto">
+                <img [src]="timbimageurl" style="width: 100%;height: inherit;">
 
                 <!-- <button mat-button (click)="removeimage()">delete</button> -->
             </div>
@@ -68,11 +68,12 @@
             <div>
                 <label class="lblFile" for="file-input">Add Pictures</label>
                 <input type="file" id="file-input" alife-file-to-base64 multiple (input)="onChangeFile($event)">
-               
+
             </div>
             <br>
             <br>
-            <button mat-button id="btn" class="btnContinue" (click)="PublishContent()" type="button">ለመለጠፍ ጠቅ ያድርጉ</button>
+            <button mat-button id="btn" class="btnContinue" (click)="PublishContent()" type="button">ለመለጠፍ ጠቅ
+                ያድርጉ</button>
 
             <br>
             <!-- <input id="btn" (click)="test()" type="button" value="test tumbnail"> <br>
@@ -122,8 +123,13 @@
         color: black;
 
     }
-    #ddSelect{
-        width:100%; height:40px; border: 1px solid lightgray; border-radius: 0%;background-color: #F8F8F8;
+
+    #ddSelect {
+        width: 100%;
+        height: 40px;
+        border: 1px solid lightgray;
+        border-radius: 0%;
+        background-color: #F8F8F8;
     }
 
     #container {
@@ -157,6 +163,8 @@
 
     /* Full-width input fields */
     input[type=text],
+    input[type=tel],
+    input[type=number],
     input[type=password],
     textarea {
         width: 100%;

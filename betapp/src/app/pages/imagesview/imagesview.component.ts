@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HomeService } from 'src/app/services/home.service';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
 
@@ -9,16 +10,16 @@ import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
 })
 export class ImagesviewComponent implements OnInit {
   images: any;
-  constructor(private storeae: LoaclstoarageService, private homeservece: HomeService) { }
+  id:any;
+  
+  constructor(private storeae: LoaclstoarageService, private homeservece: HomeService, private _Activatedroute:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this. GetAllImage();
-  }
 
-  GetAllImage() {
-    let id = this.storeae.GetData("imgrefids");
-
-    this.homeservece.GetHouseImages(id).subscribe((resposne) => 
+    this.id=this._Activatedroute.snapshot.paramMap.get("id");
+   
+    //this. GetAllImage();
+    this.homeservece.GetHouseImages(this.id).subscribe((resposne) => 
     {
 
       this.images = resposne;
@@ -26,4 +27,5 @@ export class ImagesviewComponent implements OnInit {
     });
   }
 
+ 
 }

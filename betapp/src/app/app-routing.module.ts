@@ -14,6 +14,7 @@ import { ImagesviewComponent } from './pages/imagesview/imagesview.component';
 import { ListsComponent } from './pages/lists/lists.component';
 
 import { UploadFormComponent } from './pages/upload-form/upload-form.component';
+import { SearchComponent } from './pages/search/search.component';
 
 
 // const routes: Routes = [
@@ -44,11 +45,13 @@ const routes: Routes = [
   { path: 'account', component: AccountComponent },
 
   { path: 'myposts', component: MypostesComponent },
- 
-   {path: 'imageview', component:ImagesviewComponent},
-   {path:'list',component:ListsComponent},
 
-   {path: 'uploadForm', component:UploadFormComponent}
+  { path: 'imageview/:id', component: ImagesviewComponent },
+  { path: 'list', component: ListsComponent },
+
+  { path: 'uploadForm', component: UploadFormComponent },
+  { path: 'search/:id', component: SearchComponent },
+
 
 
 ];

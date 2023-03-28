@@ -3,6 +3,7 @@
   <div class="col-12 col-md-1 col-lg-1">
   </div>
   <div class="col-12 col-md-4 col-lg-4">
+
     <div class="imgcontainer">
 
 
@@ -11,8 +12,9 @@
 
       </ng-image-slider> -->
 
-      <img [src]="bigimg" style="width: 100%; max-height:400px;">
-      <img  (click)="CHANGEimqge(img.imageUrl)" *ngFor="let img of house.imageFiles" [src]="img.imageUrl" style="width: 50px; height:50px; margin: 1%;">
+      <img [src]="bigimg" style="width: 100%; max-height:400px;" [routerLink]="['/imageview',house.houseId]">
+      <img (click)="CHANGEimqge(img.imageUrl)" *ngFor="let img of house.imageFiles" [src]="img.imageUrl"
+        style="width: 50px; height:50px; margin: 1%;">
 
 
 
@@ -20,9 +22,9 @@
     </div>
   </div>
   <div class="col-12 col-md-4 col-lg-6">
-    
+
     <h2 style="font-weight:bolder">{{house?.catagory}}</h2>
-    
+
     <h2 style="color: green;"> {{house?.price|currency}}</h2>
     <p>
       <span style="font-weight:bolder">{{house?.header}}</span><br>
@@ -34,15 +36,15 @@
     </p>
     <h2></h2>
 
-<ul *ngFor="let d of house.descriptionlists">
-  <li>{{d.description}}</li>
- 
-</ul>  
+    <ul *ngFor="let d of house.descriptionlists">
+      <li>{{d.description}}</li>
+
+    </ul>
     <p style="font-weight:600">
 
       {{house.address.city}} {{house.address.state}} {{house.address.zipCode}} <br>
 
- {{house.address.street}}
+      {{house.address.street}}
     </p>
     <p>
 
@@ -68,8 +70,8 @@
 
 
 
-<!-- 
-<div class="row me">
+
+<!-- <div class="row me">
   <div class="col-12 col-lg-12 col-md-12" style="text-align:center; font-weight: bolder; font-stretch: expanded;">
     <h1></h1>
   </div>

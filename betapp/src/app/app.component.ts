@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { LoaclstoarageService } from './services/loaclstoarage.service';
@@ -10,15 +10,24 @@ import { HomeService } from './services/home.service';
 import { DataService } from './services/data.service';
 import { MatRadioButton, MatRadioChange } from '@angular/material/radio';
 
+
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-
-
+  
+    templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 
 export class AppComponent {
+ 
+ 
+ // private homecomponent!: HomeComponent;
+
+
+
+  isMobile: boolean;
+  isTablet: boolean;
+  isDesktop: boolean;
 
   control = new FormControl();
   streets: any[] = ['Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue'];
@@ -42,14 +51,24 @@ export class AppComponent {
   selectedPostValue: any;
   @ViewChild(MatSidenav) sidenav!: MatSidenav
 
-  constructor(private service: DataService, private observer: BreakpointObserver, private homseService: HomeService, private searchsrvice: SearchService, private router: Router, private storage: LoaclstoarageService) {
 
+
+  constructor(private renderer: Renderer2,private breakpointObserver: BreakpointObserver,private service: DataService, private observer: BreakpointObserver, private homseService: HomeService, private searchsrvice: SearchService, private router: Router, private storage: LoaclstoarageService)
+   {
+    this.isMobile = breakpointObserver.isMatched('(max-width: 567px)');
+    this.isTablet = breakpointObserver.isMatched('(min-width: 568px) and (max-width: 1023px)');
+    this.isDesktop = breakpointObserver.isMatched('(min-width: 1024px)');
+
+   
   }
   ngOnInit(): void {
 
-    //alert(this.router.url)
+
+   
+       //alert(this.router.url)
 
     if (this.router.url == "/") {
+
       this.router.navigateByUrl("/home")
     }
     this.service.data$.subscribe((res: any) => this.data = res)  //read the invoked data or default data
@@ -60,9 +79,14 @@ export class AppComponent {
       map((value: string) => this._filter(value)),
     );
 
-
+    
 
   }
+ 
+
+  
+
+ 
   myFunction() {
     alert("Input field lost focus.");
   }
@@ -94,6 +118,10 @@ export class AppComponent {
     // this.router.navigateByUrl("/home")
 
     //max-width:1024px
+
+      
+
+
 
     this.observer.observe(['(max-width:3024px)']).subscribe((res: { matches: any; }) => {
       if (res.matches) {

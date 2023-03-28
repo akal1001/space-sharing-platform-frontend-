@@ -11,13 +11,15 @@ import { SearchService } from 'src/app/services/search.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  
+  
   @Input() inputFromParent: string | undefined;
   innerWidth: any;
   imgHIght: any;
   searchinput: any;
   serarchResult: any = null;
   choosedLists: any = new Array();
-  constructor(private dataservice: HomeService, private storage: LoaclstoarageService, private router: Router) { }
+  constructor(private searchsrvice: SearchService, private dataservice: HomeService, private storage: LoaclstoarageService, private router: Router) { }
   public data: any;
   el: any;
 
@@ -31,7 +33,22 @@ export class HomeComponent implements OnInit {
     this.onpageload();
     //this.searchinputFromparent
   }
+ 
 
+ userSearchinput() {
+
+     //this.router.navigateByUrl('/search')
+    this.searchsrvice.SearchServe(this.searchinput).subscribe((result: any) => {
+      console.log(JSON.stringify(result))
+      console.log(this.searchinput)
+      this.serarchResult = result;
+    
+      this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
+    })
+    this.inputFromParent = this.searchinput;
+
+
+  }
   onpageload() {
     this.sampleData = this.storage.GetData(this.storage.tempdataIds);
 

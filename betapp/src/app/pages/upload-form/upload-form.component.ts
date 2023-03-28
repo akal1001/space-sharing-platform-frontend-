@@ -43,10 +43,10 @@ export class UploadFormComponent implements OnInit {
   iconimage: any = "https://sm-image-bucket.s3.amazonaws.com/zh3ECH6qg3byimageIcon.png"
 
   title: Title[] = [
-    { value: '1', viewValue: '--- ይምረጡ ---' },
-    { value: '2', viewValue: 'የሚከራይ ሙሉ ቤት' },
-    { value: '3', viewValue: 'የሚከራይ ክፍል' },
-    { value: '4', viewValue: 'የሚከራይ ምድር ቤት' }
+  
+    { value: '1', viewValue: 'የሚከራይ ሙሉ ቤት' },
+    { value: '2', viewValue: 'የሚከራይ ክፍል' },
+    { value: '3', viewValue: 'የሚከራይ ምድር ቤት' }
   ];
 
   status: any = "200";
@@ -64,8 +64,12 @@ export class UploadFormComponent implements OnInit {
 
   constructor(private storage: LoaclstoarageService, private houseService: HomeService, private elementRef: ElementRef, private fileuploadService: FileuploaderService, private renderer: Renderer2, private breakpointObserver: BreakpointObserver) {
 
-    this.isMobile = breakpointObserver.isMatched('(max-width: 767px)');
-    this.isTablet = breakpointObserver.isMatched('(min-width: 768px) and (max-width: 1023px)');
+    // this.isMobile = breakpointObserver.isMatched('(max-width: 767px)');
+    // this.isTablet = breakpointObserver.isMatched('(min-width: 768px) and (max-width: 1023px)');
+    // this.isDesktop = breakpointObserver.isMatched('(min-width: 1024px)');
+
+    this.isMobile = breakpointObserver.isMatched('(max-width: 567px)');
+    this.isTablet = breakpointObserver.isMatched('(min-width: 568px) and (max-width: 1023px)');
     this.isDesktop = breakpointObserver.isMatched('(min-width: 1024px)');
 
 
@@ -101,7 +105,7 @@ export class UploadFormComponent implements OnInit {
     }
 
   }
-
+ 
   setValue(any: any) {
     this.selectvalue = this.title[any.target.value - 1].viewValue
     this.selectvalue2 = this.title[any.target.value - 1].value
@@ -114,8 +118,9 @@ export class UploadFormComponent implements OnInit {
   }
 
   async IsDropdwonSelected(value: any) {
-    switch (true) {
-      case value > 0 && value < 5:
+    switch (true) 
+    {
+      case value >= 1 && value <=3:
         return true;
       default: return false
     }
@@ -264,6 +269,7 @@ export class UploadFormComponent implements OnInit {
     }
 
      await this.IsDropdwonSelected(this.selectvalue2).then((resposne) => {
+      console.log("response :\n " + resposne + " \n" + this.selectvalue2)
       if (resposne == false) {
          this.selectvaluePrompt = "Choolse one form dropdown list"
         // const pElement = this.renderer.selectRootElement('#pro');

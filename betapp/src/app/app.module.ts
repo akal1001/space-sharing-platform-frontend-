@@ -43,6 +43,8 @@ import { ListsComponent } from './pages/lists/lists.component';
 import { UploadFormComponent } from './pages/upload-form/upload-form.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { LayoutModule } from '@angular/cdk/layout';
+import { SearchComponent } from './pages/search/search.component';
+
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import { LayoutModule } from '@angular/cdk/layout';
     ImagesviewComponent,
     ListsComponent,
 
-    UploadFormComponent
+    UploadFormComponent,
+      SearchComponent,
+    
 
   ],
   imports: [
