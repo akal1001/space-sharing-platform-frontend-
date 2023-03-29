@@ -36,7 +36,7 @@ import { SearchComponent } from './pages/search/search.component';
 // ];
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent },
   { path: 'edit', component: EditComponent },
   { path: 'login', component: LoginComponent },
   { path: 'createaccount', component: CreateaccountComponent },

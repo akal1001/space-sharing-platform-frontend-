@@ -4,6 +4,7 @@
   </div>
   <div class="col-12 col-md-4 col-lg-4">
 
+   
     <div class="imgcontainer">
 
 
@@ -11,6 +12,7 @@
       <!-- <ng-image-slider [images]="imageObject">
 
       </ng-image-slider> -->
+      <h1 style="color:black">{{test}}</h1> 
 
       <img [src]="bigimg" style="width: 100%; max-height:400px;" [routerLink]="['/imageview',house.houseId]">
       <img (click)="CHANGEimqge(img.imageUrl)" *ngFor="let img of house.imageFiles" [src]="img.imageUrl"

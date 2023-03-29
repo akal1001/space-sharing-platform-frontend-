@@ -12,7 +12,7 @@ import { SearchService } from 'src/app/services/search.service';
   styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
-
+  test:any = "uploading "
 
   id:any;
   bigimg:any;
@@ -21,17 +21,22 @@ export class DetailComponent implements OnInit {
   images: any = new Array<Object>();
   ngOnInit(): void {
     this.id=this._Activatedroute.snapshot.paramMap.get("id");
-    this.GetDetail(this.id);
+    this.GetDetail(this.id).then((rsponse)=>{
+       this.test = null;
+       console.log(this.test)
+    });
+    console.log(this.test)
   }
 
 
   imageObject: any = new Array();
   house: any;
-  GetDetail(id:any) {
+  async GetDetail(id:any) {
     window.scroll(0,0);
    // let id = this.storage.GetData(this.storage.id);
 
-    this.homeservice.GetHouseService(id).subscribe((response: any) => {
+    this.homeservice.GetHouseService(id).subscribe((response: any) =>
+    {
       this.house = response;
       this.bigimg = this.house?.imageFiles[0].imageUrl
       for (var i = 0; i < this.house.imageFiles.length; i++)
@@ -51,12 +56,8 @@ export class DetailComponent implements OnInit {
   {
      this.bigimg = val;
   }
-  reload(id:any)
-  {
-   
-    this.GetDetail(id)
-   
-  }
+ 
+
  
 
   

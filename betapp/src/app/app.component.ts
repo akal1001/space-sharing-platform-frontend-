@@ -1,6 +1,6 @@
 import { Component, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoaclstoarageService } from './services/loaclstoarage.service';
 import { BreakpointObserver } from '@angular/cdk/layout'
 import { SearchService } from './services/search.service';
@@ -13,17 +13,15 @@ import { MatRadioButton, MatRadioChange } from '@angular/material/radio';
 
 @Component({
   selector: 'app-root',
-  
-    templateUrl: './app.component.html',
+
+  templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 
 export class AppComponent {
- 
- 
- // private homecomponent!: HomeComponent;
 
 
+  // private homecomponent!: HomeComponent;
 
   isMobile: boolean;
   isTablet: boolean;
@@ -53,24 +51,21 @@ export class AppComponent {
 
 
 
-  constructor(private renderer: Renderer2,private breakpointObserver: BreakpointObserver,private service: DataService, private observer: BreakpointObserver, private homseService: HomeService, private searchsrvice: SearchService, private router: Router, private storage: LoaclstoarageService)
-   {
+  constructor(private route2: ActivatedRoute, private renderer: Renderer2, private breakpointObserver: BreakpointObserver, private service: DataService, private observer: BreakpointObserver, private homseService: HomeService, private searchsrvice: SearchService, private router: Router, private storage: LoaclstoarageService) {
     this.isMobile = breakpointObserver.isMatched('(max-width: 567px)');
     this.isTablet = breakpointObserver.isMatched('(min-width: 568px) and (max-width: 1023px)');
     this.isDesktop = breakpointObserver.isMatched('(min-width: 1024px)');
 
-   
+    //alert("url" + this.router.url)
   }
   ngOnInit(): void {
 
-
-   
-       //alert(this.router.url)
-
+    // alert(id);
     if (this.router.url == "/") {
 
-      this.router.navigateByUrl("/home")
+      //this.router.navigate([''])
     }
+
     this.service.data$.subscribe((res: any) => this.data = res)  //read the invoked data or default data
 
     console.log("data form child " + this.data);
@@ -79,14 +74,14 @@ export class AppComponent {
       map((value: string) => this._filter(value)),
     );
 
-    
-
   }
- 
+  AfterContentInit() {
+    // alert("url" + this.router.url)
+  }
 
-  
 
- 
+
+
   myFunction() {
     alert("Input field lost focus.");
   }
@@ -119,7 +114,7 @@ export class AppComponent {
 
     //max-width:1024px
 
-      
+
 
 
 
@@ -146,23 +141,25 @@ export class AppComponent {
   }
 
   home() {
+    this.router.navigate([''])
+    //window.location.reload()
     // if(window.innerWidth >= 1024)
     // {
     //   this.sidenav.open();
     // }
 
 
-    if (this.router.url == "/home") {
-      window.location.reload();
+    // if (this.router.url == "") {
+    //   window.location.reload();
 
-    }
-    else {
-      window.scroll(0, 0)
-      this.userselectedvalue = null;
-      this.inputFromParent = null;
-      //window.location.reload();
-      this.router.navigateByUrl("/home")
-    }
+    // }
+    // else {
+    //   window.scroll(0, 0)
+    //   this.userselectedvalue = null;
+    //   this.inputFromParent = null;
+    //   //window.location.reload();
+    //   this.router.navigateByUrl("/home")
+    // }
 
 
 

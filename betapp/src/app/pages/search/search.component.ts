@@ -16,8 +16,18 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
 
     this.id=this._Activatedroute.snapshot.paramMap.get("id");
+
+   // alert(this.id)
     //this.GetDetail(this.id);
     this.userSearchinputCity(this.id)
+
+    window.onpopstate = (event) => {
+      // User clicked the back button
+      this.id=this._Activatedroute.snapshot.paramMap.get("id");
+      //alert('User clicked the back button' + this.id);
+      this.userSearchinputCity(this.id)
+      //this.newval(this.id);
+    }
   }
   userSearchinput() {
 
@@ -26,7 +36,7 @@ export class SearchComponent implements OnInit {
      console.log(JSON.stringify(result))
      console.log(this.searchinput)
      this.serarchResult = result;
-     this.data = this.serarchResult;
+     //this.data = this.serarchResult;
      console.log(this.serarchResult);
      
    })
@@ -45,4 +55,5 @@ export class SearchComponent implements OnInit {
      //this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
    })
  }
+ 
 }
