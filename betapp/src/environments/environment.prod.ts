@@ -1,6 +1,5 @@
 export const environment = {
-  
-  //https://localhost:44330/
+ 
  //baseurl : 'https://localhost:44330/api/',
  //https://1vs63x5hod.execute-api.us-east-1.amazonaws.com/Prod
  baseurl2: 'https://12th89pvac.execute-api.us-east-1.amazonaws.com/Prod/api/values/postimg',

@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
       this.storage.SetData(this.storage.DefaultHomeData, JSON.stringify(response));
       this.data = response;
 
-      // alert(JSON.stringify(this.data));
+       console.log(JSON.stringify(this.data));
     })
 
     console.log(this.inputFromParent);

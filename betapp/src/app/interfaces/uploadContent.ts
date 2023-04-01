@@ -5,6 +5,7 @@ export class uploadContent {
   public phone?: number;
   public price?: number;
   public images?: HouseImage[] = new Array();
+  public catagoryrefrenceId?:any;
 }
 export class HouseImage {
   public id?:any;

@@ -44,6 +44,7 @@ import { UploadFormComponent } from './pages/upload-form/upload-form.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SearchComponent } from './pages/search/search.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { SearchComponent } from './pages/search/search.component';
 
     UploadFormComponent,
       SearchComponent,
+      PageNotFoundComponent,
     
 
   ],

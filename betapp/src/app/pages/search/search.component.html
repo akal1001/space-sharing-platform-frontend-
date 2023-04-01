@@ -7,29 +7,29 @@
     <div class="search-box col-xs-10 col-sm-10 col-md-6 col-lg-6 col-xl-6">
         <input type="text" placeholder="Search by city.." (keyup)="userSearchinput()" [(ngModel)]="searchinput" [matAutocomplete]="auto">
         <button> <i class="fa fa-search"></i>Go</button>
-        <br>
+        <mat-autocomplete class="ac" #auto="matAutocomplete">
+            <mat-option style="height: auto; border-top: none;" 
+              *ngFor="let r of serarchResult " [value]="r.keyword" [routerLink]="['/search', r.keyword]">
+             
+              <p (click)="userSearchinputCity(r.keyword)" style="padding: 0%;margin: 0%;line-height: 1em;font-size: small;padding: 0%;">
+                <span style="font-weight: bold;">{{r.keyword}}</span>
+               
+                
+                {{r.title }}
+                <br>
+                <br>
+                <!-- <span style="color: gray;  margin: 0%;">
+                  {{r.description}} ....
+                </span> -->
+              </p>
+      
+      
+      
+            </mat-option>
+      
+          </mat-autocomplete>
     </div>
-    <mat-autocomplete class="ac" #auto="matAutocomplete">
-        <mat-option style="height: auto; border-top: none;" 
-          *ngFor="let r of serarchResult " [value]="r.keyword" [routerLink]="['/search', r.city]">
-         
-          <p (click)="userSearchinputCity(r.keyword)" style="padding: 0%;margin: 0%;line-height: 1em;font-size: small;padding: 0%;">
-            <span style="font-weight: bold;">{{r.keyword}}</span>
-            {{r.city}} 
-            <br>
-            {{r.houseRoomeType }}
-            <br>
-            <br>
-            <!-- <span style="color: gray;  margin: 0%;">
-              {{r.description}} ....
-            </span> -->
-          </p>
-  
-  
-  
-        </mat-option>
-  
-      </mat-autocomplete>
+   
 </div>
 <div class="row">
 
@@ -80,14 +80,15 @@
 
 
             </p> -->
-                            <p style="font-weight:600;">
+                            <p style="font-weight:600; text-align: center;">
 
-                                {{d.city}} {{d.state}} {{d.zipCode}}
+                                 {{d.houseRoomeType}} <br> {{d.city}}<br>
+                                <small style="font-weight:normal"> Posted {{d._Date | date:'mediumDate'}}</small>
 
                             </p>
                             <p style="padding-top: 0%;">
 
-                                Posted on {{d._Date | date:'mediumDate'}}
+                               
 
                             </p>
                         </mat-card-content>

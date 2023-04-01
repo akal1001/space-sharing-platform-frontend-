@@ -196,7 +196,22 @@ export class AppComponent {
 
   uploadForm() {
     this.sidenav.close();
-    this.router.navigateByUrl("/uploadForm")
+    this.userselectedvalue = null;
+    this.inputFromParent = null;
+
+    let userInfo = this.storage.GetData(this.storage.usertoken);
+
+     
+    if (userInfo == null) {
+      this.router.navigateByUrl("/login")
+      
+    }
+    else
+    {
+      this.router.navigateByUrl("/uploadForm")
+    }
+    //
+   
   }
 
 

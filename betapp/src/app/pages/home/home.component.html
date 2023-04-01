@@ -21,33 +21,25 @@
     <div class="search-box col-xs-10 col-sm-10 col-md-6 col-lg-6 col-xl-6">
       <input type="text" placeholder="Search" (keyup)="userSearchinput()" [(ngModel)]="searchinput"  [matAutocomplete]="auto">
       <button > <i class="fa fa-search"></i>Go</button>
+    
+     
     </div>
-    <mat-autocomplete class="ac" #auto="matAutocomplete">
-      <mat-option style="height: auto; border-top: none;" [routerLink]="['/search', r.city]"
-        *ngFor="let r of serarchResult " [value]="r.keyword">
 
-
-       
-        <p style="padding: 0%;margin: 0%;line-height: 1em;font-size: small;padding: 0%;">
-          <span style="font-weight: bold;">{{r.keyword}}</span>
-          {{r.city}} 
-          <br>
-          {{r.houseRoomeType }}
-          <br>
-          <br>
-          <!-- <span style="color: gray;  margin: 0%;">
-            {{r.description}} ....
-          </span> -->
-        </p>
-
-
-
-      </mat-option>
-
-    </mat-autocomplete>
+  
      
   </div>
- 
+  <div>
+    <form>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option  [routerLink]="['/search', r.keyword]"
+          *ngFor="let r of serarchResult" [value]="r.keyword">
+            <label>{{r.keyword}}<small style="margin-left: 3%;">{{ r.title }}</small></label>
+        </mat-option>
+  
+      </mat-autocomplete>
+    </form>
+   
+  </div>
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 me" style="padding:1%;">
 
@@ -114,16 +106,12 @@
 
 
             </p> -->
-            <p style="font-weight:600;">
+            <p style="font-weight:600; text-align: center;">
 
-              {{d.address.city}} {{d.address.state}} {{d.address.zipCode}}
-
+             {{d.header}} <br> {{d.address.city}} <br> 
+                <small style="font-weight:lighter">  Posted {{d._Date | date:'mediumDate'}}</small>
             </p>
-            <p style="padding-top: 0%;">
-
-              Posted on {{d._Date | date:'mediumDate'}}
-
-            </p>
+           
           </mat-card-content>
 
         </mat-card>

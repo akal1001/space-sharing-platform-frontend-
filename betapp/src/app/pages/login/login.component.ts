@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
         this.storageService.SetData(this.storageService.usertoken, JSON.stringify(u))
         u = new User();
         this.user = new User();
-        this.router.navigateByUrl('/home')
+        this.router.navigate([''])
       }
       else {
         alert("usrname or password wrong!")

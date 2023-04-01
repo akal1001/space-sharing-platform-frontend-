@@ -32,7 +32,7 @@ export class AccountComponent implements OnInit {
 
          if(response == true)
          {
-            this.route.navigateByUrl("/home")
+            this.route.navigate([''])
          }
        });
        this.storage.ClearStorage();

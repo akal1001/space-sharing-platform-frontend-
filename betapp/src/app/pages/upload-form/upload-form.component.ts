@@ -109,6 +109,7 @@ export class UploadFormComponent implements OnInit {
   setValue(any: any) {
     this.selectvalue = this.title[any.target.value - 1].viewValue
     this.selectvalue2 = this.title[any.target.value - 1].value
+    this.content.catagoryrefrenceId = this.title[any.target.value].value;
     this.content.title = this.title[any.target.value - 1].viewValue
     this.selectvaluePrompt = undefined;
     console.log(this.selectvalue2);
@@ -357,36 +358,48 @@ export class UploadFormComponent implements OnInit {
     //   this.imageurls.splice(index, 1);
     // }
   }
-
+  publishmessage:any;
   async PublishContent() {
-    await this.asynctest().then((response) => {
-      if (response == 0) {
-        let obj = {
-          usertoken: this.storage.GetData(this.storage.usertoken).usertoken,
-          catagory: this.content.title,
-          catagoryReferenceId: "val.catagoryrefereceId",
-          header: this.content.title,
-          Description: this.content.description,
-          phone: this.content.phone,
-          price: this.content.price,
-          State: "No state provided",
-          city: this.content.city,
-          zipCode: 0,
-          street: "No street address provided",
-          detailLists: "detailLists",
-          Images: this.content.images,
-          IsAddressPublic: false,
+    try{
+      await this.asynctest().then((response) => {
+        if (response == 0) {
+          let obj = {
+            usertoken: this.storage.GetData(this.storage.usertoken).usertoken,
+            catagory: this.content.title,
+            catagoryReferenceId: this.content.catagoryrefrenceId,
+            header: this.content.title,
+            Description: this.content.description,
+            phone: this.content.phone,
+            price: this.content.price,
+            State: "No state provided",
+            city: this.content.city,
+            zipCode: 0,
+            street: "No street address provided",
+            detailLists: "detailLists",
+            Images: this.content.images,
+            IsAddressPublic: false,
+          }
+          this.houseService.PostHouseServiceTest(obj).subscribe((response) => {
+            this.myprompt = "upload completed"
+            // alert("Upload completed!")
+            this.publishmessage = "Congratulations your content successfully published";
+            this.uploadresponse = response
+            //this.content = new uploadContent();
+            //this.imageurls = [];
+            
+  
+          })
         }
-        this.houseService.PostHouseServiceTest(obj).subscribe((response) => {
-          this.myprompt = "upload completed"
-          // alert("Upload completed!")
-          this.uploadresponse = response
-        })
-      }
-      else {
-       // alert("all required fields must be filled out")
-      }
-    })
+        else {
+         // alert("all required fields must be filled out")
+        }
+      })
+    }
+    catch(error)
+    {
+      this.publishmessage = "Publishing fail!";
+    }
+   
 
   }
 
