@@ -60,6 +60,10 @@ export class AppComponent {
   }
   ngOnInit(): void {
 
+   
+
+
+
     // alert(id);
     if (this.router.url == "/") {
 
@@ -201,17 +205,16 @@ export class AppComponent {
 
     let userInfo = this.storage.GetData(this.storage.usertoken);
 
-     
+
     if (userInfo == null) {
       this.router.navigateByUrl("/login")
-      
+
     }
-    else
-    {
+    else {
       this.router.navigateByUrl("/uploadForm")
     }
     //
-   
+
   }
 
 
@@ -300,14 +303,19 @@ export class AppComponent {
       this.router.navigateByUrl("/home")
     }
 
-    this.searchsrvice.SearchServe(this.searchinput).subscribe((result: any) => {
-      console.log(JSON.stringify(result))
-      console.log(this.searchinput)
+    this.searchsrvice.SearchServe(this.searchinput,'none').subscribe((result: any) => {
+      //console.log(JSON.stringify(result))
+      //console.log(this.searchinput)
       this.serarchResult = result;
       this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
     })
     this.inputFromParent = this.searchinput;
 
 
+  }
+
+  test()
+  {
+    this.router.navigateByUrl("/test")
   }
 }

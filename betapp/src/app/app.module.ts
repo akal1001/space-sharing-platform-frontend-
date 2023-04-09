@@ -45,6 +45,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SearchComponent } from './pages/search/search.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { TestComponent } from './pages/test/test.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     UploadFormComponent,
       SearchComponent,
       PageNotFoundComponent,
+      TestComponent,
     
 
   ],

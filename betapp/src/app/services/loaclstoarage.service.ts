@@ -27,6 +27,8 @@ export class LoaclstoarageService {
 
   catagoryListKey = "catagoryListKeycatM9HA5U8WO6XOOXS16O7Y2DPRMYQUWLOTL6XOOUJ0X9PXS16O7Y2DG49"
   KEYPRIVATEPUBLICADDRESS = "Y2DPRMYQUWLOTL6XOOUJ0X9PXS16O9080987Y2D"
+ 
+ 
   SetData(key:string, val:string)
   {
      Storage.setItem(key,val)
@@ -50,5 +52,20 @@ export class LoaclstoarageService {
   ClearStorage()
   {
      Storage.clear();
+  }
+
+
+  SetDatatest(key:string, val:string)
+  {
+     Storage.setItem(key,val)
+  }
+  GetDatatest(key:string)
+  {
+
+
+     var data = Storage.getItem(key);
+
+     return data;
+    
   }
 }

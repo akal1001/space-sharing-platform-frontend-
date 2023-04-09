@@ -14,15 +14,13 @@ export class SearchService {
   d: any = [{ "name": "John", "age": 30, "car": null }];
 
 
-  SearchServe(input: any): Observable<any> {
-
-
+  SearchServe(input: any, languagekey:any): Observable<any> {
     let result = this.httpClient.get<any>(this._baseUploadUrl + "search", {
       params: {
-        q: input
+        q: input,
+        Languagekey:languagekey
       },
     });
-
     return result;
   }
 

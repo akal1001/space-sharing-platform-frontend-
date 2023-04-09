@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatRadioButton, MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
+import { AmeharicService } from 'src/app/services/ameharic.service';
 import { HomeService } from 'src/app/services/home.service';
 import { LoaclstoarageService } from 'src/app/services/loaclstoarage.service';
 import { SearchService } from 'src/app/services/search.service';
+import { ValidatorService } from 'src/app/services/validator.service';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +21,7 @@ export class HomeComponent implements OnInit {
   searchinput: any;
   serarchResult: any = null;
   choosedLists: any = new Array();
-  constructor(private searchsrvice: SearchService, private dataservice: HomeService, private storage: LoaclstoarageService, private router: Router) { }
+  constructor(private searchsrvice: SearchService, private amharic:AmeharicService, private valdator:ValidatorService, private dataservice: HomeService, private storage: LoaclstoarageService, private router: Router) { }
   public data: any;
   el: any;
 
@@ -34,20 +36,45 @@ export class HomeComponent implements OnInit {
     //this.searchinputFromparent
   }
  
-
- userSearchinput() {
+  search_value:any = null;
+ async userSearchinput() {
 
      //this.router.navigateByUrl('/search')
-    this.searchsrvice.SearchServe(this.searchinput).subscribe((result: any) => {
-      console.log(JSON.stringify(result))
-      console.log(this.searchinput)
-      this.serarchResult = result;
+    // this.searchsrvice.SearchServe(this.searchinput,'key').subscribe((result: any) => {
+   
+    //   this.serarchResult = result;
     
-      this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
-    })
+    //   this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
+    // })
+   
+
+    
+    let val = await this.valdator.IsStringContaionNoneEngChar(this.searchinput);
+    if (val == true) {
+      console.log("val " + val);
+      this.search_value = await this.amharic.trnsletToEngAlphWhileTyping(this.searchinput);
+      this.searchsrvice.SearchServe(this.search_value, "key").subscribe((result: any) => {
+        console.log(JSON.stringify(result))
+        console.log(this.searchinput)
+        this.serarchResult = result;
+        //this.data = this.serarchResult;
+        console.log(this.serarchResult);
+
+      })
+    }
+    else
+    {
+      this.searchsrvice.SearchServe(this.searchinput, "none").subscribe((result: any) => {
+        console.log(JSON.stringify(result))
+        console.log(this.searchinput)
+        this.serarchResult = result;
+        //this.data = this.serarchResult;
+        console.log(this.serarchResult);
+
+      })
+    }
+
     this.inputFromParent = this.searchinput;
-
-
   }
   onpageload() {
     this.sampleData = this.storage.GetData(this.storage.tempdataIds);
@@ -62,10 +89,10 @@ export class HomeComponent implements OnInit {
       this.storage.SetData(this.storage.DefaultHomeData, JSON.stringify(response));
       this.data = response;
 
-       console.log(JSON.stringify(this.data));
+      //  console.log(JSON.stringify(this.data));
     })
 
-    console.log(this.inputFromParent);
+   // console.log(this.inputFromParent);
     this.message = this.inputFromParent;
 
     this.GetCatagoryList();
@@ -117,7 +144,7 @@ export class HomeComponent implements OnInit {
     this.dataservice.GetPublickeySevice().subscribe((response: { houseId: any; }) => {
       this.key = response.houseId;
 
-      console.log("key" + this.key);
+      //console.log("key" + this.key);
     })
 
   }
@@ -133,14 +160,14 @@ export class HomeComponent implements OnInit {
   checkedvalue: any;
   checkCheckBoxvalue(event: any, catagoryrefereceId: any, value: any) {
 
-    console.log(event);
+   // console.log(event);
     if (event.checked == true) {
       this.checkedvalue = catagoryrefereceId;
 
       this.choosedLists.push(this.checkedvalue);
 
       for (var i = 0; i < this.choosedLists.length; i++) {
-        console.log("checked catagory list " + this.choosedLists[i])
+       // console.log("checked catagory list " + this.choosedLists[i])
       }
     }
     if (event.checked == false) {

@@ -16,6 +16,7 @@ import { ListsComponent } from './pages/lists/lists.component';
 import { UploadFormComponent } from './pages/upload-form/upload-form.component';
 import { SearchComponent } from './pages/search/search.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { TestComponent } from './pages/test/test.component';
 
 
 // const routes: Routes = [
@@ -52,6 +53,7 @@ const routes: Routes = [
 
   { path: 'uploadForm', component: UploadFormComponent },
   { path: 'search/:id', component: SearchComponent },
+  { path: 'test', component: TestComponent },
   { path: '**', component: PageNotFoundComponent },
 
 

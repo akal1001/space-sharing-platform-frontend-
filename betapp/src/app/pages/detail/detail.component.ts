@@ -66,7 +66,7 @@ export class DetailComponent implements OnInit {
 
 
 
-    this.searchService.SearchServe(this.house.address.city).subscribe((result: any) => {
+    this.searchService.SearchServe(this.house.address.city,'key').subscribe((result: any) => {
 
       console.log("new result " + JSON.stringify(result))
 
