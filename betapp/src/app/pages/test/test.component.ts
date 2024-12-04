@@ -85,13 +85,13 @@ export class TestComponent implements OnInit {
   }
   search_value: any = null;
   // KeyboardEvent
-  async userSearchinput() {
+  async userSearchinput(event:KeyboardEvent) {
     //this.wordList = this.userSearchinput
     let val = await this.valdator.IsStringContaionNoneEngChar(this.searchinput);
     if(val == true)
     {
       console.log("val " + val);
-      this.search_value = await this.amharic.trnsletToEngAlphWhileTyping(this.searchinput);
+      this.search_value = await this.amharic.ConvertAmeharicCharByCharToEngAlpha(this.searchinput);
     }
   }
   clear() {
@@ -117,16 +117,16 @@ export class TestComponent implements OnInit {
 
 
 
-  GetkeyandValue() {
-    this.amharic.ReturnAllAlph().subscribe((response) => {
+  async GetkeyandValue() {
 
-      this._response = response;
+    let am = await this.amharic.AmeharcJsonAsy()
+    this._response = am;
+    // this.amharic.ReturnAllAlph().subscribe((response) => {
 
-      //console.log(JSON.stringify(this._response));
+    //   this._response = response;
 
-
-      // console.log(JSON.stringify(this._response))
-    })
+     
+    // })
 
     //this.loacl.SetDatatest(this._key, this._value)
   }

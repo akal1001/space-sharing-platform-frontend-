@@ -19,37 +19,46 @@ export class SearchComponent implements OnInit {
 
     this.id = this._Activatedroute.snapshot.paramMap.get("id");
     this.searchinput = this.id;
-    // alert(this.id)
-    //this.GetDetail(this.id);
-    this.userSearchinputCity(this.id)
+    this.valdator.IsStringContaionNoneEngChar(this.id).then((response) => {
+      console.log(response)
+      if (response === true) {
+        this.amharic.ConvertAmeharicCharByCharToEngAlpha(this.id).then((response) => {
+          console.log(response);
+          this.userSearchinputCity(response,"key");
+        })
+      }
+      else {
+        this.userSearchinputCity(this.id,"none");
+      }
+    })
 
-    window.onpopstate = (event) => {
-      // User clicked the back button
-      this.id = this._Activatedroute.snapshot.paramMap.get("id");
-      this.searchinput = this.id;
-      //alert('User clicked the back button' + this.id);
-      this.userSearchinputCity(this.id)
-      //this.newval(this.id);
-    }
+
+    // window.onpopstate = (event) => {
+      
+    //   this.id = this._Activatedroute.snapshot.paramMap.get("id");
+    //   this.searchinput = this.id;
+    
+    //   this.userSearchinputCity(this.id)
+    
+    // }
   }
   search_value: any = null;
   async userSearchinput() {
 
     let val = await this.valdator.IsStringContaionNoneEngChar(this.searchinput);
     if (val == true) {
-      console.log("val " + val);
-      this.search_value = await this.amharic.trnsletToEngAlphWhileTyping(this.searchinput);
+      //console.log("val " + val);
+      this.search_value = await this.amharic.ConvertAmeharicCharByCharToEngAlpha(this.searchinput);
       this.searchsrvice.SearchServe(this.search_value, "key").subscribe((result: any) => {
-        console.log(JSON.stringify(result))
-        console.log(this.searchinput)
+        //console.log(JSON.stringify(result))
+        //console.log(this.searchinput)
         this.serarchResult = result;
         //this.data = this.serarchResult;
-        console.log(this.serarchResult);
+        //console.log(this.serarchResult);
 
       })
     }
-    else
-    {
+    else {
       this.searchsrvice.SearchServe(this.searchinput, "none").subscribe((result: any) => {
         console.log(JSON.stringify(result))
         console.log(this.searchinput)
@@ -68,12 +77,52 @@ export class SearchComponent implements OnInit {
     this.router.navigateByUrl('/home')
   }
   data: any;
-  userSearchinputCity(city: any) {
-    this.searchsrvice.SearchServe_In(city).subscribe((result: any) => {
-      console.log("new result " + JSON.stringify(result))
-      this.data = result;
-      //this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
+  userSearchinputCity(city: any, languagekey:any) {
+    this.valdator.IsStringContaionNoneEngChar(city).then((response)=>{
+      if(response === true)
+      {
+        this.searchsrvice.SearchServe_In(city,'key').subscribe((result: any) => {
+          // console.log("new result " + JSON.stringify(result))
+          this.data = result;
+          //this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
+        })
+      }
+      else
+      {
+        this.searchsrvice.SearchServe_In(city, 'languagekey').subscribe((result: any) => {
+          // console.log("new result " + JSON.stringify(result))
+          this.data = result;
+          //this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
+        })
+      }
     })
+   
+  }
+
+  userSearchinputCity2(city: any) {
+    
+    this.valdator.IsStringContaionNoneEngChar(city).then((response)=>{
+      if(response === true)
+      {
+        this.amharic.ConvertAmeharicCharByCharToEngAlpha(city).then((response)=>{
+          this.searchsrvice.SearchServe_In(response,'key').subscribe((result: any) => {
+            // console.log("new result " + JSON.stringify(result))
+            this.data = result;
+            //this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
+          })
+        })
+       
+      }
+      else
+      {
+        this.searchsrvice.SearchServe_In(city, 'none').subscribe((result: any) => {
+          // console.log("new result " + JSON.stringify(result))
+          this.data = result;
+          //this.storage.SetData(this.storage.SearchedDatakey, JSON.stringify(result))
+        })
+      }
+    })
+   
   }
 
 }

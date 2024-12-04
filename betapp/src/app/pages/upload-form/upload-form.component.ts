@@ -9,6 +9,7 @@ import { HomeService } from 'src/app/services/home.service';
 import { FormControl } from '@angular/forms';
 import { ValidatorService } from 'src/app/services/validator.service';
 import { AmeharicService } from 'src/app/services/ameharic.service';
+import { RsaService } from 'src/app/services/rsa.service';
 
 
 interface Title {
@@ -66,7 +67,7 @@ export class UploadFormComponent implements OnInit {
   myprompt: any;
 
 
-  constructor(private validator: ValidatorService, private ameharicService:AmeharicService, private storage: LoaclstoarageService, private houseService: HomeService, private elementRef: ElementRef, private fileuploadService: FileuploaderService, private renderer: Renderer2, private breakpointObserver: BreakpointObserver) {
+  constructor(private validator: ValidatorService, private rsaservice: RsaService,private ameharicService:AmeharicService, private storage: LoaclstoarageService, private houseService: HomeService, private elementRef: ElementRef, private fileuploadService: FileuploaderService, private renderer: Renderer2, private breakpointObserver: BreakpointObserver) {
 
     // this.isMobile = breakpointObserver.isMatched('(max-width: 767px)');
     // this.isTablet = breakpointObserver.isMatched('(min-width: 768px) and (max-width: 1023px)');
@@ -367,10 +368,8 @@ export class UploadFormComponent implements OnInit {
     const res = await this.validator.IsStringContaionNoneEngChar(this.content.city);
     if(res == true)
     {
-       resultTranseltedWord = await this.ameharicService.transletToEngAlph(this.content.city)
+       resultTranseltedWord = await this.ameharicService.ConvertAmeharicCharByCharToEngAlpha(this.content.city)
     }
-    
-
     try {
       await this.asynctest().then((response) => {
         if (response == 0) {
@@ -382,15 +381,16 @@ export class UploadFormComponent implements OnInit {
             Description: this.content.description,
             phone: this.content.phone,
             price: this.content.price,
-            State: "No state provided",
+            //State: "No state provided",
             city: this.content.city,
             translateword: resultTranseltedWord,
-            zipCode: 0,
-            street: "No street address provided",
-            detailLists: "detailLists",
+            //zipCode: 0,
+            //street: "No street address provided",
+            //detailLists: "detailLists",
             Images: this.content.images,
-            IsAddressPublic: false,
+           // IsAddressPublic: false,
           }
+          //let encObj = this.rsaservice.encryptWithPublicKey(JSON.stringify(obj))
           this.houseService.PostHouseServiceTest(obj).subscribe((response) => {
             this.myprompt = "upload completed"
             // alert("Upload completed!")

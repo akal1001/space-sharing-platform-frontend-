@@ -51,25 +51,25 @@ export class HomeComponent implements OnInit {
     
     let val = await this.valdator.IsStringContaionNoneEngChar(this.searchinput);
     if (val == true) {
-      console.log("val " + val);
-      this.search_value = await this.amharic.trnsletToEngAlphWhileTyping(this.searchinput);
+      //console.log("val " + val);
+      this.search_value = await this.amharic.ConvertAmeharicCharByCharToEngAlpha(this.searchinput);
       this.searchsrvice.SearchServe(this.search_value, "key").subscribe((result: any) => {
-        console.log(JSON.stringify(result))
-        console.log(this.searchinput)
+        // console.log(JSON.stringify(result))
+        // console.log(this.searchinput)
         this.serarchResult = result;
         //this.data = this.serarchResult;
-        console.log(this.serarchResult);
+        // console.log(this.serarchResult);
 
       })
     }
     else
     {
       this.searchsrvice.SearchServe(this.searchinput, "none").subscribe((result: any) => {
-        console.log(JSON.stringify(result))
-        console.log(this.searchinput)
+        // console.log(JSON.stringify(result))
+        // console.log(this.searchinput)
         this.serarchResult = result;
         //this.data = this.serarchResult;
-        console.log(this.serarchResult);
+        //console.log(this.serarchResult);
 
       })
     }
