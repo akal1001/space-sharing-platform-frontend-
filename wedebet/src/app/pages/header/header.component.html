@@ -1,0 +1,37 @@
+<div style="flex-direction: column; " >
+
+    <header class="header">
+      <div class="header-container">
+        <div class="logo" (click)="navigateToHome()">LOGO</div>
+        <input class="search-box" type="text" 
+        placeholder="Search" [(ngModel)]="searchText"
+         (focus)="onFocus()"
+         (blur)="onBlur()"
+         (input)="onSearch(searchText)" />
+        <div class="right-div">
+          <button class="login-btn" value="" (click)="navigateToHome()">Home</button>
+          <button class="login-btn" (click)="navigateToCreateAccount()">{{username}}</button>
+          <button class="login-btn"(click)="navigateToLogin()">Login</button>
+        </div>
+     
+       
+        <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+      </div>
+      <div id="welcome-container" class="welcome-container">
+       
+      </div>
+    </header>
+    <app-search-results  *ngIf="showResults" [results]="searchResults"></app-search-results>
+   
+ </div>
+<div>
+
+<!-- Full-Width Side Menu -->
+<div class="side-menu" *ngIf="isMenuOpen">
+  <button class="close-btn" (click)="toggleMenu()">×</button>
+  <ul>
+    <li><a href="#">Menu Item 1</a></li>
+    <li><a href="#">Menu Item 2</a></li>
+    <li><a href="#">Menu Item 3</a></li>
+  </ul>
+</div>

@@ -1,0 +1,11 @@
+
+<div *ngIf="results.length > 0" class="search-results">
+    <p *ngFor="let result of results" (click)="onResultSelected(result)">
+      {{ result }}
+    </p>
+  </div>
+  <div *ngIf="results.length === 0" class="search-results">
+    <p>No results found</p>
+  </div> 
+  
+  

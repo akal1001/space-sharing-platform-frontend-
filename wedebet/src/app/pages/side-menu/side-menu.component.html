@@ -1,0 +1,45 @@
+<div class="side-menu">
+    <div class="logo"></div>
+    <ul>
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a (click)="onContactClick()">Contact</a></li>  <!-- Pass data when clicked -->
+        
+    </ul>
+    <form>
+      <ul>
+        <li>
+          <label>
+            <input 
+              type="checkbox" 
+              [checked]="isHomeChecked" 
+              (change)="userChecked('Home', $event)" 
+            /> 
+            Home
+          </label>
+        </li>
+        <li>
+          <label>
+            <input 
+              type="checkbox" 
+              (change)="userChecked('About', $event)" 
+            /> 
+            About
+          </label>
+        </li>
+        <li>
+          <label>
+            <input 
+              type="checkbox" 
+              (change)="userChecked('Services', $event)" 
+            /> 
+            Services
+          </label>
+        </li>
+      </ul>
+    </form>
+    
+    
+  </div>
+  
