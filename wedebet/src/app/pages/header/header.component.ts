@@ -4,14 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
-import { SearchResultsComponent } from '../search-results/search-results.component';
 import { DataService } from '../../DataServices/data.service';
+import { SearchResultComponent } from '../search-result/search-result.component';
+
+// import { DataService } from '../../DataServices/data.service';
 
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NgIf, FormsModule, SearchResultsComponent],
+  imports: [NgIf, FormsModule, SearchResultComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

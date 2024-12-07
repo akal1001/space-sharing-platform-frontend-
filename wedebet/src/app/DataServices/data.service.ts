@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,6 +12,5 @@ export class DataService {
   setData(contactData: string) {
     this.dataSubject.next(contactData);
     console.log("data expose");
-    
   }
 }

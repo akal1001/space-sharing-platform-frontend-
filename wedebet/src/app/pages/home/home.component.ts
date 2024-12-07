@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SideMenuComponent } from '../side-menu/side-menu.component';
 import { DataService } from '../../DataServices/data.service';
+
 @Component({
   selector: 'app-home',
   standalone: true,

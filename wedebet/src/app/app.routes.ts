@@ -3,7 +3,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { AppComponent } from './app.component';
 import { CreateAccountComponent } from './pages/create-account/create-account.component';
 import { HomeComponent } from './pages/home/home.component';
-import { SearchResultsComponent } from './pages/search-results/search-results.component';
+
 import { DetailComponent } from './pages/detail/detail.component';
 
 

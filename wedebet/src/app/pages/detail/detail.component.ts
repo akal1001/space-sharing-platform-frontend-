@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../DataServices/data.service';
 
+
 @Component({
   selector: 'app-detail',
   standalone: true,
