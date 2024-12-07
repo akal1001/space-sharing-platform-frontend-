@@ -5,6 +5,8 @@ import { ReplaySubject, Subject } from 'rxjs';
 })
 export class DataService {
 
+  constructor() { }
+  
   private dataSubject = new ReplaySubject<string>(1);
   data$ = this.dataSubject.asObservable();
  

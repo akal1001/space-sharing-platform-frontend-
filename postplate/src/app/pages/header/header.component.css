@@ -1,0 +1,152 @@
+
+/* Header Styling */
+.header {
+ 
+
+   
+    top: 0; /* Fixes it to the top of the page */
+    left: 0;
+    
+    background-color: #007bff;
+    color: white;
+    z-index: 1000; /* Ensures it stays above other content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adds a shadow for better visibility */
+    
+  }
+  
+  .header-container {
+    display: flex;
+  
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .search-box {
+    padding: 0.5rem;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 1rem; /* Add space between logo and search box */
+   
+  }
+  .right-div{
+    display: flex;
+    margin-left: auto
+  }
+  
+  .login-btn {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: auto
+  }
+  
+  .menu-toggle {
+    display: none;
+    background: none;
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  
+  }
+  
+  
+  
+  /* Responsive Design for Small Screens */
+  @media (max-width: 768px) {
+    .search-box {
+      display: none; /* Hide search box on small screens */
+    }
+  
+    .login-btn {
+      display: none; /* Hide login button on small screens */
+    }
+  
+    .menu-toggle {
+      display: block; /* Show menu toggle button */
+    }
+  
+    /* Optionally adjust header-container on small screens */
+    .header-container {
+      justify-content: space-between; /* Ensure toggle is on the far right */
+    }
+    /* .welcome-container{
+      display: block;
+      width: 100%;;
+    } */
+  
+  
+    /* .app-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: 100%;
+    } */
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: auto;  /* Footer stays at the bottom */
+      width: 100%;
+      position: relative;
+    }
+  }
+  
+  
+  
+    /* Full-Width Side Menu */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%; /* Full width */
+      height: 100%;
+      background-color: #007bff;
+      color: white;
+      display: flex;
+      flex-direction: column;
+  
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      z-index: 1000; /* Ensure it appears above other elements */
+    }
+  
+    .side-menu ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 2rem;
+      text-align: center;
+    }
+  
+    .side-menu li {
+      margin: 1rem 0;
+    }
+  
+    .side-menu a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+  
+    .close-btn {
+      align-self: flex-end;
+      background: none;
+      color: white;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+  
+   
+  
+  
+   
