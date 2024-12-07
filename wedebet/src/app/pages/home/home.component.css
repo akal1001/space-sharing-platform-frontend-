@@ -1,33 +1,119 @@
+/* Hide the menu and adjust home container on small screens */
 @media (max-width: 768px) {
-    .menu-container {
-      display: none;
-    }
-  
-    .home-container {
-  
-      width: 100%;
-      margin-left: 0;
-      text-align: center;
-      border: 1px solid lightgray;
-    }
+  .menu-container {
+    display: none;
   }
-  
-  @media (min-width: 769px) {
-  
-    .menu-container {
-  
-      display: block;
-      position: fixed;
-      height: 100vh; /* Full height of the viewport */
-      /* border: 1px solid lightgray; */
-      overflow-y: auto;
-    }
-  
-    .home-container {
-  
-      text-align: center;
-      width: 100%;
-      margin-left: 200px;
-      border: 1px solid lightgray;
-    }
+
+  .home-container {
+    width: 100%;
+    height: auto;
+    margin-left: 0;
+    text-align: center;
+    border: 1px solid lightgray;
   }
+}
+
+/* Display the menu and adjust home container on larger screens */
+@media (min-width: 769px) {
+  .menu-container {
+    display: block;
+    position: fixed;
+    height: 100vh; /* Full height of the viewport */
+    overflow-y: auto;
+  }
+
+  .home-container {
+    text-align: center;
+    width: 100%;
+    margin-left: 250px; /* Space for the menu */
+    border: 1px solid lightgray;
+  }
+}
+
+/* Container Styles */
+.menu-container {
+  width: 250px;
+  background-color: #f9f9f9;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.home-container {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Cards Section */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* Card Styles */
+.card {
+  width: 100%;
+  max-width: 220px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Container */
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Price Tag & Image Count */
+.card .price-tag,
+.card .image-count {
+  position: absolute;
+  top: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.card .price-tag {
+  left: 8px;
+}
+
+.card .image-count {
+  right: 8px;
+}
+
+/* Property Details */
+.card .details {
+  padding: 12px;
+  text-align: center;
+}
+
+.card .details h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
+.card .details p {
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.card .details small {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Media Query for Large Screens (Show 5 items per row) */
+@media screen and (min-width: 1200px) {
+  .card {
+    flex: 1 1 calc(20% - 16px); /* 20% width for 5 items per row, minus the gap */
+    max-width: none; /* Remove the max-width for large screens */
+  }
+}

@@ -8,5 +8,5 @@ export const appConfig: ApplicationConfig = {
 };
 
 export const APP_CONFIG = {
-  apiUrl: 'https://localhost:44330/api',
+  apiUrl: 'https://ndl8o233h7.execute-api.us-east-1.amazonaws.com/Prod/api',
 };

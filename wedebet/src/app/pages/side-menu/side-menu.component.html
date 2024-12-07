@@ -1,45 +1,49 @@
 <div class="side-menu">
-    <div class="logo"></div>
-    <ul>
-      <li><a href="#" class="active">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Services</a></li>
-      <li><a (click)="onContactClick()">Contact</a></li>  <!-- Pass data when clicked -->
-        
-    </ul>
+ 
+
+   
     <form>
+      <h3>ምድብ</h3>
       <ul>
-        <li>
+        <li *ngFor="let result of data">
           <label>
             <input 
               type="checkbox" 
               [checked]="isHomeChecked" 
-              (change)="userChecked('Home', $event)" 
+              (change)="userChecked(result, $event)" 
             /> 
-            Home
+           {{result._Catagory}}
           </label>
         </li>
-        <li>
+       
+      </ul>
+    </form>
+    <form>
+      <h3>Category</h3>
+      <ul>
+        <li *ngFor="let result of data">
           <label>
             <input 
               type="checkbox" 
-              (change)="userChecked('About', $event)" 
+              [checked]="isHomeChecked" 
+              (change)="userChecked(result, $event)" 
             /> 
-            About
+           {{result._Catagory}}
           </label>
         </li>
-        <li>
-          <label>
-            <input 
-              type="checkbox" 
-              (change)="userChecked('Services', $event)" 
-            /> 
-            Services
-          </label>
-        </li>
+       
       </ul>
     </form>
     
     
   </div>
   
+
+<!-- 
+
+  <div class="logo"></div>
+  <ul>
+ 
+    <li><a (click)="onContactClick()">Contact</a></li> 
+      
+  </ul> -->

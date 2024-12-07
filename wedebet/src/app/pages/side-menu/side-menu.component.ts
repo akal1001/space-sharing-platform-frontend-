@@ -1,24 +1,41 @@
 import { Component } from '@angular/core';
 import { DataService } from '../../DataServices/data.service';
-
+import { NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
+import { ApiService } from '../../APIs/api.service';
 
 
 @Component({
   selector: 'app-side-menu',
   standalone: true,
-  imports: [],
+  imports: [NgIf,NgFor],
   templateUrl: './side-menu.component.html',
   styleUrl: './side-menu.component.css'
 })
 export class SideMenuComponent {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private apiService:ApiService) {}
+
+  data:any;
+  ngOnInit() {
+    this.apiService.getData().subscribe(
+      (response) => {
+        this.data = response;
+        console.log(this.data);
+      },
+      (error) => {
+        console.error('API call error:', error);
+      }
+    );
+  }
+
+
 
   onContactClick() {
     const contactData = 'This is contact data'; 
     this.dataService.setData(contactData);
   }
 
-  isHomeChecked = true; // Default value for the "Home" checkbox
+  isHomeChecked = false; // Default value for the "Home" checkbox
 
   userChecked(option: string, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;

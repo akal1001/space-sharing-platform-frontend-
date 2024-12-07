@@ -1,18 +1,15 @@
 .side-menu {
+    padding-top: 30px;
+    padding-bottom: 0px;
     width: 200px;
     background-color: white;
     color: gray;
     text-align: center;
-    top: 0;
-    left: 0;
+   
+    /* border: 1px solid red; */
   }
   
-  .side-menu .logo {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: gray;
-  }
+
   
   .side-menu ul {
     list-style-type: none;
@@ -29,7 +26,7 @@
     color: gray;
     text-decoration: none;
     display: block;
-    padding: 10px;
+   
     border-radius: 5px;
   }
   
@@ -44,3 +41,18 @@
     }
   }
   
+  form{
+
+    padding: 5%;
+  }
+  form h3 {
+    text-align: center;
+    margin: 0;
+  }
+
+  form ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+  }

@@ -10,6 +10,7 @@
          (blur)="onBlur()"
          (input)="onSearch(searchText)" />
         <div class="right-div">
+          <button class="login-btn" value="" (click)="navigateToUpload()">Upload</button>
           <button class="login-btn" value="" (click)="navigateToHome()">Home</button>
           <button class="login-btn" (click)="navigateToCreateAccount()">{{username}}</button>
           <button class="login-btn"(click)="navigateToLogin()">Login</button>

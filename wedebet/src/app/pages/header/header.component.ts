@@ -145,4 +145,7 @@ export class HeaderComponent implements OnInit {
   navigateToHome() {
     this.router.navigate(['/home']);
   }
+  navigateToUpload() {
+    this.router.navigate(['/upload']);
+  }
 }
