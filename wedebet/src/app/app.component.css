@@ -8,8 +8,11 @@
    
     min-height: 100vh;
     margin: 0%;
+  
     padding-top: 50px;
     background-color: rgb(249, 249, 249);
+    
+    /* border: 1px solid red; */
 }
 
 .footer_container {

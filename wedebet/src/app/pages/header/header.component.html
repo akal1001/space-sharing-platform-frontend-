@@ -5,7 +5,7 @@
       <div class="header-container">
         <div class="logo" (click)="navigateToHome()">LOGO</div>
         <input class="search-box" type="text" 
-        placeholder="Search" [(ngModel)]="searchText"
+        placeholder="Search.." [(ngModel)]="searchText"
          (focus)="onFocus()"
          (blur)="onBlur()"
          (input)="onSearch(searchText)" />

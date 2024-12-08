@@ -66,15 +66,17 @@ export class HeaderComponent implements OnInit {
         searchBox.setAttribute('type', 'text');
         searchBox.setAttribute('placeholder', 'Search');
         searchBox.setAttribute('id', 'search-box'); // Set a unique ID
+        
         searchBox.value = this.searchText; // Set the current value of the textbox
     
        
         // Apply styles
         searchBox.style.position = 'relative';
         searchBox.style.padding = '0.5rem';
-        searchBox.style.width = '97%';
-        searchBox.style.border = '1px solid #ccc';
-        searchBox.style.borderRadius = '1px';
+        searchBox.style.width = '94%';
+        searchBox.style.marginBottom = '1%';
+        // searchBox.style.border = '1px solid #007bff';
+        // searchBox.style.borderRadius = '1px';
     
         // Attach the same event handlers as in the Angular template
         searchBox.addEventListener('focus', () => {
