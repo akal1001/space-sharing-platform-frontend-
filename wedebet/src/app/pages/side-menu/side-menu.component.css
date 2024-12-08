@@ -1,12 +1,13 @@
 .side-menu {
     padding-top: 30px;
     padding-bottom: 0px;
-    width: 200px;
+    width: 250px;
     background-color: white;
     color: gray;
     text-align: center;
+    min-height: 90%;
    
-    /* border: 1px solid red; */
+    border: 1px solid lightgray
   }
   
 

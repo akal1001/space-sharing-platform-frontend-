@@ -5,10 +5,11 @@
 }
 
 .body_container {
-    background-color: rgb(249, 253, 249);
+   
     min-height: 100vh;
     margin: 0%;
     padding-top: 50px;
+    background-color: rgb(249, 249, 249);
 }
 
 .footer_container {

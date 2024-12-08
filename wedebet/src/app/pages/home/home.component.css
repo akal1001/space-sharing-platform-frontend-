@@ -1,5 +1,5 @@
-/* Hide the menu and adjust home container on small screens */
-@media (max-width: 768px) {
+/* Hide the menu and adjust home container on small screens (phone) */
+@media (max-width: 480px) {
   .menu-container {
     display: none;
   }
@@ -10,6 +10,52 @@
     margin-left: 0;
     text-align: center;
     border: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+  }
+
+  .property-item {
+    display: flex;
+   
+    width: 100% !important;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    /* width: calc(25% - 1rem); */
+    width: calc(50% - 0.5rem);
+    overflow: hidden;
+  }
+}
+
+/* Hide the menu and adjust home container on small screens (tablet) */
+@media (max-width: 768px) {
+  .menu-container {
+    display: none;
+  }
+
+  .home-container {
+    width: 100% ;
+    height: auto;
+    margin-left: 0;
+    text-align: center;
+    border: 1px solid lightgray;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .property-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    /* width: calc(25% - 1rem); */
+    width: calc((100% / 3) - 1rem);
+    overflow: hidden;
   }
 }
 
@@ -18,102 +64,86 @@
   .menu-container {
     display: block;
     position: fixed;
-    height: 100vh; /* Full height of the viewport */
+    height: 100vh;
+    width: 20%;
+    /* Full height of the viewport */
     overflow-y: auto;
+    /* border: 1px solid green; */
   }
 
   .home-container {
     text-align: center;
-    width: 100%;
-    margin-left: 250px; /* Space for the menu */
-    border: 1px solid lightgray;
+
+    margin-left: 250px;
+    /* Space for the menu */
+    /* border: 1px solid red; */
+   
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .property-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    width: calc(25% - 1rem);
+    /* width: calc((100% / 3) - 1rem); */
+    overflow: hidden;
   }
 }
 
-/* Container Styles */
-.menu-container {
-  width: 250px;
-  background-color: #f9f9f9;
-  border-right: 1px solid #ddd;
-  overflow-y: auto;
-}
 
-.home-container {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-}
 
-/* Cards Section */
-.cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-}
 
-/* Card Styles */
-.card {
+/* Individual Property Item */
+
+
+/* Property Image */
+.property-image {
   width: 100%;
-  max-width: 220px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Image Container */
-.card img {
-  width: 100%;
-  height: 100%;
+  height: 150px;
   object-fit: cover;
 }
 
-/* Price Tag & Image Count */
-.card .price-tag,
-.card .image-count {
-  position: absolute;
-  top: 8px;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
+/* Property Info */
+.property-info {
+  padding: 0.5rem;
 }
 
-.card .price-tag {
-  left: 8px;
+.property-info h4 {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  color: #333;
 }
 
-.card .image-count {
-  right: 8px;
-}
-
-/* Property Details */
-.card .details {
-  padding: 12px;
-  text-align: center;
-}
-
-.card .details h4 {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 8px 0;
-}
-
-.card .details p {
-  font-size: 14px;
-  margin: 4px 0;
-}
-
-.card .details small {
-  font-size: 12px;
+.property-info p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
   color: #666;
 }
 
-/* Media Query for Large Screens (Show 5 items per row) */
-@media screen and (min-width: 1200px) {
-  .card {
-    flex: 1 1 calc(20% - 16px); /* 20% width for 5 items per row, minus the gap */
-    max-width: none; /* Remove the max-width for large screens */
-  }
+.property-info small {
+  color: #999;
+}
+
+/* Property Meta (Price and Image Count) */
+.property-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.property-meta span {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.property-price {
+  font-weight: bold;
+  color: #000;
 }
