@@ -9,13 +9,10 @@ import { APP_CONFIG } from '../app.config';
 })
 export class AccountService {
   private apiUrl = APP_CONFIG.apiUrl+"/account/";
-  
-  //private _baseUploadUrl = environment.baseurl + "account/"
   constructor(private httpClient: HttpClient, private storage: LoaclstoarageService) { }
-  //login user
-  UserLoginServe(UsernameOrEmail: any, password: any): Observable<any> {
+  
+  UserLoginServe(UsernameOrEmail: any, password: any): Observable<{ loginResponseSuccess:any }> {
 
-    // alert(UsernameOrEmail + "  " + password)
     let result = this.httpClient.get<any>(this.apiUrl + "login", {
       params: {
         UsernameOrEmail: UsernameOrEmail,
@@ -26,21 +23,9 @@ export class AccountService {
     return result;
   }
   //create new user
-  postNewUserService(
-    username: any,
-    password: any,
-    email: any
-  ): Observable<boolean> {
-    // string username, string password, string email
-    const endpont =
-      this.apiUrl +
-      "signup?username=" +
-      username +
-      "&password=" +
-      password +
-      "&email=" +
-      email;
-    return this.httpClient.post<boolean>(endpont, "");
+  postNewUserService(username: any,password: any,email: any): Observable<{ success: string; message:string }> {
+    const endpont =this.apiUrl +"signup?username=" +username +"&password=" +password +"&email=" +email;
+    return this.httpClient.post<any>(endpont, "");
   }
   //user log out
   UserLogout() {
