@@ -8,5 +8,15 @@ export const appConfig: ApplicationConfig = {
 };
 
 export const APP_CONFIG = {
-  apiUrl: 'https://ndl8o233h7.execute-api.us-east-1.amazonaws.com/Prod/api',
+  apiUrl: 'https://nl4her1ffj.execute-api.us-east-1.amazonaws.com/Prod/api',
 };
+export const aws_Config = {
+  bucketName: 'sm-image-bucket',
+  region: 'us-east-1',
+  aws_access_key: "AKIA4O3HLAEQGKNC275K",
+  aws_secret_key: "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",
+  s3Url: 'https://sm-image-bucket.s3.amazonaws.com/',
+}
+
+
+

@@ -1,13 +1,23 @@
+import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import {FormsModule,FormBuilder,ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
+import { FileuploaderService } from '../../services/fileuploader.service';
 @Component({
   selector: 'app-upload',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, NgIf,NgFor],
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css'
 })
 export class UploadComponent {
+
+  uploadedurls: any[] = [];
+  uploadStatus: string | null = null; // Added property
+  uploadMessage: string | null = null; // Added property
+
+  constructor(private http: HttpClient, private fileUploadService:FileuploaderService) {}
+
   property = {
     header: '',  // Bind this to the dropdown
     price: null,
@@ -37,9 +47,26 @@ export class UploadComponent {
   }
 
   onImageChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.property.image = file;
+    // Loop through all selected files
+    for (let i = 0; i < event.target.files.length; i++) {
+      const file = event.target.files[i];
+      if (file) {
+        this.property.image = file;  
+        
+      }
+  
+      // Call the upload service for each file
+      this.fileUploadService.uploadFile(file).then(img => {
+        console.log("result : " + img.fileUrl);
+        console.log("result : " + img.status);
+        console.log("result : " + img.message);
+  
+        // Update the message, status, and uploaded URL for each file
+        this.uploadMessage = img.message;
+        this.uploadStatus = img.status;
+        
+        this.uploadedurls.push(img.fileUrl)
+      });
     }
   }
 }

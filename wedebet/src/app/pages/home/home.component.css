@@ -16,7 +16,7 @@
   /* Center the flex items */
   justify-content: center;  /* Centers items horizontally */
   align-items: center;      /* Centers items vertically */
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 .property-item {

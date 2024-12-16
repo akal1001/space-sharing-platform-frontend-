@@ -6,6 +6,8 @@ import { HomeComponent } from './pages/home/home.component';
 
 import { DetailComponent } from './pages/detail/detail.component';
 import { UploadComponent } from './pages/upload/upload.component';
+import { FavoriteComponent } from './pages/favorite/favorite.component';
+import { AccountComponent } from './pages/account/account.component';
 
 
 export const routes: Routes = [
@@ -13,5 +15,8 @@ export const routes: Routes = [
    { path: 'detail', component:DetailComponent},
    { path: 'login', component: LoginComponent},
    { path: 'createAccount', component:CreateAccountComponent}, 
-   { path: 'upload', component:UploadComponent} 
+   { path: 'upload', component:UploadComponent},
+   {path:'favorite', component:FavoriteComponent},
+   {path:'account',component:AccountComponent}
+
 ];

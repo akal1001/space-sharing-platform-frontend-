@@ -150,4 +150,7 @@ export class HeaderComponent implements OnInit {
   navigateToUpload() {
     this.router.navigate(['/upload']);
   }
+  navigateToFav(){
+    this.router.navigate(['/favorite']);
+  }
 }

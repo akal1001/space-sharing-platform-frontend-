@@ -1,8 +1,8 @@
-<div class="upload-form-container">
+<!-- <div class="upload-form-container">
     <h2>Upload a Property</h2>
     <form (ngSubmit)="onSubmit()" #propertyForm="ngForm" enctype="multipart/form-data">
       
-      <!-- Property Header Dropdown -->
+    
       <div class="form-group">
         <label for="header">Property Header:</label>
         <select id="header" name="header" [(ngModel)]="property.header" required>
@@ -46,4 +46,27 @@
       <button type="submit" [disabled]="!propertyForm.form.valid">Submit</button>
     </form>
   </div>
+   -->
+
+   <div class="upload-container">
+    <h3>Upload Image</h3>
+    
+    <!-- File Input -->
+    <input
+      type="file"
+      id="fileInput"
+      alife-file-to-base64 multiple
+      (change)="onImageChange($event)"
+      accept="image/*"
+      class="form-control"
+    />
   
+    <!-- Optional: Display Upload Status -->
+    <p *ngIf="uploadStatus" [class.success]="uploadStatus === 'success'" [class.error]="uploadStatus === 'error'">
+      {{ uploadMessage }}
+    </p>
+    <div *ngFor="let img of uploadedurls">
+      <img [src]="img" *ngIf="img" alt="Uploaded Image">
+    </div>
+
+  </div>
