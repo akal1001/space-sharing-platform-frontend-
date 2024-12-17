@@ -30,6 +30,7 @@ export class FileuploaderService {
   }
 
   //send fiel to s3 bucket(test)
+  
   SendFileToS3(forma: any): Observable<any> {
     // alert(forma);
     const endpoint = environment.baseurl2;// "https://localhost:60715/api/values/putfile?id=" + "base64";
