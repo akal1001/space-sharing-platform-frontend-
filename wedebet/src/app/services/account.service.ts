@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { House } from '../interfaces/house';
 import { LoaclstoarageService } from './loaclstoarage.service';
 import { APP_CONFIG } from '../app.config';
+import { LoginResponse } from '../interfaces/login-response';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,13 +28,28 @@ export class AccountService {
     const endpont =this.apiUrl +"signup?username=" +username +"&password=" +password +"&email=" +email;
     return this.httpClient.post<any>(endpont, "");
   }
+
+  retrieveAccountDataFromLocalStorage(): Observable<LoginResponse | null> {
+    const storedData = localStorage.getItem('v');
+    if (storedData) {
+      const parsedData: LoginResponse = JSON.parse(storedData);
+      return of(parsedData);  
+    } else {
+      return of(null);
+    }
+  }
+
+
+
+
+
   //user log out
   UserLogout() {
-    let user = this.storage.GetData(this.storage.usertoken);
+   
    
     let result = this.httpClient.delete<any>(this.apiUrl + "logout", {
       params: {
-        token: user.usertoken
+        
       },
     });
 
@@ -41,8 +57,8 @@ export class AccountService {
   }
 
   GetAllMyPost(): Observable<House[]> {
-    let user = this.storage.GetData(this.storage.usertoken);
-    return this.httpClient.get<House[]>(this.apiUrl + 'GetAllMyPosts?token=' + user.usertoken);
+    
+    return this.httpClient.get<House[]>(this.apiUrl + 'GetAllMyPosts?token=');
   }
 
   GetKey(): Observable<any> {

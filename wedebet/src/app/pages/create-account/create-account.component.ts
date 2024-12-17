@@ -12,12 +12,15 @@ import { AccountService } from '../../services/account.service';
   styleUrl: './create-account.component.css'
 })
 export class CreateAccountComponent {
+
+  _message:any;
   accountModel = { 
     username: '', 
     password: '', 
     confirmPassword: '', 
     email: '' 
   };
+isSuccess: any;
   constructor(private accountService:AccountService){
 
   }
@@ -26,6 +29,7 @@ export class CreateAccountComponent {
     this.accountService.postNewUserService(this.accountModel.username,this.accountModel.password, this.accountModel.email).subscribe((r)=>{
       console.log(r.message);
       console.log(r.success);
+      this._message = r.message;
     })
    
     // Add logic to process the account creation

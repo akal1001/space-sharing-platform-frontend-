@@ -17,7 +17,9 @@
     <div class="create-account-option">
 
       <p>Don't have an account? <a (click) ="navigateToCreateAccount()" routerLinkActive="active" style="color:blue;">Create one here</a></p>
-      <p>{{_message}}</p>
+   
+      <p [class]="messageClass">{{ _message }}</p>
+
     </div>
   </div>
   

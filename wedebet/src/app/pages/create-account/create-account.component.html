@@ -35,6 +35,9 @@
       </div>
       
       <button type="submit" [disabled]="!accountForm.valid || accountModel.password !== accountModel.confirmPassword">Create</button>
+     
     </form>
+    <p>{{_message}}</p>
+    
   </div>
   

@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
 import { DataService } from '../../DataServices/data.service';
 import { SearchResultComponent } from '../search-result/search-result.component';
+import { AccountService } from '../../services/account.service';
 
 // import { DataService } from '../../DataServices/data.service';
 
@@ -25,10 +26,33 @@ export class HeaderComponent implements OnInit {
   searchResults: string[] = [];
   showResults = false;
   username:any;
-  constructor(private router: Router, private dataservice:DataService) {
+  isuserLoggedIn = false; 
+  constructor(private router: Router, private dataservice:DataService, private accountService:AccountService) {
      this.dataservice.data$.subscribe(d=>{
        this.username = d;
      })
+
+      this.dataservice.IsUserloginData$.subscribe(x=>{
+      
+        this.isuserLoggedIn = x;
+      })
+
+      this.accountService.retrieveAccountDataFromLocalStorage().subscribe({
+        next: (r) => {
+          console.log(r?.success);
+          this.isuserLoggedIn = r?.success??false; 
+          if(r?.success == true){
+            dataservice.setData(r.name);
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {
+          console.log('Request completed');
+        }
+      });
+      
   }
 
   ngOnInit() 
@@ -40,7 +64,7 @@ export class HeaderComponent implements OnInit {
        this.addSearchBoxOnSmallDevices();
      });
     }
-   
+  
   }
 
   toggleMenu()
@@ -75,10 +99,7 @@ export class HeaderComponent implements OnInit {
         searchBox.style.padding = '0.5rem';
         searchBox.style.width = '94%';
         searchBox.style.marginBottom = '1%';
-        // searchBox.style.border = '1px solid #007bff';
-        // searchBox.style.borderRadius = '1px';
-    
-        // Attach the same event handlers as in the Angular template
+      
         searchBox.addEventListener('focus', () => {
           this.showResults = true; // Show the search results
         });
@@ -143,7 +164,9 @@ export class HeaderComponent implements OnInit {
   navigateToCreateAccount() {
     this.router.navigate(['/createAccount']);
   }
-
+  navigateToAccount() {
+    this.router.navigate(['/account']);
+  }
   navigateToHome() {
     this.router.navigate(['/home']);
   }

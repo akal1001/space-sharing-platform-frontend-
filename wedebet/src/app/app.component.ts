@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener  } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from "./pages/header/header.component"; // Adjust path as needed
 import { FooterComponent } from './pages/footer/footer.component';
 import { ApiService } from './APIs/api.service';
+import { DataService } from './DataServices/data.service';
 
 
 @Component({
@@ -22,17 +23,25 @@ export class AppComponent {
   title = 'wedebet';
   data: any;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private dataservice:DataService) { }
 
   ngOnInit() {
-    this.apiService.getData().subscribe(
-      (response) => {
-        this.data = response;
-        console.log(this.data);
-      },
-      (error) => {
+
+    
+  
+
+    this.apiService.getData().subscribe({
+      next:
+        (response) => {
+          this.data = response;
+          console.log(this.data);
+        },
+      error: (error) => {
         console.error('API call error:', error);
+      },
+      complete: () => {
+
       }
-    );
+    });
   }
 }

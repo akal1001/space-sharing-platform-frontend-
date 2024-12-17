@@ -11,14 +11,16 @@
          (input)="onSearch(searchText)" />
         
         <div class="right-div">
-          <button class="login-btn" value="" (click)="navigateToUpload()">Upload</button>
+       
           <button class="login-btn" value="" (click)="navigateToHome()">Home</button>
-          <button class="login-btn" (click)="navigateToCreateAccount()">{{username}}</button>
-          <button class="login-btn"(click)="navigateToLogin()">Login</button>
           <button class="login-btn" value="fav" (click)="navigateToFav()">fav</button>
+          <button class="login-btn" value="" (click)="navigateToUpload()">Upload</button>
+          <button *ngIf="isuserLoggedIn"class="login-btn" (click)="navigateToAccount()">{{username}}</button>
+          <button *ngIf="!isuserLoggedIn" class="login-btn"(click)="navigateToLogin()">Login</button>
+         
         </div>
      
-       
+   
         <button class="menu-toggle" (click)="toggleMenu()">☰</button>
       </div>
       <div id="welcome-container" class="welcome-container">

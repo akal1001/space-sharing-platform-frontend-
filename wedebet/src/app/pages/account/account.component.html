@@ -1,1 +1,13 @@
-<p>account works!</p>
+<div class="account-page">
+    <h2>Welcome, {{ accountData?.name }}</h2>
+    
+    <div class="account-details">
+      <p><strong>ID:</strong> {{ accountData?.id}}</p>
+ 
+      <p><strong>Token:</strong> {{ accountData?.token }}</p>
+     
+    </div>
+  
+    <button class="logout-btn" (click)="logout()">Log Out</button>
+  </div>
+  
