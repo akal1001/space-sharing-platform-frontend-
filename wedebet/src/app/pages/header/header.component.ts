@@ -25,50 +25,51 @@ export class HeaderComponent implements OnInit {
   isMenuOpen = false
   searchResults: string[] = [];
   showResults = false;
-  username:any;
-  isuserLoggedIn = false; 
-  constructor(private router: Router, private dataservice:DataService, private accountService:AccountService) {
-     this.dataservice.data$.subscribe(d=>{
-       this.username = d;
-     })
+  username: any;
+  isuserLoggedIn = false;
+  constructor(private router: Router, private dataservice: DataService, private accountService: AccountService)
+   {
+  
+  
+    this.dataservice.data$.subscribe(d => {
+      this.username = d;
+    })
 
-      this.dataservice.IsUserloginData$.subscribe(x=>{
-      
-        this.isuserLoggedIn = x;
-      })
+    this.dataservice.IsUserloginData$.subscribe(x => {
 
-      this.accountService.retrieveAccountDataFromLocalStorage().subscribe({
-        next: (r) => {
-          console.log(r?.success);
-          this.isuserLoggedIn = r?.success??false; 
-          if(r?.success == true){
-            dataservice.setData(r.name);
-          }
-        },
-        error: (err) => {
-          console.error(err);
-        },
-        complete: () => {
-          console.log('Request completed');
+      this.isuserLoggedIn = x;
+    })
+
+    this.accountService.ReturnUserDataFromLocalStorage().subscribe({
+      next: (userData) => {
+        this.isuserLoggedIn = userData?.success ?? false;
+
+        if (userData?.success == true) {
+          dataservice.setData(userData.name);
         }
-      });
-      
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        console.log('Request completed');
+      }
+    });
+
   }
 
-  ngOnInit() 
-  {
+  ngOnInit() {
     this.router.navigate(['/home']);
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-     this.addSearchBoxOnSmallDevices();
-     window.addEventListener('resize', () => {
-       this.addSearchBoxOnSmallDevices();
-     });
+      this.addSearchBoxOnSmallDevices();
+      window.addEventListener('resize', () => {
+        this.addSearchBoxOnSmallDevices();
+      });
     }
-  
+
   }
 
-  toggleMenu()
-  {
+  toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
@@ -80,66 +81,66 @@ export class HeaderComponent implements OnInit {
   }
 
   addSearchBoxOnSmallDevices() {
-    
+
     const welcomeContainer = document.getElementById('welcome-container') // Get the welcome container
-      const searchBoxExists = document.getElementById('search-box'); // Check if the search box already exists
-    
-      // If screen width is small and the search box doesn't already exist
-      if (window.innerWidth <= 768 && !searchBoxExists) {
-        const searchBox = document.createElement('input'); // Create the search box
-        searchBox.setAttribute('type', 'text');
-        searchBox.setAttribute('placeholder', 'Search');
-        searchBox.setAttribute('id', 'search-box'); // Set a unique ID
-        
-        searchBox.value = this.searchText; // Set the current value of the textbox
-    
-       
-        // Apply styles
-        searchBox.style.position = 'relative';
-        searchBox.style.padding = '0.5rem';
-        searchBox.style.width = '94%';
-        searchBox.style.marginBottom = '1%';
-      
-        searchBox.addEventListener('focus', () => {
-          this.showResults = true; // Show the search results
-        });
-    
-        searchBox.addEventListener('blur', () => {
-          setTimeout(() => {
-            this.showResults = false; // Hide the search results after a delay
-          }, 200);
-        });
-    
-        searchBox.addEventListener('input', (event: Event) => {
-          const target = event.target as HTMLInputElement;
-          this.searchText = target.value; // Update the `searchText` variable
-          this.onSearch(this.searchText); // Call the search logic
-        });
-     
-        welcomeContainer?.appendChild(searchBox); // Append it to the welcome container
-      } 
-      // If screen is larger than 768px, remove the search box if it exists
-      else if (window.innerWidth > 768 && searchBoxExists) {
-        welcomeContainer?.removeChild(searchBoxExists); // Remove the search box if screen is larger than 768px
-      }
-   
+    const searchBoxExists = document.getElementById('search-box'); // Check if the search box already exists
+
+    // If screen width is small and the search box doesn't already exist
+    if (window.innerWidth <= 768 && !searchBoxExists) {
+      const searchBox = document.createElement('input'); // Create the search box
+      searchBox.setAttribute('type', 'text');
+      searchBox.setAttribute('placeholder', 'Search');
+      searchBox.setAttribute('id', 'search-box'); // Set a unique ID
+
+      searchBox.value = this.searchText; // Set the current value of the textbox
+
+
+      // Apply styles
+      searchBox.style.position = 'relative';
+      searchBox.style.padding = '0.5rem';
+      searchBox.style.width = '94%';
+      searchBox.style.marginBottom = '1%';
+
+      searchBox.addEventListener('focus', () => {
+        this.showResults = true; // Show the search results
+      });
+
+      searchBox.addEventListener('blur', () => {
+        setTimeout(() => {
+          this.showResults = false; // Hide the search results after a delay
+        }, 200);
+      });
+
+      searchBox.addEventListener('input', (event: Event) => {
+        const target = event.target as HTMLInputElement;
+        this.searchText = target.value; // Update the `searchText` variable
+        this.onSearch(this.searchText); // Call the search logic
+      });
+
+      welcomeContainer?.appendChild(searchBox); // Append it to the welcome container
+    }
+    // If screen is larger than 768px, remove the search box if it exists
+    else if (window.innerWidth > 768 && searchBoxExists) {
+      welcomeContainer?.removeChild(searchBoxExists); // Remove the search box if screen is larger than 768px
+    }
+
   }
-  
-  onFocus(){
+
+  onFocus() {
     this.showResults = true;
     const currentUrl = this.router.url;
     console.log('Current URL:', currentUrl);
-    if(currentUrl != '/'){
+    if (currentUrl != '/') {
       this.router.navigate(['/']);
     }
   }
 
   // for search compoonent 
   onSearch(query: string): void {
-   
+
     // Mock search results
     if (query) {
-      this.searchResults = ['Result 1', 'Result 2', 'Result 3','Result 1', 'Result 2', 'Result 3','Result 1', 'Result 2', 'Result 3'].filter((result) =>
+      this.searchResults = ['Result 1', 'Result 2', 'Result 3', 'Result 1', 'Result 2', 'Result 3', 'Result 1', 'Result 2', 'Result 3'].filter((result) =>
         result.toLowerCase().includes(query.toLowerCase())
       );
     } else {
@@ -151,7 +152,7 @@ export class HeaderComponent implements OnInit {
     console.log("on focus now")
     // Delay hiding the results to allow clicks on them
     setTimeout(() => (this.showResults = false), 200);
-    
+
   }
 
 
@@ -173,7 +174,7 @@ export class HeaderComponent implements OnInit {
   navigateToUpload() {
     this.router.navigate(['/upload']);
   }
-  navigateToFav(){
+  navigateToFav() {
     this.router.navigate(['/favorite']);
   }
 }

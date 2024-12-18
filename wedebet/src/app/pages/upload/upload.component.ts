@@ -1,72 +1,142 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {FormsModule,FormBuilder,ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
-import { FileuploaderService } from '../../services/fileuploader.service';
+import { FormsModule, FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
+import { S3Service } from '../../services/s3.service';
+import { UploadService } from '../../services/upload.service';
+import { AccountService } from '../../services/account.service';
+import { HouseDataRequest } from '../../interfaces/house-data-request';
+import { HouseDataService } from '../../services/house-data.service';
+import { Housetype } from '../../interfaces/housetype';
+
 @Component({
   selector: 'app-upload',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf,NgFor],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor],
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css'
 })
-export class UploadComponent {
+export class UploadComponent  {
 
   uploadedurls: any[] = [];
   uploadStatus: string | null = null; // Added property
   uploadMessage: string | null = null; // Added property
 
-  constructor(private http: HttpClient, private fileUploadService:FileuploaderService) {}
+  _message: any;
+  isSuccess: boolean = false;
 
-  property = {
-    header: '',  // Bind this to the dropdown
-    price: null,
-    image: null,
-    address: '',
-    city: '',
-    phone: '',
-    description: ''
+  constructor(private http: HttpClient, private houseDataService: HouseDataService, private s3Service: S3Service, private uploadService: UploadService, private accountService: AccountService) { 
+    this.houseTypes();
+    const localDateTime = new Date().toLocaleString();
+  }
+  
+  property: HouseDataRequest = {
+    HouseTypeId: '',
+    HouseId: '',
+    Header: '',
+    Description: '',
+    Price: 0,
+    DatePosted: new Date(),
+    ContactId: '',
+    Phone: '',
+    Email: '',
+    AddressId: '',
+    Street: '',
+    City: '',
+    State: '',
+    ZipCode: 0,
+    PostalCode: '',
+    Country: '',
+    IsAddressPublic: false,
+    DateUpdated: new Date(),
+    ImageId: '',
+    ImageName: '',
+    Image: '',
+    ImageUrls: [],
+    DateUploaded: new Date()
   };
 
-  // Dummy options for the dropdown
-  headerOptions = [
-    'Apartment - 2 Bedroom, 1 Bath',
-    'House - 3 Bedroom, 2 Bath',
-    'Condo - Studio, 1 Bath',
-    'Townhouse - 2 Bedroom, 2 Bath',
-    'Studio - 1 Bedroom, 1 Bath',
-    'Penthouse - 4 Bedroom, 3 Bath',
-    'Villa - 5 Bedroom, 4 Bath',
-    'Loft - 1 Bedroom, 1 Bath',
-    'Cottage - 2 Bedroom, 1 Bath'
-  ];
+ 
+
 
   onSubmit() {
     console.log(this.property);
-    // Handle the form submission logic
+    this.onUpload();
   }
 
   onImageChange(event: any) {
-    // Loop through all selected files
+
     for (let i = 0; i < event.target.files.length; i++) {
       const file = event.target.files[i];
       if (file) {
-        this.property.image = file;  
-        
+        this.property.Image = file;
+
       }
-  
-      // Call the upload service for each file
-      this.fileUploadService.uploadFile(file).then(img => {
+
+
+      this.s3Service.uploadFile(file).then(img => {
         console.log("result : " + img.fileUrl);
         console.log("result : " + img.status);
         console.log("result : " + img.message);
-  
-        // Update the message, status, and uploaded URL for each file
+
+
         this.uploadMessage = img.message;
         this.uploadStatus = img.status;
-        
+
         this.uploadedurls.push(img.fileUrl)
+       
       });
     }
+    this.property.ImageUrls = this.uploadedurls;
+  }
+
+  onUpload() {
+    this._message = null;
+    this.accountService.ReturnUserDataFromLocalStorage().subscribe({
+      next: (info) => {
+        if (info?.token) {
+
+          // Now, proceed with the upload request
+          this.uploadService.uploadHouse(this.property, info.token).subscribe({
+            next: (response) => {
+              if (response.success) {
+                this._message.success('House uploaded successfully');
+              } else {
+                this._message.error('Upload failed: ' + response.message);
+              }
+            },
+            error: (error) => {
+              this._message.error('An error occurred during upload');
+              console.error('Upload error:', error);
+            }
+          });
+        } else {
+          // Handle case where token is not available
+          this._message.error('Token is missing, please log in again');
+        }
+      },
+      error: () => {
+        // Handle any error in fetching user data from localStorage
+        this._message.error('Failed to retrieve user data');
+      },
+      complete: () => {
+        // Handle completion if needed
+      }
+    });
+  }
+  headerOptions: any = [{
+    houseTypeId: '',
+    houseTypeName: ''
+  }];
+   
+  houseTypes() {
+    this.houseDataService.houseTypes().subscribe({
+      next: (data) => {
+        this.headerOptions = data.data;
+      }, error: () => { }, complete: () => {
+        console.log(this.headerOptions)
+       }
+    })
+
   }
 }

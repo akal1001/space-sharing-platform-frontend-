@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { House } from '../interfaces/house';
-import { LoaclstoarageService } from './loaclstoarage.service';
+
 import { APP_CONFIG } from '../app.config';
 import { LoginResponse } from '../interfaces/login-response';
 @Injectable({
@@ -10,7 +10,7 @@ import { LoginResponse } from '../interfaces/login-response';
 })
 export class AccountService {
   private apiUrl = APP_CONFIG.apiUrl+"/account/";
-  constructor(private httpClient: HttpClient, private storage: LoaclstoarageService) { }
+  constructor(private httpClient: HttpClient) { }
   
   UserLoginServe(UsernameOrEmail: any, password: any): Observable<{ loginResponseSuccess:any }> {
 
@@ -24,12 +24,11 @@ export class AccountService {
     return result;
   }
   //create new user
-  postNewUserService(username: any,password: any,email: any): Observable<{ success: string; message:string }> {
+  postNewUserService(username: any,password: any,email: any): Observable<{ success: boolean; message:string }> {
     const endpont =this.apiUrl +"signup?username=" +username +"&password=" +password +"&email=" +email;
     return this.httpClient.post<any>(endpont, "");
   }
-
-  retrieveAccountDataFromLocalStorage(): Observable<LoginResponse | null> {
+  ReturnUserDataFromLocalStorage(): Observable<LoginResponse | null> {
     const storedData = localStorage.getItem('v');
     if (storedData) {
       const parsedData: LoginResponse = JSON.parse(storedData);
@@ -43,26 +42,11 @@ export class AccountService {
 
 
 
-  //user log out
-  UserLogout() {
-   
-   
-    let result = this.httpClient.delete<any>(this.apiUrl + "logout", {
-      params: {
-        
-      },
-    });
-
-    return result;
-  }
 
   GetAllMyPost(): Observable<House[]> {
     
     return this.httpClient.get<House[]>(this.apiUrl + 'GetAllMyPosts?token=');
   }
 
-  GetKey(): Observable<any> {
-   
-    return this.httpClient.get<any>(this.apiUrl + 'getKey');
-  }
+
 }

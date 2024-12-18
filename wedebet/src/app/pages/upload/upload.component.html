@@ -4,17 +4,17 @@
 
     <div class="form-group">
       <label for="header">Property Header:</label>
-      <select id="header" name="header" [(ngModel)]="property.header" required>
+      <select id="header" name="header" [(ngModel)]="property.HouseTypeId" required>
         <option value="" disabled>Select a property type</option>
-        <option *ngFor="let headerOption of headerOptions" [value]="headerOption">
-          {{ headerOption }}
+        <option *ngFor="let option of headerOptions" [value]="option.houseTypeId">
+          {{ option.houseTypeName }}
         </option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="price">Price:</label>
-      <input type="number" id="price" name="price" [(ngModel)]="property.price" required>
+      <input type="number" id="price" name="price" [(ngModel)]="property.Price" required>
     </div>
 
     <div class="form-group">
@@ -35,23 +35,23 @@
 
     <div class="form-group">
       <label for="address">Address:</label>
-      <input type="text" id="address" name="address" [(ngModel)]="property.address" required>
+      <input type="text" id="address" name="address" [(ngModel)]="property.Street" required>
     </div>
 
     <div class="form-group">
       <label for="city">City:</label>
-      <input type="text" id="city" name="city" [(ngModel)]="property.city" required>
+      <input type="text" id="city" name="city" [(ngModel)]="property.City" required>
     </div>
 
     <div class="form-group">
       <label for="phone">Phone Number:</label>
-      <input type="tel" id="phone" name="phone" [(ngModel)]="property.phone" required pattern="^\+?\d{0,13}"
+      <input type="tel" id="phone" name="phone" [(ngModel)]="property.Phone" required pattern="^\+?\d{0,13}"
         placeholder="+1234567890">
     </div>
 
     <div class="form-group">
       <label for="description">Description:</label>
-      <textarea id="description" name="description" [(ngModel)]="property.description" rows="4" required></textarea>
+      <textarea id="description" name="description" [(ngModel)]="property.Description" rows="4" required></textarea>
     </div>
 
     <button type="submit" [disabled]="!propertyForm.form.valid">Submit</button>

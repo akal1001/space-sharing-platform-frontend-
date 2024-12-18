@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DataService } from '../../DataServices/data.service';
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
-import { ApiService } from '../../APIs/api.service';
+
 
 
 @Component({
@@ -13,19 +13,11 @@ import { ApiService } from '../../APIs/api.service';
   styleUrl: './side-menu.component.css'
 })
 export class SideMenuComponent {
-  constructor(private dataService: DataService, private apiService:ApiService) {}
+  constructor(private dataService: DataService) {}
 
   data:any;
   ngOnInit() {
-    this.apiService.getData().subscribe(
-      (response) => {
-        this.data = response;
-        console.log(this.data);
-      },
-      (error) => {
-        console.error('API call error:', error);
-      }
-    );
+   
   }
 
 

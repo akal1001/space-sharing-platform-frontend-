@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { SideMenuComponent } from '../side-menu/side-menu.component';
 import { DataService } from '../../DataServices/data.service';
-import { ApiService } from '../../APIs/api.service';
+
 import { House } from '../../interfaces/house';
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
+import { HouseDataService } from '../../services/house-data.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -14,10 +15,10 @@ import { NgFor } from '@angular/common';
 })
 export class HomeComponent  {
 
-  house:House | any
+  house: any;
   contactData: any;
 
-  constructor(private dataService: DataService, private apiService:ApiService) {
+  constructor(private dataService: DataService, private housedataservice:HouseDataService ) {
     this.dataService.data$.subscribe(data => 
       {
       this.contactData = data;  
@@ -25,10 +26,16 @@ export class HomeComponent  {
     });
   }
   ngOnInit(): void {
-     this.apiService.getallhouseData().subscribe(d=>{
-        this.house = d;
-        console.log(this.house)
-     })
+    
+     this.housedataservice.houses().subscribe({next:(housedata)=>{
+      console.log(housedata)
+      this.house = housedata;
+      console.log(this.house)
+     },error(err) {
+       
+     },complete() {
+       
+     },})
     //this.searchinputFromparent
   }
  

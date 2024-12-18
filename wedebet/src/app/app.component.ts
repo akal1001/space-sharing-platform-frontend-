@@ -7,7 +7,7 @@ import { NgIf } from '@angular/common';
 import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from "./pages/header/header.component"; // Adjust path as needed
 import { FooterComponent } from './pages/footer/footer.component';
-import { ApiService } from './APIs/api.service';
+
 import { DataService } from './DataServices/data.service';
 
 
@@ -23,25 +23,12 @@ export class AppComponent {
   title = 'wedebet';
   data: any;
 
-  constructor(private apiService: ApiService, private dataservice:DataService) { }
+  constructor( private dataservice:DataService) { }
 
   ngOnInit() {
 
     
   
 
-    this.apiService.getData().subscribe({
-      next:
-        (response) => {
-          this.data = response;
-          console.log(this.data);
-        },
-      error: (error) => {
-        console.error('API call error:', error);
-      },
-      complete: () => {
-
-      }
-    });
   }
 }

@@ -50,8 +50,16 @@
   .is-invalid {
     border-color: red;
   }
+
+
+
+  .success-message {
+    color: green;
+    font-weight: bold;
+  }
+  
   .error-message {
     color: red;
-    font-size: 12px;
+    font-weight: bold;
   }
   

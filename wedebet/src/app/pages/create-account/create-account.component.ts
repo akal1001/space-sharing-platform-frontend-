@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import {FormsModule,FormBuilder,ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { NgFor, NgIf, NgClass } from '@angular/common';
 import { AccountService } from '../../services/account.service';
 
@@ -13,25 +13,50 @@ import { AccountService } from '../../services/account.service';
 })
 export class CreateAccountComponent {
 
-  _message:any;
-  accountModel = { 
-    username: '', 
-    password: '', 
-    confirmPassword: '', 
-    email: '' 
+  _message: any;
+  accountModel = {
+    username: '',
+    password: '',
+    confirmPassword: '',
+    email: ''
   };
-isSuccess: any;
-  constructor(private accountService:AccountService){
+  isSuccess: boolean = false;
+
+  messageClass: string = '';
+  constructor(private accountService: AccountService) {
 
   }
 
   onSubmit() {
-    this.accountService.postNewUserService(this.accountModel.username,this.accountModel.password, this.accountModel.email).subscribe((r)=>{
-      console.log(r.message);
-      console.log(r.success);
-      this._message = r.message;
-    })
-   
-    // Add logic to process the account creation
+   this. createAccount();
   }
+  createAccount() {
+    this._message = null; 
+    this.isSuccess = false; 
+    this.messageClass = ''; 
+  
+    this.accountService.postNewUserService(this.accountModel.username, this.accountModel.password, this.accountModel.email).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.isSuccess = true;
+          this._message = response.message || 'Account created successfully.';
+          this.messageClass = 'success-message';
+        } else {
+          this.isSuccess = false;
+          this._message = response.message || 'Signup failed.';
+          this.messageClass = 'error-message';
+        }
+      },
+      error: (error) => {
+        this.isSuccess = false;
+        this._message = error?.error?.message || 'An error occurred during signup.';
+        console.error('Signup Error:', error);
+        this.messageClass = 'error-message';
+      },
+      complete: () => {
+        console.log('Signup request completed.');
+      }
+    });
+  }
+  
 }

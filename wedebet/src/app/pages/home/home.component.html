@@ -6,7 +6,7 @@
   
   <div class="home-container">
     <div class="property-item" *ngFor="let d of house">
-      <img [src]="d.imageFiles[0]?.imageUrl" alt="Property Image" class="property-image">
+      <img [src]="d.imageFiles[0]?.Images" alt="Property Image" class="property-image">
       <div class="property-info">
         <h4>{{ d.header }}</h4>
         <p>{{ d.address.city }}</p>

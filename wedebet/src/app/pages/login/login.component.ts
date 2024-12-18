@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { DataService } from '../../DataServices/data.service';
 
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { LoaclstoarageService } from '../../services/loaclstoarage.service';
+
 import { AccountService } from '../../services/account.service';
 import { User } from '../../interfaces/user';
 import { LoginResponse } from '../../interfaces/login-response';
@@ -24,7 +24,7 @@ import { LoginResponse } from '../../interfaces/login-response';
 export class LoginComponent  {
 
   //constructor(private router: Router, private dataService: DataService) {}
-  constructor(private dataService: DataService, private router: Router, private httpClient: HttpClient, private storageService: LoaclstoarageService, private accountService: AccountService) { }
+  constructor(private dataService: DataService, private router: Router, private httpClient: HttpClient, private accountService: AccountService) { }
    user:User={};
    _message:any;
    isSuccess: boolean = false;
