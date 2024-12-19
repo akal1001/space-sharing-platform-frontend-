@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { DataService } from '../../DataServices/data.service';
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
+import { HouseDataService } from '../../services/house-data.service';
+import { Housetype } from '../../interfaces/housetype';
 
 
 
@@ -13,10 +15,20 @@ import { NgFor } from '@angular/common';
   styleUrl: './side-menu.component.css'
 })
 export class SideMenuComponent {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private housedatasrvice:HouseDataService) {}
 
   data:any;
   ngOnInit() {
+  this.housedatasrvice.AvailablehouseTypes().subscribe(
+    {next:(response)=>{
+
+      this.data = response.data;
+      console.log("type " +JSON.stringify(response.data))
+  },error(err) {
+    
+  },complete() {
+    
+  },})
    
   }
 

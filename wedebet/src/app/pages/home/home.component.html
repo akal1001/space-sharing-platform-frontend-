@@ -5,16 +5,25 @@
   </div>
   
   <div class="home-container">
-    <div class="property-item" *ngFor="let d of house">
-      <img [src]="d.imageFiles[0]?.Images" alt="Property Image" class="property-image">
+    <div class="property-item" *ngFor="let d of house" (click)="navToDetail(d.house.houseId)">
+      <img [src]="d.images[0].imageUrl" alt="Property Image" class="property-image">
       <div class="property-info">
-        <h4>{{ d.header }}</h4>
+        <h4>{{ d.house.header }}</h4>
         <p>{{ d.address.city }}</p>
-        <small>Posted {{ d._Date }}</small>
-        <i class="fas fa-heart"></i>
+        <!-- <p>{{ d.house.description }}</p> -->
+        <div class="description-container">
+          <p class="description-text">
+            {{ getShortDescription(d.house.description) }}
+            <span *ngIf="d.house.description.length > maxDescriptionLength" class="more-link">more</span>
+          </p>
+        </div>
+        
+        
+        <small>{{ d.house.datePosted }}</small>
+        <!-- <i class="fas fa-heart"></i> -->
         <div class="property-meta">
-          <span>{{ d.imageFiles.length }} Pic</span>
-          <span class="property-price">{{ d.price }}</span>
+          <span>{{ d.images.length }} Pic</span>
+          <span class="property-price">{{ "$ "+ d.house.price }}</span>
         </div>
       </div>
     </div>

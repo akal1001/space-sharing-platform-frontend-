@@ -3,6 +3,7 @@ import { APP_CONFIG } from '../app.config';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Housetype } from '../interfaces/housetype';
+import { House } from '../interfaces/house';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,17 @@ export class HouseDataService {
     }
 
     houses() {
-      let result = this.httpClient.get<any>(this.apiUrl + "houses");
+      let result = this.httpClient.get<House>(this.apiUrl + "houses");
+      return result;
+    }
+
+    AvailablehouseTypes() {
+      let result = this.httpClient.get<any>(this.apiUrl + "AvailablePostedHousetypes");
+      return result;
+    }
+
+    houseDetail( houseId:string){
+      let result = this.httpClient.get<any>(this.apiUrl + "houseDetail?houseId="+houseId);
       return result;
     }
 }

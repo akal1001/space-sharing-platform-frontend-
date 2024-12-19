@@ -71,6 +71,7 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+    this.navigateToHome();
   }
 
 
@@ -166,13 +167,29 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/createAccount']);
   }
   navigateToAccount() {
-    this.router.navigate(['/account']);
+    if(this.isMenuOpen)
+    {
+      this.isMenuOpen = !this.isMenuOpen;
+      this.router.navigate(['/account']);
+    }
+    else{
+      this.router.navigate(['/account']);
+    }
+   
   }
   navigateToHome() {
     this.router.navigate(['/home']);
   }
   navigateToUpload() {
-    this.router.navigate(['/upload']);
+   
+    if(this.isMenuOpen)
+      {
+        this.isMenuOpen = !this.isMenuOpen;
+        this.router.navigate(['/upload']);
+      }
+      else{
+        this.router.navigate(['/upload']);
+      }
   }
   navigateToFav() {
     this.router.navigate(['/favorite']);

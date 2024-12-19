@@ -122,3 +122,25 @@
     width: calc(25% - 1rem); /* 4 items per row on large screens */
   }
 }
+.description-container {
+  position: relative;
+  width: 100%;
+}
+
+.description-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5em; /* Adjust based on your design */
+  max-height: 4.5em; /* 3 lines * line height */
+  white-space: normal;
+  text-align: justify;
+}
+
+.more-link {
+  color: blue;  /* Link color */
+  text-decoration: underline;
+  cursor: pointer;
+}

@@ -1,20 +1,18 @@
 import { Address } from "./address";
 import { Contact } from "./contact";
-import { Imagefile } from "./imagefile";
+import {Image} from "./image";
 
 export interface House {
      houseid?: any;
      userId?: any;
      header?: any;
      Description?: any;
-     catagory?:any;
-  
      price?: any;
      city?: any;
      zipCode?: any;
      State?: any;
      phone?: any;
-     ImageFiles?: Imagefile[];
+     images?: Image;
      _Date: Date | undefined;
      contact?: Contact
      address?: Address;

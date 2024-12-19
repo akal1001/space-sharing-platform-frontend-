@@ -1,2 +1,60 @@
-<p>detail view</p>
-<p style="margin-top: 100px;">{{dataDetail}}</p>
+<div class="home-container">
+    <div class="property-detail">
+      <div class="property-layout">
+        <!-- Left: Images Section -->
+        <div class="property-images">
+          <div class="property-image-gallery">
+            <img
+              *ngIf="houeeDetail.images?.length > 0"
+              [src]="houeeDetail.images[0].imageUrl"
+              alt="Main Property Image"
+              class="main-image"
+            />
+            <p *ngIf="houeeDetail.images?.length === 0">No images available for this house.</p>
+          </div>
+          <div class="additional-images" *ngIf="houeeDetail.images?.length > 1">
+            <h3>Gallery</h3>
+            <div class="gallery-grid">
+              <img
+                *ngFor="let image of houeeDetail.images.slice(1)"
+                [src]="image.imageUrl"
+                alt="Additional Property Image"
+                class="gallery-image"
+              />
+            </div>
+          </div>
+        </div>
+  
+        <!-- Right: Text Content Section -->
+        <div class="property-details">
+          <!-- Property Info -->
+          <div class="property-info">
+            <h2>{{ houeeDetail.house.header }}</h2>
+            <p>{{ houeeDetail.house.description }}</p>
+            <div class="property-meta">
+              <span>{{ houeeDetail.images?.length || 0 }} Pics</span>
+              <span class="property-price">{{ "$ " + houeeDetail.house.price }}</span>
+            </div>
+          </div>
+  
+          <!-- Address Section -->
+          <div class="property-address" *ngIf="houeeDetail.address">
+            <h3>Address</h3>
+            <p><strong>Street:</strong> {{ houeeDetail.address.street }}</p>
+            <p><strong>City:</strong> {{ houeeDetail.address.city }}</p>
+            <p><strong>State:</strong> {{ houeeDetail.address.state || 'Not Available' }}</p>
+            <p><strong>Zip Code:</strong> {{ houeeDetail.address.zipCode || 'Not Available' }}</p>
+            <p><strong>Country:</strong> {{ houeeDetail.address.country || 'Not Available' }}</p>
+          </div>
+  
+          <!-- Contact Section -->
+          <div class="property-contact" *ngIf="houeeDetail.contact">
+            <h3>Contact Info</h3>
+            <p><strong>Phone:</strong> {{ houeeDetail.contact.phone }}</p>
+            <p><strong>Email:</strong> {{ houeeDetail.contact.email || 'Not Available' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

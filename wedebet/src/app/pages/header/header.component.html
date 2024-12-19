@@ -14,7 +14,7 @@
        
           <button class="login-btn" value="" (click)="navigateToHome()">Home</button>
           <button class="login-btn" value="fav" (click)="navigateToFav()">fav</button>
-          <button class="login-btn" value="" (click)="navigateToUpload()">Upload</button>
+          <button class="login-btn" value="" (click)="navigateToUpload()">Post</button>
           <button *ngIf="isuserLoggedIn"class="login-btn" (click)="navigateToAccount()">{{username}}</button>
           <button *ngIf="!isuserLoggedIn" class="login-btn"(click)="navigateToLogin()">Login</button>
          
@@ -36,9 +36,9 @@
 <div class="side-menu" *ngIf="isMenuOpen">
   <button class="close-btn" (click)="toggleMenu()">×</button>
   <ul>
-    <li><a href="#">Account</a></li>
-    <li><a href="#">Upload</a></li>
-    <li><a href="#">My Posts</a></li>
+    <li><a (click)="navigateToAccount()">Account</a></li>
+    <li><a (click)="navigateToUpload()">Upload</a></li>
+    <li><a >My Posts</a></li>
     <li>
       <button class="login-bt 888888n" (click)="navigateToFav()">fav</button>
     </li>
