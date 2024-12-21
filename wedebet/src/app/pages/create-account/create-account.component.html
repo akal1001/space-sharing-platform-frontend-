@@ -37,7 +37,13 @@
       <button type="submit" [disabled]="!accountForm.valid || accountModel.password !== accountModel.confirmPassword">Create</button>
      
     </form>
-    
-    <p [class]="messageClass">{{ _message }}</p>
+   
+   
+   
+    <p [class]="messageClass">{{ _message }}
+      <a *ngIf="isSuccess"(click)="onNavigateToLogin()" routerLink="/login" routerLinkActive="active" style="color: blue;">
+        Click here to log in.
+      </a>
+    </p>
   </div>
   

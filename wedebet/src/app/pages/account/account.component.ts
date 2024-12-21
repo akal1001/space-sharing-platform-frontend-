@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginResponse } from '../../interfaces/login-response';
-
+import { FormsModule, FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
+import { HouseDataService } from '../../services/house-data.service';
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
 export class AccountComponent implements OnInit {
   accountData:LoginResponse | undefined;
-  
-  constructor(private router: Router) {
+  housetype: string = '';
+  constructor(private router: Router, private housedataSrvice:HouseDataService) {
 
   }
   ngOnInit(): void {
@@ -26,11 +27,21 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  
   logout() {
    
     localStorage.removeItem('v'); 
     window.location.reload();
     //this.router.navigate(['/login']);
 
+  }
+  onSubmit() {
+   this.housedataSrvice.InserHouseTypes(this.housetype).subscribe({next:(response)=>
+    {
+    console.log(response);
+   },error(err) {
+     console.log(err)
+   },});
+   
   }
 }

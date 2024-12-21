@@ -27,17 +27,20 @@ export class HeaderComponent implements OnInit {
   showResults = false;
   username: any;
   isuserLoggedIn = false;
-  constructor(private router: Router, private dataservice: DataService, private accountService: AccountService)
-   {
-  
-  
-    this.dataservice.data$.subscribe(d => {
+
+
+  constructor(private router: Router, private dataservice: DataService, private accountService: AccountService) {
+
+    
+    this.dataservice.userdata$.subscribe(d => {
+     
       this.username = d;
     })
 
     this.dataservice.IsUserloginData$.subscribe(x => {
 
       this.isuserLoggedIn = x;
+
     })
 
     this.accountService.ReturnUserDataFromLocalStorage().subscribe({
@@ -45,7 +48,8 @@ export class HeaderComponent implements OnInit {
         this.isuserLoggedIn = userData?.success ?? false;
 
         if (userData?.success == true) {
-          dataservice.setData(userData.name);
+          const truncatedName = userData.name.slice(0, 4);
+          dataservice.setUserData(truncatedName);
         }
       },
       error: (err) => {
@@ -59,13 +63,13 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.navigate(['/home']);
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      this.addSearchBoxOnSmallDevices();
-      window.addEventListener('resize', () => {
-        this.addSearchBoxOnSmallDevices();
-      });
-    }
+    // this.router.navigate(['/home']);
+    // if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    //   this.addSearchBoxOnSmallDevices();
+    //   window.addEventListener('resize', () => {
+    //     this.addSearchBoxOnSmallDevices();
+    //   });
+    // }
 
   }
 
@@ -78,7 +82,7 @@ export class HeaderComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     console.log("resize event fired")
-    this.addSearchBoxOnSmallDevices();
+    // this.addSearchBoxOnSmallDevices();
   }
 
   addSearchBoxOnSmallDevices() {
@@ -167,30 +171,43 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/createAccount']);
   }
   navigateToAccount() {
-    if(this.isMenuOpen)
-    {
+    if (this.isMenuOpen) {
+
       this.isMenuOpen = !this.isMenuOpen;
-      this.router.navigate(['/account']);
+      if (this.isuserLoggedIn) {
+
+        this.router.navigate(['/account']);
+      }
+      else {
+        this.router.navigate(['/login']);
+
+      }
+
     }
     else{
       this.router.navigate(['/account']);
     }
-   
+
   }
   navigateToHome() {
     this.router.navigate(['/home']);
   }
   navigateToUpload() {
    
-    if(this.isMenuOpen)
-      {
-        this.isMenuOpen = !this.isMenuOpen;
-        this.router.navigate(['/upload']);
-      }
-      else{
-        this.router.navigate(['/upload']);
-      }
+  
+    // Check if user is logged in
+    if (this.isuserLoggedIn === true) {
+      this.router.navigate(['/upload']);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  
+    // Close the menu if it's open
+    if (this.isMenuOpen) {
+      this.isMenuOpen = false;
+    }
   }
+  
   navigateToFav() {
     this.router.navigate(['/favorite']);
   }

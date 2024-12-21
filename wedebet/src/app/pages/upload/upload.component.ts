@@ -1,7 +1,7 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule, FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, NgForm,FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { S3Service } from '../../services/s3.service';
 import { UploadService } from '../../services/upload.service';
 import { AccountService } from '../../services/account.service';
@@ -16,7 +16,7 @@ import { Housetype } from '../../interfaces/housetype';
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css'
 })
-export class UploadComponent  {
+export class UploadComponent implements OnInit {
 
   uploadedurls: any[] = [];
   uploadStatus: string | null = null; // Added property
@@ -24,10 +24,15 @@ export class UploadComponent  {
 
   _message: any;
   isSuccess: boolean = false;
+  isUploading: boolean = false;
+
 
   constructor(private http: HttpClient, private houseDataService: HouseDataService, private s3Service: S3Service, private uploadService: UploadService, private accountService: AccountService) { 
     this.houseTypes();
     const localDateTime = new Date().toLocaleString();
+  }
+  ngOnInit(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   
   property: HouseDataRequest = {
@@ -65,62 +70,77 @@ export class UploadComponent  {
   }
 
   onImageChange(event: any) {
-
+    this.isUploading = true;  // Set the flag to true before starting the upload
+    this.uploadMessage = "Uploading image...";  // Show the uploading message
+  
     for (let i = 0; i < event.target.files.length; i++) {
       const file = event.target.files[i];
+  
       if (file) {
         this.property.Image = file;
-
       }
-
-
+  
+      // Upload the image file
       this.s3Service.uploadFile(file).then(img => {
         console.log("result : " + img.fileUrl);
         console.log("result : " + img.status);
         console.log("result : " + img.message);
-
-
-        this.uploadMessage = img.message;
-        this.uploadStatus = img.status;
-
-        this.uploadedurls.push(img.fileUrl)
-       
+  
+        this.uploadMessage = img.message; // Show the message from the upload service
+        this.uploadStatus = img.status;  // Set the upload status (success or error)
+  
+        // Store the uploaded file URLs
+        this.uploadedurls.push(img.fileUrl);
+  
+        // Update the property ImageUrls after all files are uploaded
+        this.property.ImageUrls = this.uploadedurls;
+  
+        // After all files are uploaded, set uploading to false
+        if (i === event.target.files.length - 1) {
+          this.isUploading = false;  // Set the flag to false after the last file is uploaded
+        }
+      }).catch(error => {
+        console.error("Upload error:", error);
+        this.uploadMessage = "Upload failed!";
+        this.uploadStatus = "error";  // Set the status to error if the upload fails
+  
+        // Set uploading to false if there's an error
+        this.isUploading = false;
       });
     }
-    this.property.ImageUrls = this.uploadedurls;
   }
+  
 
   onUpload() {
     this._message = null;
+    this._message = "uploading ..."
+
     this.accountService.ReturnUserDataFromLocalStorage().subscribe({
       next: (info) => {
         if (info?.token) {
-
           // Now, proceed with the upload request
           this.uploadService.uploadHouse(this.property, info.token).subscribe({
-            next: (response) => {
-              if (response.success) {
-                this._message.success('House uploaded successfully');
-              } else {
-                this._message.error('Upload failed: ' + response.message);
-              }
+            next: (response) =>
+           {
+              this._message = response.message;
+              console.log(this._message)
+              console.log(response.success)
             },
             error: (error) => {
-              this._message.error('An error occurred during upload');
-              console.error('Upload error:', error);
+              this._message = error;
+              console.log(this._message)
             }
           });
         } else {
           // Handle case where token is not available
           this._message.error('Token is missing, please log in again');
+          console.log(this._message)
         }
       },
-      error: () => {
-        // Handle any error in fetching user data from localStorage
-        this._message.error('Failed to retrieve user data');
+      error: (error) => {
+        this._message= error
       },
       complete: () => {
-        // Handle completion if needed
       }
     });
   }

@@ -1,76 +1,89 @@
-.home-container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .property-detail {
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
+.property-layout {
+  display: flex;
+  flex-wrap: wrap; /* Ensures wrapping for small screens */
+  gap: 20px;
+  padding: 2%; /* Padding around the container */
+
+}
+.main-image{
+  min-width: 100%;
+  max-height: 400px;
+}
+.property-images {
+  flex: 1;
+  max-width: 40%; /* Keeps images section proportionate on larger screens */
+  min-width: 300px; /* Ensures proper layout on smaller screens */
+}
+
+.property-image-gallery .main-image {
+  width: 100%; /* Ensures the main image scales correctly */
+  border-radius: 8px;
+}
+
+.gallery-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap; /* Adjusts layout for smaller screens */
+}
+
+.gallery-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover; /* Maintains image aspect ratio */
+  border-radius: 8px;
+}
+
+.property-details {
+  flex: 2;
+  display: flex;
+  flex-direction: column; /* Ensures proper stacking of details */
+  gap: 20px;
+  min-width: 300px; /* Prevents shrinking too much on small screens */
+}
+
+.property-info h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.property-info p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.property-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.property-price {
+  font-weight: bold;
+  color: #2a9d8f;
+}
+
+.property-address,
+.property-contact {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+/* Responsive design for small screens */
+@media (max-width: 768px) {
   .property-layout {
-    display: flex;
-    gap: 20px;
+    flex-direction: column; /* Stacks sections vertically */
+    min-height: 100%;
   }
-  
-  .property-images {
-    flex: 1;
-    max-width: 40%;
-  }
-  
-  .property-image-gallery .main-image {
-    width: 100%;
-    border-radius: 8px;
-  }
-  
-  .gallery-grid {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  
-  .gallery-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  
+
+  .property-images,
   .property-details {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    max-width: 100%; /* Full width for both sections */
+    min-width: auto; /* Removes unnecessary width restrictions */
+    
   }
-  
-  .property-info h2 {
-    margin: 0;
-    font-size: 24px;
-    color: #333;
-  }
-  
-  .property-info p {
-    margin: 8px 0;
-    color: #555;
-  }
-  
+
   .property-meta {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 12px;
-    font-size: 14px;
+    flex-wrap: wrap; /* Ensures no overlap on narrow screens */
+    gap: 10px;
   }
-  
-  .property-price {
-    font-weight: bold;
-    color: #2a9d8f;
-  }
-  
-  .property-address,
-  .property-contact {
-    border-top: 1px solid #ddd;
-    padding-top: 10px;
-  }
-  
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormsModule,FormBuilder,ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { NgFor, NgIf, NgClass } from '@angular/common';
 import { Router } from '@angular/router';
@@ -21,10 +21,13 @@ import { LoginResponse } from '../../interfaces/login-response';
   styleUrl: './login.component.css',
   imports: [FormsModule, ReactiveFormsModule,NgClass],
 })
-export class LoginComponent  {
+export class LoginComponent implements OnInit  {
 
   //constructor(private router: Router, private dataService: DataService) {}
   constructor(private dataService: DataService, private router: Router, private httpClient: HttpClient, private accountService: AccountService) { }
+  ngOnInit(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
    user:User={};
    _message:any;
    isSuccess: boolean = false;
@@ -56,11 +59,12 @@ export class LoginComponent  {
           this._message = loginResponse.message;
           this.messageClass = 'success-message';
           this.isSuccess = true; 
-       
-          this.dataService.setData(loginResponse.name)
+          const truncatedName = loginResponse.name.slice(0, 4);
+          this.dataService.setUserData(truncatedName)
           this.dataService.setloginSucessData(loginResponse.success);
           
           localStorage.setItem("v", JSON.stringify(loginResponse));
+          this.router.navigate(['/home']);
        
         } else {
           this._message = loginResponse.message;

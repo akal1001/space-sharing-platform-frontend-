@@ -32,4 +32,9 @@ export class HouseDataService {
       let result = this.httpClient.get<any>(this.apiUrl + "houseDetail?houseId="+houseId);
       return result;
     }
+
+    InserHouseTypes(htype:string) {
+      let result = this.httpClient.post(this.apiUrl + "InsertHouseType?housetype="+htype, "");
+      return result;
+    }
 }

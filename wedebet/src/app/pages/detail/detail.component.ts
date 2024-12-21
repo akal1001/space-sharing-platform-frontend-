@@ -12,18 +12,26 @@ import { NgFor } from '@angular/common';
   styleUrl: './detail.component.css'
 })
 export class DetailComponent implements OnInit {
-
+  selectedImage: string | null = null;
   houeeDetail: any;
     // Placeholder for house data
   constructor(private dataService: DataService, private housedataserveice:HouseDataService) {
 
   }
   ngOnInit(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     this.dataService.data$.subscribe(housId => {
       this.housedataserveice.houseDetail(housId).subscribe(data => {
+        this.selectedImage = data.data.images[0]?.imageUrl || null;
         this.houeeDetail = data.data;
+       
         console.log(this.houeeDetail);
       });
     })
+
+   
+  }
+  updateMainImage(imageUrl: string) {
+    this.selectedImage = imageUrl;
   }
 }

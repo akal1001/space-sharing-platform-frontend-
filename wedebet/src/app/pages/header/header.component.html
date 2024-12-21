@@ -3,7 +3,7 @@
 
     <header class="header">
       <div class="header-container">
-        <div class="logo" (click)="navigateToHome()">LOGO</div>
+        <div class="logo" (click)="navigateToHome()">Logo</div>
         <input class="search-box" type="text" 
         placeholder="Search.." [(ngModel)]="searchText"
          (focus)="onFocus()"
@@ -19,8 +19,11 @@
           <button *ngIf="!isuserLoggedIn" class="login-btn"(click)="navigateToLogin()">Login</button>
          
         </div>
-     
-   
+        <button class="login-btn1" value="" (click)="navigateToHome()">Home</button>
+      
+       
+        <button class="login-btn1" value="" (click)="navigateToUpload()">Post</button>
+        <button *ngIf="isuserLoggedIn"class="login-btn1" (click)="navigateToAccount()">{{username}}</button>
         <button class="menu-toggle" (click)="toggleMenu()">☰</button>
       </div>
       <div id="welcome-container" class="welcome-container">
@@ -33,18 +36,15 @@
 <div>
 
 <!-- Full-Width Side Menu -->
-<div class="side-menu" *ngIf="isMenuOpen">
-  <button class="close-btn" (click)="toggleMenu()">×</button>
-  <ul>
-    <li><a (click)="navigateToAccount()">Account</a></li>
-    <li><a (click)="navigateToUpload()">Upload</a></li>
-    <li><a >My Posts</a></li>
-    <li>
-      <button class="login-bt 888888n" (click)="navigateToFav()">fav</button>
-    </li>
-    <li>
-      <button class="login-btn"(click)="navigateToLogin()">Login</button>
-    </li>
-  
-  </ul>
+<div class="side-menu" [class.open]="isMenuOpen">
+  <button class="close-btn" aria-label="Close menu" (click)="toggleMenu()">×</button>
+  <nav>
+    <ul class="menu-list">
+      <li><a class="menu-item" (click)="navigateToAccount()">Account</a></li>
+      <li><a class="menu-item" (click)="navigateToUpload()">Post</a></li>
+      <!-- Uncomment if needed -->
+      <!-- <li><a class="menu-item" (click)="navigateToFav()">Favorites</a></li>
+      <li><a class="menu-item" (click)="navigateToLogin()">Login</a></li> -->
+    </ul>
+  </nav>
 </div>

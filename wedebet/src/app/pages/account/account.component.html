@@ -2,12 +2,29 @@
     <h2>Welcome, {{ accountData?.name }}</h2>
     
     <div class="account-details">
-      <p><strong>ID:</strong> {{ accountData?.id}}</p>
+    
  
-      <p><strong>Token:</strong> {{ accountData?.token }}</p>
+      <p style="word-wrap: break-word;"><strong>Token:</strong> {{ accountData?.token }}</p>
      
     </div>
   
     <button class="logout-btn" (click)="logout()">Log Out</button>
+
+
+   
   </div>
+  <!-- <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="housetype">House Type:</label>
+      <input 
+        type="text" 
+        id="housetype" 
+        name="housetype" 
+        [(ngModel)]="housetype" 
+        required 
+        class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form> -->
+  
   

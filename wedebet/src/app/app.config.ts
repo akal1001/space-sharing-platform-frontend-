@@ -8,8 +8,8 @@ export const appConfig: ApplicationConfig = {
 };
 
 export const APP_CONFIG = {
-  apiUrl: 'https://localhost:18874/api',
-  //apiUrl:'https://55g6g8nqy2.execute-api.us-east-1.amazonaws.com/Prod/api'
+// apiUrl: 'https://localhost:18874/api',
+ apiUrl:'https://55g6g8nqy2.execute-api.us-east-1.amazonaws.com/Prod/api'
 };
 export const aws_Config = {
   bucketName: 'sm-image-bucket',

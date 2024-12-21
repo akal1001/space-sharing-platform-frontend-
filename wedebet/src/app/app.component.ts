@@ -23,11 +23,11 @@ export class AppComponent {
   title = 'wedebet';
   data: any;
 
-  constructor( private dataservice:DataService) { }
+  constructor( private dataservice:DataService, private router:Router) { }
 
   ngOnInit() {
 
-    
+    this.router.navigate(['/home']);
   
 
   }

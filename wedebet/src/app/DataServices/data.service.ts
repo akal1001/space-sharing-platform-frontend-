@@ -11,7 +11,15 @@ export class DataService {
 
   setData(contactData: string) {
     this.dataSubject.next(contactData);
-    
+  }
+
+  
+  
+  private userDataSubject = new ReplaySubject<string>(1);
+  userdata$ = this.userDataSubject.asObservable();
+
+  setUserData(userData: string) {
+    this.userDataSubject.next(userData);
   }
 
   private isUserLoggedInSubject = new ReplaySubject<boolean>(1);

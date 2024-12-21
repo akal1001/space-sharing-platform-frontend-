@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { NgFor, NgIf, NgClass } from '@angular/common';
 import { AccountService } from '../../services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-account',
@@ -23,7 +24,7 @@ export class CreateAccountComponent {
   isSuccess: boolean = false;
 
   messageClass: string = '';
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private router:Router) {
 
   }
 
@@ -39,8 +40,9 @@ export class CreateAccountComponent {
       next: (response) => {
         if (response.success) {
           this.isSuccess = true;
-          this._message = response.message || 'Account created successfully.';
+          this._message = response.message || 'Your account has been successfully created!';
           this.messageClass = 'success-message';
+          
         } else {
           this.isSuccess = false;
           this._message = response.message || 'Signup failed.';
@@ -58,5 +60,7 @@ export class CreateAccountComponent {
       }
     });
   }
-  
+  onNavigateToLogin(): void {
+    this.router.navigate(['/login']);
+  }
 }
