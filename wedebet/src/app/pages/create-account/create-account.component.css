@@ -62,4 +62,10 @@
     color: red;
     font-weight: bold;
   }
+  .a-btn1 {
   
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 1%;
+    padding: 10px 15px;
+  }

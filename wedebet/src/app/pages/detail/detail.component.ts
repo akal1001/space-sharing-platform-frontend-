@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../DataServices/data.service';
-import { HouseDataService } from '../../services/house-data.service';
+import { HouseDataService } from '../../services/houseData.service';
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
 

@@ -27,7 +27,7 @@
   .form-group input,
   .form-group select,
   .form-group textarea {
-    width: 95%;
+    width: 100%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -70,7 +70,6 @@
   }
   @media (max-width: 768px) {
     .upload-form-container{
-      padding: 5%;
-      width: 90%;
+      width: 80%
     }
   }

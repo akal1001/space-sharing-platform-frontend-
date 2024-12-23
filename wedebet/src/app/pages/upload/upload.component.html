@@ -17,25 +17,28 @@
       <input type="text" id="price" name="price" [(ngModel)]="property.Price" required 
       pattern="^[0-9]+(\.[0-9]{1,2})?$" inputmode="numeric" placeholder="$0.00">    </div>
 
-    <div class="form-group">
-      <label for="image">Upload Image:</label>
-      <input type="file" id="fileInput" alife-file-to-base64 multiple (change)="onImageChange($event)" accept="image/*"
-      class="form-control" required/>
-
-        <!-- <p *ngIf="uploadStatus" [class.success]="uploadStatus === 'success'" [class.error]="uploadStatus === 'error'">
-        {{ uploadMessage }}
-        </p> -->
-
-        <!-- Add a loading message while image is uploading -->
+      <div class="form-group">
+        <label for="fileInput" class="upload-button">Upload Image</label>
+        <input 
+          type="file" 
+          id="fileInput" 
+          multiple 
+          (change)="onImageChange($event)" 
+          accept="image/*" 
+          class="file-input" 
+          required 
+        />
+      
+        <!-- Image upload status -->
         <p *ngIf="isUploading" class="loading-message">Image is uploading...</p>
-
-
-      <div class="image-container">
-        <div *ngFor="let img of uploadedurls">
-          <img class="uploaded-image" [src]="img" *ngIf="img" alt="Uploaded Image">
+      
+        <div class="image-container">
+          <div *ngFor="let img of uploadedurls">
+            <img class="uploaded-image" [src]="img" *ngIf="img" alt="Uploaded Image">
+          </div>
         </div>
       </div>
-    </div>
+      
 
     <div class="form-group">
       <label for="address">Address:</label>

@@ -1,13 +1,14 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule, NgForm,FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { S3Service } from '../../services/s3.service';
-import { UploadService } from '../../services/upload.service';
+
 import { AccountService } from '../../services/account.service';
 import { HouseDataRequest } from '../../interfaces/house-data-request';
-import { HouseDataService } from '../../services/house-data.service';
+import { HouseDataService } from '../../services/houseData.service';
 import { Housetype } from '../../interfaces/housetype';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload',
@@ -17,6 +18,7 @@ import { Housetype } from '../../interfaces/housetype';
   styleUrl: './upload.component.css'
 })
 export class UploadComponent implements OnInit {
+ 
 
   uploadedurls: any[] = [];
   uploadStatus: string | null = null; // Added property
@@ -27,7 +29,7 @@ export class UploadComponent implements OnInit {
   isUploading: boolean = false;
 
 
-  constructor(private http: HttpClient, private houseDataService: HouseDataService, private s3Service: S3Service, private uploadService: UploadService, private accountService: AccountService) { 
+  constructor(private http: HttpClient, private router:Router, private houseDataService: HouseDataService, private s3Service: S3Service, private accountService: AccountService) { 
     this.houseTypes();
     const localDateTime = new Date().toLocaleString();
   }
@@ -67,6 +69,7 @@ export class UploadComponent implements OnInit {
   onSubmit() {
     console.log(this.property);
     this.onUpload();
+   
   }
 
   onImageChange(event: any) {
@@ -79,6 +82,7 @@ export class UploadComponent implements OnInit {
       if (file) {
         this.property.Image = file;
       }
+      
   
       // Upload the image file
       this.s3Service.uploadFile(file).then(img => {
@@ -119,12 +123,39 @@ export class UploadComponent implements OnInit {
       next: (info) => {
         if (info?.token) {
           // Now, proceed with the upload request
-          this.uploadService.uploadHouse(this.property, info.token).subscribe({
+          this.houseDataService.uploadHouse(this.property, info.token).subscribe({
             next: (response) =>
            {
               this._message = response.message;
               console.log(this._message)
               console.log(response.success)
+
+              this.property={ HouseTypeId: '',
+                HouseId: '',
+                Header: '',
+                Description: '',
+                Price: 0,
+                DatePosted: new Date(),
+                ContactId: '',
+                Phone: '',
+                Email: '',
+                AddressId: '',
+                Street: '',
+                City: '',
+                State: '',
+                ZipCode: 0,
+                PostalCode: '',
+                Country: '',
+                IsAddressPublic: false,
+                DateUpdated: new Date(),
+                ImageId: '',
+                ImageName: '',
+                Image: '',
+                ImageUrls: [],
+                DateUploaded: new Date()}
+
+                this.uploadedurls = [];
+             
             },
             error: (error) => {
               this._message = error;

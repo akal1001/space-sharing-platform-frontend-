@@ -1,15 +1,18 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { House } from '../interfaces/house';
 
 import { APP_CONFIG } from '../app.config';
 import { LoginResponse } from '../interfaces/login-response';
+import { HouseDataRequest } from '../interfaces/house-data-request';
+import { HouseDetail } from '../interfaces/house-detail';
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   private apiUrl = APP_CONFIG.apiUrl+"/account/";
+
   constructor(private httpClient: HttpClient) { }
   
   UserLoginServe(UsernameOrEmail: any, password: any): Observable<{ loginResponseSuccess:any }> {
@@ -43,9 +46,13 @@ export class AccountService {
 
 
 
-  GetAllMyPost(): Observable<House[]> {
-    
-    return this.httpClient.get<House[]>(this.apiUrl + 'GetAllMyPosts?token=');
+  GetAllMyPost(token: any): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', token);
+    return this.httpClient.get<any>(`${this.apiUrl}MyPosts`, { headers });
+  }
+  DeleteMyPost(houseId:any, token:any):Observable<any>{
+    const headers = new HttpHeaders().set('Authorization', token);
+    return this.httpClient.delete<any>(`${this.apiUrl}deletePost?houseId=`+ houseId, { headers });
   }
 
 

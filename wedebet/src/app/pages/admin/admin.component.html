@@ -1,0 +1,14 @@
+<p>admin works!</p>
+ <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="housetype">House Type:</label>
+      <input 
+        type="text" 
+        id="housetype" 
+        name="housetype" 
+        [(ngModel)]="housetype" 
+        required 
+        class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>

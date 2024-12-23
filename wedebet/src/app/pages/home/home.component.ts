@@ -5,8 +5,9 @@ import { Router, RouterOutlet } from '@angular/router';
 import { House } from '../../interfaces/house';
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
-import { HouseDataService } from '../../services/house-data.service';
+import { HouseDataService } from '../../services/houseData.service';
 import { Route } from '@angular/router';
+import { VersionService } from '../../services/version.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -19,7 +20,7 @@ export class HomeComponent  {
   house: any;
   contactData: any;
 
-  constructor(private dataService: DataService, private housedataservice:HouseDataService, private router:Router ) {
+  constructor(private dataService: DataService,private versionservice:VersionService, private housedataservice:HouseDataService, private router:Router ) {
     this.dataService.data$.subscribe(data => 
       {
       this.contactData = data;  
@@ -27,6 +28,8 @@ export class HomeComponent  {
     });
   }
   ngOnInit(): void {
+
+     this.CheckVersion();
     
      this.housedataservice.houses().subscribe({next:(housedata)=>{
       console.log(housedata)
@@ -37,7 +40,11 @@ export class HomeComponent  {
      },complete() {
        
      },})
-    //this.searchinputFromparent
+
+
+    
+   
+   
   }
 
   navToDetail(houseId:string){
@@ -53,4 +60,39 @@ export class HomeComponent  {
     }
     return description;
   }
+
+  CheckVersion() {
+    // Set initial version in localStorage (if not already set)
+    const storedVersion = localStorage.getItem("_v") || "1.1.0";
+    localStorage.setItem("_v", storedVersion);
+  
+    this.versionservice.GetVersionServe().subscribe({
+      next: (response) => {
+        console.log(response.success);
+        console.log(response.status);
+        console.log("Version from Server: " + response.data);
+  
+        if (response.success) {
+          console.log("Stored Version: " + storedVersion);
+          console.log("Version from Server: " + response.data);
+  
+          // Check if the versions differ
+          if (storedVersion !== response.data) {
+            // Update the stored version
+            localStorage.setItem("_v", response.data);
+  
+            // Reload the page
+            location.reload();
+          }
+        }
+      },
+      error: (err) => {
+        console.error("Error fetching version:", err);
+      },
+      complete: () => {
+        console.log("Version check complete");
+      },
+    });
+  }
+  
 }

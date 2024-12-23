@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DataService } from '../../DataServices/data.service';
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
-import { HouseDataService } from '../../services/house-data.service';
+import { HouseDataService } from '../../services/houseData.service';
 import { Housetype } from '../../interfaces/housetype';
 
 

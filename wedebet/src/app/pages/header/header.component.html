@@ -23,6 +23,7 @@
       
        
         <button class="login-btn1" value="" (click)="navigateToUpload()">Post</button>
+        <button *ngIf="!isuserLoggedIn" class="login-btn1"(click)="navigateToLogin()">Login</button>
         <button *ngIf="isuserLoggedIn"class="login-btn1" (click)="navigateToAccount()">{{username}}</button>
         <button class="menu-toggle" (click)="toggleMenu()">☰</button>
       </div>

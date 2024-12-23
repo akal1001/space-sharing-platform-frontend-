@@ -5,6 +5,7 @@
   </div>
   
   <div class="home-container">
+  
     <div class="property-item" *ngFor="let d of house" (click)="navToDetail(d.house.houseId)">
       <img [src]="d.images[0]?.imageUrl" alt="Property Image" class="property-image">
       <div class="property-info">

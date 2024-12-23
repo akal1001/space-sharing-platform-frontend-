@@ -9,6 +9,7 @@ import { HeaderComponent } from "./pages/header/header.component"; // Adjust pat
 import { FooterComponent } from './pages/footer/footer.component';
 
 import { DataService } from './DataServices/data.service';
+import { VersionService } from './services/version.service';
 
 
 @Component({
@@ -22,13 +23,29 @@ import { DataService } from './DataServices/data.service';
 export class AppComponent {
   title = 'wedebet';
   data: any;
-
-  constructor( private dataservice:DataService, private router:Router) { }
+  version:any = "1.0.0";
+  constructor( private dataservice:DataService,private versionSrvice:VersionService, private router:Router) { }
 
   ngOnInit() {
+   
+    this.versionSrvice.GetVersionServe().subscribe({next:(response)=>
+      {
+        console.log(response.success);
+        console.log(response.status);
+        console.log("varsion: " + response.data);
 
+      },
+      error(err) {
+        console.log(err)
+    },complete() {
+        console.log(
+          "version check complete"
+        )
+    },})
     this.router.navigate(['/home']);
-  
 
+  }
+  reload() {
+    location.reload();
   }
 }

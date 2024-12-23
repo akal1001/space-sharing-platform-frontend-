@@ -1,30 +1,44 @@
 <div class="account-page">
     <h2>Welcome, {{ accountData?.name }}</h2>
     
-    <div class="account-details">
+    <!-- <div class="account-details">
     
  
       <p style="word-wrap: break-word;"><strong>Token:</strong> {{ accountData?.token }}</p>
      
-    </div>
-  
+    </div> -->
+    <!-- <button class="logout-btn" (click)="MyPosts()">My Posts</button> -->
     <button class="logout-btn" (click)="logout()">Log Out</button>
+
+    <button *ngIf="admin !== null && admin !== undefined" class="logout-btn" (click)="navToAdmin()">Admin</button>
+   
 
 
    
   </div>
-  <!-- <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-    <div class="form-group">
-      <label for="housetype">House Type:</label>
-      <input 
-        type="text" 
-        id="housetype" 
-        name="housetype" 
-        [(ngModel)]="housetype" 
-        required 
-        class="form-control" />
+  <div style="display: flex; justify-content: center; align-items: center; width: 100%; height:80px; background-color:lightgray;font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 28px; font-weight: 700; color: #fff; text-transform: uppercase;">
+    My Property Listings
+  </div>
+  
+  
+  
+  <div class="home-container">
+   
+    <div class="property-item" *ngFor="let d of house" >
+      <img [src]="d.images[0]?.imageUrl" alt="Property Image" class="property-image"(click)="navToDetail(d.house.houseId)">
+      <div class="property-info">
+        <h4>{{ d.house.header }}</h4>
+        <p>{{ d.address.city }}</p>
+           
+        <small>{{ d.house.datePosted }}</small>
+        <!-- <i class="fas fa-heart"></i> -->
+        <div class="property-meta">
+          <button class="a-btn1" (click)="onEdit(d.house.houseId)">Edit</button>
+          <button class="a-btn1" (click)="onDelete(d.house.houseId)">delete</button>
+            </div>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form> -->
+  </div>
+ 
   
   
