@@ -8,6 +8,7 @@ import { FormsModule, FormBuilder, ReactiveFormsModule, FormGroup, Validators } 
 
 import { AccountService } from '../../services/account.service';
 import { DataService } from '../../DataServices/data.service';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin',
@@ -18,11 +19,30 @@ import { DataService } from '../../DataServices/data.service';
 })
 export class AdminComponent {
   housetype: string = '';
-  constructor(private housedataservice:HouseDataService){}
-  onSubmit() {
+  inputValue:any;
+  appVerison:any;
+  constructor(private housedataservice:HouseDataService, private addminService:AdminService){
+     this.addminService.getversion().subscribe({next:(response)=>{
+      this.appVerison = response.data;
+     },error:(error)=>{
+        console.log(error.error);
+     }})
+  }
+  onSubmitType() {
     this.housedataservice.InserHouseTypes(this.housetype).subscribe({next:(response)=>
      {
      console.log(response);
+    },error(err) {
+      console.log(err)
+    },});
+    
+   }
+
+   onSubmitVersion() {
+    this.addminService.addVersionServe(this.inputValue).subscribe({next:(response)=>
+     {
+     console.log(response);
+     
     },error(err) {
       console.log(err)
     },});

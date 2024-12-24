@@ -15,21 +15,37 @@ export class AccountService {
 
   constructor(private httpClient: HttpClient) { }
   
-  UserLoginServe(UsernameOrEmail: any, password: any): Observable<{ loginResponseSuccess:any }> {
+  // UserLoginServe1(UsernameOrEmail: any, password: any): Observable<{ loginResponseSuccess:any }> {
 
-    let result = this.httpClient.get<any>(this.apiUrl + "login", {
-      params: {
-        UsernameOrEmail: UsernameOrEmail,
-        password: password
-      },
-    });
+  //   let result = this.httpClient.get<any>(this.apiUrl + "login", {
+  //     params: {
+  //       UsernameOrEmail: UsernameOrEmail,
+  //       password: password
+  //     },
+  //   });
 
+  //   return result;
+  // }
+  UserLoginServe(UsernameOrEmail: any, password: any): Observable<{ loginResponseSuccess: any }> {
+    const loginData = {
+      UsernameOrEmail: UsernameOrEmail,
+      Password: password
+    };
+  
+    // Sending login data in the request body with POST
+    let result = this.httpClient.post<any>(this.apiUrl + "login", loginData);
+  
     return result;
   }
   //create new user
-  postNewUserService(username: any,password: any,email: any): Observable<{ success: boolean; message:string }> {
-    const endpont =this.apiUrl +"signup?username=" +username +"&password=" +password +"&email=" +email;
-    return this.httpClient.post<any>(endpont, "");
+  postNewUserService(username: any,password: any,email: any): Observable<{ success: boolean; message:string }>
+   {
+     const signupRequestData={
+       username:username,
+       password:password,
+       email:email
+     }
+    return this.httpClient.post<any>(this.apiUrl +"signup", signupRequestData);
   }
   ReturnUserDataFromLocalStorage(): Observable<LoginResponse | null> {
     const storedData = localStorage.getItem('v');
@@ -56,4 +72,6 @@ export class AccountService {
   }
 
 
+
+ 
 }

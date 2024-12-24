@@ -3,41 +3,49 @@ import { SideMenuComponent } from '../side-menu/side-menu.component';
 import { DataService } from '../../DataServices/data.service';
 import { Router, RouterOutlet } from '@angular/router';
 import { House } from '../../interfaces/house';
-import { NgIf } from '@angular/common';
+import { NgIf, DatePipe, CurrencyPipe } from '@angular/common';
 import { NgFor } from '@angular/common';
 import { HouseDataService } from '../../services/houseData.service';
 import { Route } from '@angular/router';
 import { VersionService } from '../../services/version.service';
+import { FilterViewComponent } from '../filter-view/filter-view.component';
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SideMenuComponent,NgIf,NgFor],
+  imports: [SideMenuComponent,FilterViewComponent,NgIf,NgFor,DatePipe,CurrencyPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent  {
-  maxDescriptionLength = 100;
+  maxDescriptionLength = 30;
   house: any;
   contactData: any;
-
+  filteredData:any=null;
   constructor(private dataService: DataService,private versionservice:VersionService, private housedataservice:HouseDataService, private router:Router ) {
-    this.dataService.data$.subscribe(data => 
-      {
-      this.contactData = data;  
-      console.log("Data From Contact: " + this.contactData);
-    });
+   
+    this.dataService.getFilterData$.subscribe({next:(value)=>
+    {
+        this.filteredData = value;    
+
+    },error:(eror)=>{
+      console.log(eror.error);
+      
+    }})
   }
   ngOnInit(): void {
 
      this.CheckVersion();
     
      this.housedataservice.houses().subscribe({next:(housedata)=>{
-      console.log(housedata)
+     
       this.house = housedata;
-      console.log(this.house)
+     
      },error(err) {
        
      },complete() {
+
+
        
      },})
 
@@ -47,11 +55,11 @@ export class HomeComponent  {
    
   }
 
-  navToDetail(houseId:string){
-    this.dataService.setData(houseId);
-    this.router.navigate(['/detail']);
-
+  _navTo(data:any,targetRoute:string){
+    this.dataService.setData(data);
+    this.dataService.navTo(targetRoute);
   } 
+  
 
 
   getShortDescription(description: string): string {
@@ -81,6 +89,7 @@ export class HomeComponent  {
             // Update the stored version
             localStorage.setItem("_v", response.data);
   
+          
             // Reload the page
             location.reload();
           }
@@ -94,5 +103,6 @@ export class HomeComponent  {
       },
     });
   }
+
   
 }

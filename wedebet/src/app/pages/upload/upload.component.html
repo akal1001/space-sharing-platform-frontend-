@@ -14,8 +14,21 @@
 
     <div class="form-group">
       <label for="price">Price:</label>
-      <input type="text" id="price" name="price" [(ngModel)]="property.Price" required 
-      pattern="^[0-9]+(\.[0-9]{1,2})?$" inputmode="numeric" placeholder="$0.00">    </div>
+      <input
+        type="number"
+        id="price"
+        name="price"
+        [(ngModel)]="property.Price"
+        required
+        placeholder="$0.00"
+        min="0"
+        step="0.01"
+        class="form-control"
+      >
+      <div *ngIf="!property.Price && submitted" class="text-danger">
+        Price is required.
+      </div>
+    </div>
 
       <div class="form-group">
         <label for="fileInput" class="upload-button">Upload Image</label>
@@ -40,34 +53,47 @@
       </div>
       
 
-    <div class="form-group">
-      <label for="address">Address:</label>
-      <input type="text" id="address" name="address" [(ngModel)]="property.Street" required>
-    </div>
-
-    <div class="form-group">
-      <label for="country">Country:</label>
-      <input type="text" id="city" name="country" [(ngModel)]="property.Country" required>
-    </div>
-    <div class="form-group">
-      <label for="city">City:</label>
-      <input type="text" id="city" name="city" [(ngModel)]="property.City" required>
-    </div>
-
-    <div class="form-group">
-      <label for="phone">Phone Number:</label>
-      <input type="tel" id="phone" name="phone" [(ngModel)]="property.Phone" required pattern="^\+?\d{0,13}"
-        placeholder="+1234567890">
-    </div>
-
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <textarea id="description" name="description" [(ngModel)]="property.Description" rows="4" required></textarea>
-    </div>
-
-    <button type="submit" [disabled]="!propertyForm.form.valid">Submit</button>
-    <p>{{this._message}}</p>
-  </form>
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" [(ngModel)]="property.Street" required />
+        <div *ngIf="submitted && !property.Street" class="text-danger">Address is required.</div>
+      </div>
+    
+      <div class="form-group">
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" [(ngModel)]="property.Country" required />
+        <div *ngIf="submitted && !property.Country" class="text-danger">Country is required.</div>
+      </div>
+    
+      <div class="form-group">
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" [(ngModel)]="property.City" required />
+        <div *ngIf="submitted && !property.City" class="text-danger">City is required.</div>
+      </div>
+    
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          [(ngModel)]="property.Phone"
+          required
+          pattern="^\+?\d{0,13}"
+          placeholder="+1234567890"
+        />
+        <div *ngIf="submitted && !property.Phone" class="text-danger">Phone number is required.</div>
+      </div>
+    
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" [(ngModel)]="property.Description" rows="4" required></textarea>
+        <div *ngIf="submitted && !property.Description" class="text-danger">Description is required.</div>
+      </div>
+    
+      <button type="submit" [disabled]="!propertyForm.form.valid" class="btn btn-primary">Submit</button>
+      <p>{{ _message }}</p>
+    </form>
 </div>
 
 

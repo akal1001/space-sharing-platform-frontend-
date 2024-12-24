@@ -10,7 +10,7 @@
     <!-- <button class="logout-btn" (click)="MyPosts()">My Posts</button> -->
     <button class="logout-btn" (click)="logout()">Log Out</button>
 
-    <button *ngIf="admin !== null && admin !== undefined" class="logout-btn" (click)="navToAdmin()">Admin</button>
+    <button *ngIf="admin !== null && admin !== undefined" class="logout-btn" (click)="navTo('admin')">Admin</button>
    
 
 

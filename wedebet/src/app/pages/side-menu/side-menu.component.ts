@@ -34,16 +34,17 @@ export class SideMenuComponent {
 
 
 
-  onContactClick() {
-    const contactData = 'This is contact data'; 
-    this.dataService.setData(contactData);
-  }
+  
 
   isHomeChecked = false; // Default value for the "Home" checkbox
 
-  userChecked(option: string, event: Event): void {
+  userChecked(option: any, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
-    console.log(`Option: ${option}, Checked: ${isChecked}`);
+    console.log(`Option: ${JSON.stringify(option)}, Checked: ${isChecked}`);
+    
+   
+    this.dataService.setFilterData(option.houseTypeId);
+
     // Add your custom logic here
   }
 }

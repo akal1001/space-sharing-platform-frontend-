@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+  constructor(private router:Router){
 
+  }
   private dataSubject = new ReplaySubject<string>(1);
   data$ = this.dataSubject.asObservable();
 
@@ -13,8 +16,8 @@ export class DataService {
     this.dataSubject.next(contactData);
   }
 
-  
-  
+
+
   private userDataSubject = new ReplaySubject<string>(1);
   userdata$ = this.userDataSubject.asObservable();
 
@@ -27,6 +30,18 @@ export class DataService {
 
   setloginSucessData(successData: boolean) {
     this.isUserLoggedInSubject.next(successData);
-   
   }
+
+
+  // for filter data
+  private filtterDataSubject = new ReplaySubject<string>(1);
+  getFilterData$ = this.filtterDataSubject.asObservable();
+
+  setFilterData(data: string) {
+    this.filtterDataSubject.next(data);
+  }
+
+  navTo(componentName:string){
+    this.router.navigate(['/'+ componentName]);
+  } 
 }

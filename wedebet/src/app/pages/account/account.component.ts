@@ -128,7 +128,8 @@ export class AccountComponent implements OnInit {
     
     })
   }
-  navToAdmin(){
-    this.router.navigate(['/admin']);
+  navTo(targetRoute:any){
+    this.dataService.navTo(targetRoute)
+   
   }
 }

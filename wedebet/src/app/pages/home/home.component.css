@@ -39,40 +39,32 @@
 
 .property-info {
   padding: 0.5rem;
+  /* font-family: 'Noto Sans Ethiopic', sans-serif; */
+  /* font-family: "Noto Serif Ethiopic", "Abyssinica SIL", serif; */
+ 
 }
 
 .property-info h4 {
   margin: 0.5rem 0;
   font-size: 1.1rem;
   color: #333;
+  
 }
 
 .property-info p {
   margin: 0.25rem 0;
   font-size: 0.9rem;
   color: #666;
+  /* font-family: "Noto Serif Ethiopic", "Abyssinica SIL", serif; */
+
+  word-spacing: 0.2em
 }
 
 .property-info small {
   color: #999;
 }
 
-.property-meta {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.5rem;
-}
 
-.property-meta span {
-  font-size: 0.9rem;
-  color: #333;
-}
-
-.property-price {
-  font-weight: bold;
-  /* color: #000; */
-  color: green;
-}
 
 /* Small screens (Phones in portrait mode) */
 @media (max-width: 480px) and (orientation: portrait) {
@@ -130,15 +122,19 @@
 
 .description-text {
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-line-clamp: 1; /* Limit to 3 lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.5em; /* Adjust based on your design */
-  min-height: 4.5em;
-  max-height: 4.5em; /* 3 lines * line height */
+  min-height: 3.5em;
+  max-height: 3.5em; /* 3 lines * line height */
   white-space: normal;
   text-align: justify;
+
+  font-family: 'Noto Sans Ethiopic', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 .more-link {
@@ -146,3 +142,30 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+
+
+
+
+.property-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.property-images {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.property-price {
+  font-size: 1.3rem;
+  font-weight: lighter;
+  color: #28a745; /* Green color */
+}
+
+.property-meta i {
+  margin-right: 8px;
+}
+

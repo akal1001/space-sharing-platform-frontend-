@@ -1,14 +1,33 @@
-<p>admin works!</p>
- <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+
+ <h4>{{appVerison}}</h4>
+<div class="form-container">
+  <form (ngSubmit)="onSubmitType()"  #houseTypeForm="ngForm">
     <div class="form-group">
-      <label for="housetype">House Type:</label>
       <input 
         type="text" 
         id="housetype" 
         name="housetype" 
         [(ngModel)]="housetype" 
         required 
-        class="form-control" />
+        class="form-input" 
+        placeholder="Enter house type"
+      />
+      <button type="submit" [disabled]="!houseTypeForm.form.valid" class="submit-button">Submit</button>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+
+  <form (ngSubmit)="onSubmitVersion()" #versionForm="ngForm">
+    <div class="form-group">
+      <input
+        type="text"
+        id="textInput"
+        name="textInput"
+        placeholder="Enter version.."
+        [(ngModel)]="inputValue"
+        required
+        class="form-input"
+      />
+      <button type="submit" [disabled]="!versionForm.form.valid" class="submit-button">Submit</button>
+    </div>
+  </form>
+</div>

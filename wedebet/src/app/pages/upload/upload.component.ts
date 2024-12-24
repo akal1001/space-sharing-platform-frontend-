@@ -63,12 +63,21 @@ export class UploadComponent implements OnInit {
     DateUploaded: new Date()
   };
 
- 
+  submitted = false;
 
 
   onSubmit() {
+    this.submitted = true;
+
+    const phonePattern = /^\+?\d{10,13}$/; // Adjust regex as needed
+    if (this.property.Phone && !phonePattern.test(this.property.Phone)) {
+      this._message = 'Please enter a valid phone number.';
+      alert(this._message);
+     
+    }
+
     console.log(this.property);
-    this.onUpload();
+   // this.onUpload();
    
   }
 
