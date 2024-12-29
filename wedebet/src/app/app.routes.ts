@@ -12,13 +12,14 @@ import { AdminComponent } from './pages/admin/admin.component';
 
 
 export const routes: Routes = [
+   {path:'admin',component:AdminComponent},
    { path: 'home', component: HomeComponent},
    { path: 'detail', component:DetailComponent},
    { path: 'login', component: LoginComponent},
    { path: 'createAccount', component:CreateAccountComponent}, 
    { path: 'upload', component:UploadComponent},
    {path:'favorite', component:FavoriteComponent},
-   {path:'account',component:AccountComponent},
-   {path:'admin',component:AdminComponent}
+   {path:'account',component:AccountComponent}
+ 
 
 ];

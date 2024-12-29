@@ -54,7 +54,8 @@ export class LoginComponent implements OnInit  {
         {
           const loginResponse:LoginResponse = JSON.parse(JSON.stringify(response));
          
- 
+         loginResponse.loginDate  = new Date();
+         
         if (loginResponse.success) {
           this._message = loginResponse.message;
           this.messageClass = 'success-message';

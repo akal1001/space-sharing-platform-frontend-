@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class UploadComponent implements OnInit {
  
-
+  houseTypid:any = null;
   uploadedurls: any[] = [];
   uploadStatus: string | null = null; // Added property
   uploadMessage: string | null = null; // Added property
@@ -38,8 +38,10 @@ export class UploadComponent implements OnInit {
   }
   
   property: HouseDataRequest = {
+  
     HouseTypeId: '',
     HouseId: '',
+    HouseTypeName:'',
     Header: '',
     Description: '',
     Price: 0,
@@ -72,12 +74,12 @@ export class UploadComponent implements OnInit {
     const phonePattern = /^\+?\d{10,13}$/; // Adjust regex as needed
     if (this.property.Phone && !phonePattern.test(this.property.Phone)) {
       this._message = 'Please enter a valid phone number.';
-      alert(this._message);
+      // alert(this._message);
      
     }
 
     console.log(this.property);
-   // this.onUpload();
+    this.onUpload();
    
   }
 
@@ -139,8 +141,10 @@ export class UploadComponent implements OnInit {
               console.log(this._message)
               console.log(response.success)
 
-              this.property={ HouseTypeId: '',
+              this.property={ 
+                HouseTypeId: '',
                 HouseId: '',
+                HouseTypeName:'',
                 Header: '',
                 Description: '',
                 Price: 0,

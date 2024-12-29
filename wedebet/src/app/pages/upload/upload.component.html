@@ -12,6 +12,18 @@
       </select>
     </div>
 
+ 
+    
+    <!-- Show the text box if 'Other' is selected -->
+    <div *ngIf="property.HouseTypeId === '812828b7f3214274a1515e54f6446072'" class="form-group">
+      <label for="type">Enter property type:</label>
+      <input type="text" id="type" name="type" [(ngModel)]="property.HouseTypeName" required />
+      <div *ngIf="submitted && !property.HouseTypeName" class="text-danger">
+        Property type is required.
+      </div>
+    </div>
+    
+
     <div class="form-group">
       <label for="price">Price:</label>
       <input
@@ -79,7 +91,7 @@
           name="phone"
           [(ngModel)]="property.Phone"
           required
-          pattern="^\+?\d{0,13}"
+          pattern=""
           placeholder="+1234567890"
         />
         <div *ngIf="submitted && !property.Phone" class="text-danger">Phone number is required.</div>

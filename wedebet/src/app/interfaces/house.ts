@@ -3,17 +3,29 @@ import { Contact } from "./contact";
 import {Image} from "./image";
 
 export interface House {
-     houseid?: any;
+     // houseId?: any;
+     // userId?: any;
+     // header?: any;
+     // Description?: any;
+     // price?: any;
+     // city?: any;
+     // zipCode?: any;
+     // State?: any;
+     // phone?: any;
+     // images?: Image;
+     // datePosted: Date | undefined;
+     // contact?: Contact
+     // address?: Address;
+     // houseImageURL?: string;
+
+     houseId?: any;
      userId?: any;
      header?: any;
-     Description?: any;
+     description?: any;
      price?: any;
-     city?: any;
-     zipCode?: any;
-     State?: any;
-     phone?: any;
+    
      images?: Image;
-     _Date: Date | undefined;
+     datePosted: Date | undefined;
      contact?: Contact
      address?: Address;
      houseImageURL?: string;

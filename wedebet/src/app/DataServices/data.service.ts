@@ -9,14 +9,12 @@ export class DataService {
   constructor(private router:Router){
 
   }
-  private dataSubject = new ReplaySubject<string>(1);
+  private dataSubject = new ReplaySubject<any>(1);
   data$ = this.dataSubject.asObservable();
 
-  setData(contactData: string) {
+  setData(contactData: any) {
     this.dataSubject.next(contactData);
   }
-
-
 
   private userDataSubject = new ReplaySubject<string>(1);
   userdata$ = this.userDataSubject.asObservable();
@@ -34,12 +32,25 @@ export class DataService {
 
 
   // for filter data
-  private filtterDataSubject = new ReplaySubject<string>(1);
+  private filtterDataSubject = new ReplaySubject<any>(1);
   getFilterData$ = this.filtterDataSubject.asObservable();
 
-  setFilterData(data: string) {
+  setFilterData(data: any) {
     this.filtterDataSubject.next(data);
   }
+
+
+  //new post found 
+  private newPostCountSubject = new ReplaySubject<any>(1);
+  dataCountNewPost$ = this.newPostCountSubject.asObservable();
+
+  setNewPostCountData(data: any) {
+    this.newPostCountSubject.next(data);
+  }
+
+
+
+
 
   navTo(componentName:string){
     this.router.navigate(['/'+ componentName]);

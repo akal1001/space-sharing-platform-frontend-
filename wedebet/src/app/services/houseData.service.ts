@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { APP_CONFIG } from '../app.config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, finalize, Observable, throwError } from 'rxjs';
 import { Housetype } from '../interfaces/housetype';
 import { House } from '../interfaces/house';
+import { HouseDetail } from '../interfaces/house-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,21 @@ export class HouseDataService {
       let result = this.httpClient.post(this.apiUrl + "InsertHouseType?housetype="+htype, "");
       return result;
     }
+  
+
+    getHouses(pageNumber: number, pageSize: number): Observable<any> {
+      const url = `${this.apiUrl}GetHousesByPageAsync?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+      return this.httpClient.get<any>(url);
+    }
+
+    getHousesByHouseTypeId(pageNumber: number, pageSize: number, housetypeId:string): Observable<any> {
+      const url = `${this.apiUrl}GetHousesByHouseTypeIdPageAsync?pageNumber=${pageNumber}&pageSize=${pageSize}&houseTypeId=${housetypeId}`;
+      return this.httpClient.get<any>(url);
+    }
     
+    getNewPostHouseCount(lastFetchedDate: any): Observable<any> {
+     
+      const url = `${this.apiUrl}GetNewPostCountAsync?lastFetchedDate=${lastFetchedDate}`;
+      return this.httpClient.get<any>(url);
+    }
 }

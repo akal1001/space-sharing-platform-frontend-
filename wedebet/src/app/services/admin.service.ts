@@ -15,7 +15,7 @@ export class AdminService {
     const versionDto = {
       "version": version
     };
-    let result = this.httpClient.post<any>(this.apiUrl + "version", versionDto);
+    let result = this.httpClient.post<any>(this.apiUrl + "addversion", versionDto);
 
     return result;
   }

@@ -7,3 +7,10 @@ body{
     font-family: 'Noto Sans Ethiopic', sans-serif;
 }
 
+.loading{
+    display: flex !important;
+     justify-content: center !important;
+      align-items: center !important;
+       width: 100% !important;
+        height: 50vh;
+    }

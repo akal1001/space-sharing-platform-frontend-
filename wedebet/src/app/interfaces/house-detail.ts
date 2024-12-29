@@ -6,6 +6,6 @@ export interface HouseDetail {
     house:House;
     address:Address;
     contact:Contact;
-    image:Image;
+    images:Image[];
 
 }

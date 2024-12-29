@@ -1,0 +1,31 @@
+<!-- <div class="scrollable-container">
+    <div class="scrollable-content">
+      <button *ngFor="let button of buttons" class="scroll-button">
+        {{ button }}
+      </button>
+    </div>
+  </div> -->
+  <div class="scrollable-container">
+    <div class="scrollable-content">
+      <button name="all" (click)="onClicked(buttons, $event)" class="scroll-button">ሁሉም</button>
+      <button *ngFor="let button of data"  (click)="onClicked(button, $event)" class="scroll-button">
+        {{ button.houseTypeName }}
+      </button>
+    </div>
+  </div>
+
+  
+  <!-- <ul>
+    <li *ngFor="let result of data">
+      <label>
+        <input 
+          type="checkbox" 
+          [checked]="isHomeChecked" 
+          (change)="userChecked(result, $event)" 
+        /> 
+       {{result.houseTypeName}}
+      </label>
+    </li>
+    -->
+  <!-- </ul> -->
+  

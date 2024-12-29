@@ -19,6 +19,7 @@ export class AccountComponent implements OnInit {
   accountData:LoginResponse | undefined;
   housetype: string = '';
   admin:any;
+  mydata:any;
   constructor(private dataService: DataService,private router: Router,private accountService:AccountService, private housedataSrvice:HouseDataService) {
 
   }
@@ -89,6 +90,8 @@ export class AccountComponent implements OnInit {
       this.accountService.GetAllMyPost(t).subscribe({next:(response)=>{
         console.log(response);
         this.house = response.data;
+        this.mydata = 1;
+        
       },
       error(err) {
         console.log(err);

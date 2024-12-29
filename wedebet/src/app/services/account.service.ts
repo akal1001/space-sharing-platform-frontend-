@@ -53,7 +53,14 @@ export class AccountService {
       const parsedData: LoginResponse = JSON.parse(storedData);
       return of(parsedData);  
     } else {
-      return of(null);
+      const nullData:LoginResponse = {
+        success:false,
+        message: '',
+        name: '',
+        id: '',
+        token: ''
+      };
+      return of(nullData);
     }
   }
 

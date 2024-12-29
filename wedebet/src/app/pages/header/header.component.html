@@ -11,7 +11,7 @@
          (input)="onSearch(searchText)" />
         
         <div class="right-div">
-       
+          <button *ngIf="IsNewPost" class="new-item-btn" (click)="ItemViewed()">New</button>
           <button class="login-btn" value="" (click)="navigateToHome()">Home</button>
           <button class="login-btn" value="fav" (click)="navigateToFav()">fav</button>
           <button class="login-btn" value="" (click)="navigateToUpload()">Post</button>

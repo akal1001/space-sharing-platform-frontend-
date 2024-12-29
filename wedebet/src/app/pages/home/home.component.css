@@ -4,18 +4,19 @@
 
 .home-container {
   width: 100%;
-  height: auto;
+  min-height: 100vh;
+ 
   margin: 0;
   display: flex;
   flex-wrap: wrap;
   gap: .5rem;
-  background-color: rgb(245, 240, 240);
+  /* background-color: rgb(245, 240, 240); */
   text-align: center;
   padding: 0;
   /* gap: 0.5rem; */
   /* Center the flex items */
   justify-content: center;  /* Centers items horizontally */
-  align-items: center;      /* Centers items vertically */
+
   margin-top: 10px;
 }
 
@@ -70,7 +71,13 @@
 @media (max-width: 480px) and (orientation: portrait) {
   .property-item {
     width: calc(50% - 0.5rem); /* 2 items per row in portrait mode */
+    /* width: calc(100%); 2 items per row in portrait mode */
   }
+  /* .property-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  } */
 }
 
 /* Small screens (Phones in landscape mode) */

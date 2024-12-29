@@ -1,10 +1,11 @@
 export interface HouseDataRequest {
     UserId?: string;
     HouseTypeId: string;
+    HouseTypeName:string;
     HouseId: string;
     Header: string;
     Description: string;
-    Price: number;
+    Price: number;  
     DatePosted?: Date;
     
     ContactId: string;

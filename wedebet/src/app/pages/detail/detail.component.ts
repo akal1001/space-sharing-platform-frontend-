@@ -3,6 +3,10 @@ import { DataService } from '../../DataServices/data.service';
 import { HouseDataService } from '../../services/houseData.service';
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
+import { HouseDetail } from '../../interfaces/house-detail';
+import { House } from '../../interfaces/house';
+import { Address } from '../../interfaces/address';
+import { Contact } from '../../interfaces/contact';
 
 @Component({
   selector: 'app-detail',
@@ -13,7 +17,14 @@ import { NgFor } from '@angular/common';
 })
 export class DetailComponent implements OnInit {
   selectedImage: string | null = null;
-  houeeDetail: any;
+  //houeseDetail!: HouseDetail;
+  houeseDetail: HouseDetail = {
+    house: {} as House, 
+    address: {} as Address, 
+    contact: {} as Contact, 
+    images: [] 
+  };
+  
     // Placeholder for house data
   constructor(private dataService: DataService, private housedataserveice:HouseDataService) {
 
@@ -21,12 +32,20 @@ export class DetailComponent implements OnInit {
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     this.dataService.data$.subscribe(housId => {
-      this.housedataserveice.houseDetail(housId).subscribe(data => {
-        this.selectedImage = data.data.images[0]?.imageUrl || null;
-        this.houeeDetail = data.data;
+     
+      this.houeseDetail = housId
+      this.selectedImage = this.houeseDetail.images[0].imageUrl;
+      console.log(this.houeseDetail)
+      // this.housedataserveice.houseDetail(housId).subscribe(response => 
+      // {
+      //   this.houeseDetail = response.data
+      //      console.log(this.houeseDetail);
+          
+      //  this.selectedImage =  this.houeseDetail?.images[0].imageUrl || null;
+      //  // this.houeeDetail = data.data;
        
-        console.log(this.houeeDetail);
-      });
+    
+      // });
     })
 
    

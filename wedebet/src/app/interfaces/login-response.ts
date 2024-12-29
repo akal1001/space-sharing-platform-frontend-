@@ -4,4 +4,5 @@ export interface LoginResponse {
   name: string;
   id: string;
   token: string;
+  loginDate?:Date;
 }

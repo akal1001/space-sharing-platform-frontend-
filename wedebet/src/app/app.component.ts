@@ -10,12 +10,13 @@ import { FooterComponent } from './pages/footer/footer.component';
 
 import { DataService } from './DataServices/data.service';
 import { VersionService } from './services/version.service';
+import { SideMenuComponent } from "./pages/side-menu/side-menu.component";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule, RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [FormsModule, RouterOutlet, HeaderComponent, FooterComponent,SideMenuComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

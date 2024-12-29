@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
   username: any;
   isuserLoggedIn = false;
 
-
+  IsNewPost = false;
   constructor(private router: Router, private dataservice: DataService, private accountService: AccountService) {
 
     
@@ -41,6 +41,15 @@ export class HeaderComponent implements OnInit {
 
       this.isuserLoggedIn = x;
 
+    })
+
+    this.dataservice.dataCountNewPost$.subscribe((val)=>{
+    
+      if(val>0)
+      {
+    
+        this.IsNewPost = true;
+      }
     })
 
     this.accountService.ReturnUserDataFromLocalStorage().subscribe({
@@ -190,6 +199,7 @@ export class HeaderComponent implements OnInit {
 
   }
   navigateToHome() {
+    //this.IsNewPost = true;
     this.router.navigate(['/home']);
   }
   navigateToUpload() {
@@ -210,5 +220,11 @@ export class HeaderComponent implements OnInit {
   
   navigateToFav() {
     this.router.navigate(['/favorite']);
+  }
+  ItemViewed(){
+    // //window.location.reload();
+    // window.scrollTo({ top: 0, behavior: 'smooth' });
+    // this.IsNewPost = false;
+  
   }
 }
