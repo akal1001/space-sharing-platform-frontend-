@@ -9,6 +9,7 @@ import { UploadComponent } from './pages/upload/upload.component';
 import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { AccountComponent } from './pages/account/account.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { EditComponent } from './pages/edit/edit.component';
 
 
 export const routes: Routes = [
@@ -19,7 +20,8 @@ export const routes: Routes = [
    { path: 'createAccount', component:CreateAccountComponent}, 
    { path: 'upload', component:UploadComponent},
    {path:'favorite', component:FavoriteComponent},
-   {path:'account',component:AccountComponent}
+   {path:'account',component:AccountComponent},
+   {path:'edit',component:EditComponent}
  
 
 ];

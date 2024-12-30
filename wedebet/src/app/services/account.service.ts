@@ -73,10 +73,21 @@ export class AccountService {
     const headers = new HttpHeaders().set('Authorization', token);
     return this.httpClient.get<any>(`${this.apiUrl}MyPosts`, { headers });
   }
+
   DeleteMyPost(houseId:any, token:any):Observable<any>{
     const headers = new HttpHeaders().set('Authorization', token);
     return this.httpClient.delete<any>(`${this.apiUrl}deletePost?houseId=`+ houseId, { headers });
   }
+
+
+  GetAllMySelectionPost(token: any, pageNumber: number, pageSize: number): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', token);
+    const url = `${this.apiUrl}MySelections?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.httpClient.get<any>(url, { headers });
+  }
+  
+
+ 
 
 
 

@@ -1,0 +1,66 @@
+<div class="edit-container">
+  <h1>Edit Property Details</h1>
+
+  <form class="edit-form" (submit)="onSave()">
+    <!-- Property Details -->
+    <section class="form-section">
+      <h2>Property Information</h2>
+      <label>
+        Header:
+        <input class="input" type="text" [(ngModel)]="data.house.header" name="header" />
+      </label>
+      <label>
+        Price:
+        <input class="input" type="number" [(ngModel)]="data.house.price" name="price" />
+      </label>
+      <label>
+        Description:
+        <textarea class="input" [(ngModel)]="data.house.description" name="description"></textarea>
+      </label>
+    </section>
+
+    <!-- Address Details -->
+    <section class="form-section">
+      <h2>Address Information</h2>
+      <label>
+        Country:
+        <input class="input" type="text" [(ngModel)]="data.address.country" name="country" />
+      </label>
+      <label>
+        City:
+        <input class="input" type="text" [(ngModel)]="data.address.city" name="city" />
+      </label>
+      <label>
+        Street:
+        <input class="input" type="text" [(ngModel)]="data.address.street" name="street" />
+      </label>
+    </section>
+
+    <!-- Contact Details -->
+    <section class="form-section">
+      <h2>Contact Information</h2>
+      <label>
+        Phone:
+        <input class="input" type="number" [(ngModel)]="data.contact.phone" name="phone" />
+      </label>
+    </section>
+
+    <!-- Images -->
+    <section class="form-section">
+      <h2>Images</h2>
+      <div *ngFor="let img of data.images; let i = index" class="image-container">
+        <img class="edit-image" [src]="img.imageUrl" *ngIf="img.imageUrl" alt="Uploaded Image" />
+        <button type="button" class="btn-delete" (click)="removeImage(i)">Remove</button>
+      </div>
+      <label class="upload-label">
+        Upload New Image:
+        <input type="file" (change)="onFileSelected($event)" class="input upload-input" />
+      </label>
+    </section>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button type="submit" class="btn-save">Save</button>
+    </div>
+  </form>
+</div>

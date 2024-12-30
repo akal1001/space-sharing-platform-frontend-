@@ -20,7 +20,7 @@ export class AccountComponent implements OnInit {
   housetype: string = '';
   admin:any;
   mydata:any;
-  constructor(private dataService: DataService,private router: Router,private accountService:AccountService, private housedataSrvice:HouseDataService) {
+  constructor(private dataService: DataService, private router: Router,private accountService:AccountService, private housedataSrvice:HouseDataService) {
 
   }
   ngOnInit(): void {
@@ -45,8 +45,9 @@ export class AccountComponent implements OnInit {
     //this.router.navigate(['/login']);
 
   }
-  onEdit(id:any){
-   alert("Edit Not implemented yet!")
+  onEdit(editData:any){
+    this.dataService.setEditData(editData)
+    this.dataService.navTo('edit');
   }
   onDelete(id:any){
     // alert("delete Not implemented yet!")

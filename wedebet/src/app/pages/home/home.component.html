@@ -36,7 +36,8 @@
             <span *ngIf="d.house.description.length > maxDescriptionLength" class="more-link">more</span>
           </p>
         </div> -->
-        <p>Posted on: <small>{{ d.house.datePosted| date: 'MMM dd, yyyy, hh:mm a' }}</small></p>
+        <!-- <p>Posted on: <small>{{ d.house.datePosted| date: 'MMM dd, yyyy, hh:mm a' }}</small></p> -->
+        <p>Posted on: <small>{{ d.house.datePosted| date: 'MMM dd, yyyy' }}</small></p>
         <!-- <i class="fas fa-heart"></i> -->
         <div class="property-meta">
           <span class="property-images">

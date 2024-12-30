@@ -220,6 +220,10 @@ export class HeaderComponent implements OnInit {
   
   navigateToFav() {
     this.router.navigate(['/favorite']);
+       // Close the menu if it's open
+       if (this.isMenuOpen) {
+        this.isMenuOpen = false;
+      }
   }
   ItemViewed(){
     // //window.location.reload();

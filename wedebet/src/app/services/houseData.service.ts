@@ -61,4 +61,13 @@ export class HouseDataService {
       const url = `${this.apiUrl}GetNewPostCountAsync?lastFetchedDate=${lastFetchedDate}`;
       return this.httpClient.get<any>(url);
     }
+    AddUserSelectionPost(houseId: any, token: any): Observable<any> {
+      const headers = new HttpHeaders().set('Authorization', token);
+      return this.httpClient.post(
+        `${this.apiUrl}addUserSelectionHouse?houseId=${houseId}`,
+        {}, // Empty body
+        { headers } // Pass headers correctly here
+      );
+    }
+    
 }

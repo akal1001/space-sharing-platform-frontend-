@@ -50,6 +50,14 @@ export class DataService {
 
 
 
+  private editDataSubject = new ReplaySubject<any>(1);
+  geEditData$ = this.editDataSubject.asObservable();
+
+  setEditData(data: any) {
+    this.editDataSubject.next(data);
+  }
+
+
 
 
   navTo(componentName:string){

@@ -213,6 +213,13 @@ export class HomeComponent implements OnInit {
           alert("Please log in to access this feature.");
           return;
         }
+        this.housedataservice.AddUserSelectionPost(houseId,response.token).subscribe({next(value) 
+        {
+          
+        },
+         error(err) {
+         
+       },})
         this.likedHouses[houseId] = !this.likedHouses[houseId];
         this.likedHouses[houseId]
       }, error(err) {

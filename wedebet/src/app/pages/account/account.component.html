@@ -27,7 +27,7 @@
   <div class="home-container">
    
     <div class="property-item" *ngFor="let d of house" >
-      <img [src]="d.images[0]?.imageUrl" alt="Property Image" class="property-image"(click)="navToDetail(d.house.houseId)">
+      <img [src]="d.images[0]?.imageUrl" alt="Property Image" class="property-image"(click)="navToDetail(d)">
       <div class="property-info">
         <h4>{{ d.house.header }}</h4>
         <p>{{ d.address.city }}</p>
@@ -35,7 +35,7 @@
         <small>{{ d.house.datePosted }}</small>
         <!-- <i class="fas fa-heart"></i> -->
         <div class="property-meta">
-          <button class="a-btn1" (click)="onEdit(d.house.houseId)">Edit</button>
+          <button class="a-btn1" (click)="onEdit(d)">Edit</button>
           <button class="a-btn1" (click)="onDelete(d.house.houseId)">delete</button>
             </div>
       </div>
