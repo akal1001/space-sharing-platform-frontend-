@@ -17,7 +17,7 @@ export class HouseDataService {
     }
     uploadHouse(uploadHouseRequest: any, token: string): Observable<any> {
         const headers = new HttpHeaders().set('Authorization', token);
-        return this.httpClient.post(this.apiUrl+"upload", uploadHouseRequest, { headers });
+        return this.httpClient.post(this.apiUrl+"_ph", uploadHouseRequest, { headers });
     }
     
     houseTypes() {
@@ -26,45 +26,47 @@ export class HouseDataService {
     }
 
     houses() {
-      let result = this.httpClient.get<House>(this.apiUrl + "houses");
+      let result = this.httpClient.get<House>(this.apiUrl + "_gh_s");
       return result;
     }
 
+
+
     AvailablehouseTypes() {
-      let result = this.httpClient.get<any>(this.apiUrl + "AvailablePostedHousetypes");
+      let result = this.httpClient.get<any>(this.apiUrl + "_gapht");
       return result;
     }
 
     houseDetail( houseId:string){
-      let result = this.httpClient.get<any>(this.apiUrl + "houseDetail?houseId="+houseId);
+      let result = this.httpClient.get<any>(this.apiUrl + "_ghd_b_id?houseId="+houseId);
       return result;
     }
 
     InserHouseTypes(htype:string) {
-      let result = this.httpClient.post(this.apiUrl + "InsertHouseType?housetype="+htype, "");
+      let result = this.httpClient.post(this.apiUrl + "_pht?housetype="+htype, "");
       return result;
     }
   
 
     getHouses(pageNumber: number, pageSize: number): Observable<any> {
-      const url = `${this.apiUrl}GetHousesByPageAsync?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+      const url = `${this.apiUrl}_gh_b_page?pageNumber=${pageNumber}&pageSize=${pageSize}`;
       return this.httpClient.get<any>(url);
     }
 
     getHousesByHouseTypeId(pageNumber: number, pageSize: number, housetypeId:string): Observable<any> {
-      const url = `${this.apiUrl}GetHousesByHouseTypeIdPageAsync?pageNumber=${pageNumber}&pageSize=${pageSize}&houseTypeId=${housetypeId}`;
+      const url = `${this.apiUrl}_gh_b_hti_page?pageNumber=${pageNumber}&pageSize=${pageSize}&houseTypeId=${housetypeId}`;
       return this.httpClient.get<any>(url);
     }
     
     getNewPostHouseCount(lastFetchedDate: any): Observable<any> {
      
-      const url = `${this.apiUrl}GetNewPostCountAsync?lastFetchedDate=${lastFetchedDate}`;
+      const url = `${this.apiUrl}_gnphc?lastFetchedDate=${lastFetchedDate}`;
       return this.httpClient.get<any>(url);
     }
     AddUserSelectionPost(houseId: any, token: any): Observable<any> {
       const headers = new HttpHeaders().set('Authorization', token);
       return this.httpClient.post(
-        `${this.apiUrl}addUserSelectionHouse?houseId=${houseId}`,
+        `${this.apiUrl}pus?houseId=${houseId}`,
         {}, // Empty body
         { headers } // Pass headers correctly here
       );

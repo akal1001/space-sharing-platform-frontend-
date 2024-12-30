@@ -7,7 +7,7 @@
   </div> -->
   <div class="scrollable-container">
     <div class="scrollable-content">
-      <button name="all" (click)="onClicked(buttons, $event)" class="scroll-button">ሁሉም</button>
+     
       <button *ngFor="let button of data"  (click)="onClicked(button, $event)" class="scroll-button">
         {{ button.houseTypeName }}
       </button>

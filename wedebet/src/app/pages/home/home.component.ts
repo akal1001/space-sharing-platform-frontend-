@@ -20,7 +20,7 @@ import { SlideButtonsViewComponent} from '../../pages/slide-buttons-view/slide-b
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SideMenuComponent, NgFor, NgIf, DatePipe, CurrencyPipe,FilterViewComponent,SlideButtonsViewComponent],
+  imports: [SideMenuComponent, NgFor, DatePipe, CurrencyPipe, SlideButtonsViewComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

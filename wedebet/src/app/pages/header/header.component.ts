@@ -84,7 +84,7 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
-    this.navigateToHome();
+    
   }
 
 
@@ -199,9 +199,20 @@ export class HeaderComponent implements OnInit {
 
   }
   navigateToHome() {
-    //this.IsNewPost = true;
-    this.router.navigate(['/home']);
+  
+    const currentRoute = this.router.url;
+    
+    if (currentRoute === '/home') {
+      
+      window.location.reload();
+    
+      
+    } else {
+      
+      this.router.navigate(['/home']);
+    }
   }
+  
   navigateToUpload() {
    
   
