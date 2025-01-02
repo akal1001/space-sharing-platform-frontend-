@@ -25,6 +25,10 @@ export interface HouseDataRequest {
     ImageId: string;
     ImageName: string;
     Image: string;
-    ImageUrls: string[];
+    ImageInfos: ImgInfo[];  
     DateUploaded?: Date;
 }
+ class ImgInfo{
+    key:string | undefined;
+    url:string | undefined;
+ }

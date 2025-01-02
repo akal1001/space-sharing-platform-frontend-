@@ -4,8 +4,10 @@
   left: 0;
   background-color: #007bff;
   background-color:black;
+  background-color:white;
  
   color: white;
+  border: 1px solid lightgray;
   /* z-index: 10;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
 }
@@ -15,7 +17,9 @@
   padding: 0.5rem 1rem;
   background-color: #007bff;
   background-color:black;
+  background-color:white;
   color: white;
+  color: black;
   
  
  
@@ -43,6 +47,7 @@
 .login-btn {
   background: none;
   color: white;
+  color: black;
   border: none;
   font-size: 1rem;
   cursor: pointer;
@@ -67,6 +72,7 @@
 .login-btn1 {
   background: none;
   color: white;
+  color: black;
   border: none;
   font-size: 1rem;
   cursor: pointer;
@@ -80,6 +86,7 @@
 .login-btn12 {
   background: none;
   color: white;
+  color: black;
   border: none;
   font-size: 1rem;
   cursor: pointer;
@@ -105,13 +112,17 @@
 
   .menu-toggle {
     display: block;
+    color: black;
     margin-right: 0;
     padding: 0;
     margin-left: 2%;
+
   }
 
   .header-container {
     justify-content: space-between;
+    padding-left: 1%;
+    padding-right: 1%;
   }
 
   footer {

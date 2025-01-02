@@ -59,7 +59,7 @@
       
         <div class="image-container">
           <div *ngFor="let img of uploadedurls">
-            <img class="uploaded-image" [src]="img" *ngIf="img" alt="Uploaded Image">
+            <img class="uploaded-image" [src]="img.url" *ngIf="img" alt="Uploaded Image">
           </div>
         </div>
       </div>

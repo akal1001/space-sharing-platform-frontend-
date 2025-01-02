@@ -4,7 +4,7 @@ import { NgFor, NgIf, NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { DataService } from '../../DataServices/data.service';
 
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
 
 import { AccountService } from '../../services/account.service';
 import { User } from '../../interfaces/user';
@@ -19,12 +19,12 @@ import { LoginResponse } from '../../interfaces/login-response';
   standalone: true,
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  imports: [FormsModule, ReactiveFormsModule,NgClass],
+  imports: [FormsModule, ReactiveFormsModule],
 })
 export class LoginComponent implements OnInit  {
 
   //constructor(private router: Router, private dataService: DataService) {}
-  constructor(private dataService: DataService, private router: Router, private httpClient: HttpClient, private accountService: AccountService) { }
+  constructor(private dataService: DataService, private router: Router, private accountService: AccountService) { }
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }

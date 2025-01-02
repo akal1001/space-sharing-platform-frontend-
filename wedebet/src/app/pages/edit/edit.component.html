@@ -56,6 +56,7 @@
         Upload New Image:
         <input type="file" (change)="onFileSelected($event)" class="input upload-input" />
       </label>
+  
     </section>
 
     <!-- Actions -->
@@ -64,3 +65,14 @@
     </div>
   </form>
 </div>
+
+
+
+
+
+<form>
+  <div class="file-upload">
+    <input type="file" (change)="onFilesSelected($event)" multiple />
+    <button (click)="onUpload()">Upload Files</button>
+  </div>
+</form>

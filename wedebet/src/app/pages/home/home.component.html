@@ -41,7 +41,8 @@
         <!-- <i class="fas fa-heart"></i> -->
         <div class="property-meta">
           <span class="property-images">
-            <i class="fas fa-camera"></i> {{ d.images.length }} Photos
+            <!-- <i class="fas fa-camera"></i>  -->
+            {{ d.images.length }} Photos
           </span>
           <span class="property-images" id="{{d.house.houseId}}" (click)="toggleLike(d.house.houseId)">
             <i [class]="likedHouses[d.house.houseId] ? 'fas fa-heart liked' : 'far fa-heart not-liked'"></i>

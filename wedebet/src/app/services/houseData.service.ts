@@ -21,7 +21,7 @@ export class HouseDataService {
     }
     
     houseTypes() {
-      let result = this.httpClient.get<any>(this.apiUrl + "housetypes");
+      let result = this.httpClient.get<any>(this.apiUrl + "_ght");
       return result;
     }
 

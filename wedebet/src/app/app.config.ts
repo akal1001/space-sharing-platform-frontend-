@@ -20,6 +20,12 @@ export const aws_Config = {
   s3Url: 'https://betapp.s3.amazonaws.com/',
 }
 
+export const Somee_Config = {
+  apiKey:'UnJ4QeZfY1dudOC0Tt2wMJmN8/2w1piw+boeqxc0sfey7ttrZtisq/ukAiX2lfTj',
+  apiUrl: 'https://fileupload.somee.com/api/S3/Upload',
+  //apiUrl:'https://localhost:7051/api/S3/Upload'
+}
+
 
 
 
