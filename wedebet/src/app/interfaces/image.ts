@@ -4,4 +4,5 @@ export interface Image {
     imageName: string;
     imageUrl: string;
     dateUploaded: Date;
+    _key:string;
 }

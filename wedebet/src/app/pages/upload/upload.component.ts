@@ -182,11 +182,11 @@ export class UploadComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       this.selectedFiles = input.files;
-      this.onUploadImage();
+      this.UploadImageS3();
     }
   }
 
-  onUploadImage(): void {
+  UploadImageS3(): void {
     if (this.selectedFiles) {
       this.fileUploadService.uploadFiles(this.selectedFiles).subscribe({
         next: (response) => {

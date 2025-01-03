@@ -50,11 +50,15 @@
       <h2>Images</h2>
       <div *ngFor="let img of data.images; let i = index" class="image-container">
         <img class="edit-image" [src]="img.imageUrl" *ngIf="img.imageUrl" alt="Uploaded Image" />
-        <button type="button" class="btn-delete" (click)="removeImage(i)">Remove</button>
+        <button type="button" class="btn-delete" (click)="deleteImage(img._key,img.imageId,i)">Remove</button>
+      </div>
+      <div *ngFor="let img of images; let i = index" class="image-container">
+        <img class="edit-image" [src]="img.imageUrl" *ngIf="img.imageUrl" alt="Uploaded Image" />
+        <button type="button" class="btn-delete" (click)="deleteImage(img._key,img.imageId,i)">Remove</button>
       </div>
       <label class="upload-label">
         Upload New Image:
-        <input type="file" (change)="onFileSelected($event)" class="input upload-input" />
+        <input type="file" (change)="onImageChange($event)" multiple class="input upload-input" />
       </label>
   
     </section>
@@ -69,10 +73,3 @@
 
 
 
-
-<form>
-  <div class="file-upload">
-    <input type="file" (change)="onFilesSelected($event)" multiple />
-    <button (click)="onUpload()">Upload Files</button>
-  </div>
-</form>

@@ -8,17 +8,17 @@ export interface HouseDataRequest {
     Price: number;  
     DatePosted?: Date;
     
-    ContactId: string;
-    Phone: string;
+    ContactId?: string;
+    Phone?: string;
     Email: string;
   
-    AddressId: string;
-    Street: string;
-    City: string;
+    AddressId?: string;
+    Street?: string;
+    City?: string;
     State: string;
     ZipCode: number;
     PostalCode: string;
-    Country: string;
+    Country?: string;
     IsAddressPublic: boolean;
     DateUpdated?: Date;
   

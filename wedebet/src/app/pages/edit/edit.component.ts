@@ -8,6 +8,8 @@ import { AccountService } from '../../services/account.service';
 import { FormsModule, NgForm, FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { HouseDetail } from '../../interfaces/house-detail';
 import { FileUploadService } from '../../services/file-upload.service';
+import { S3Service } from '../../services/s3.service';
+import { Image } from '../../interfaces/image';
 
 @Component({
   selector: 'app-edit',
@@ -19,7 +21,13 @@ import { FileUploadService } from '../../services/file-upload.service';
 export class EditComponent {
   apiKey: string = 'UnJ4QeZfY1dudOC0Tt2wMJmN8/2w1piw+boeqxc0sfey7ttrZtisq/ukAiX2lfTj';
   data!: HouseDetail;
-  constructor(private dataService: DataService, private fileUploadService: FileUploadService, private houseDataService: HouseDataService, private accountService: AccountService) {
+  
+  selectedFiles: FileList | null = null;
+  isUploading: boolean = false;
+  uploadMessage: string = "";
+  images: Image[] = [];
+
+  constructor(private dataService: DataService, private s3Service: S3Service, private fileUploadService: FileUploadService, private houseDataService: HouseDataService, private accountService: AccountService) {
 
   }
 
@@ -30,67 +38,126 @@ export class EditComponent {
       console.log("data for Eedit " + JSON.stringify(this.data));
     });
   }
-
-  onFileSelected(event: Event): void {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput.files && fileInput.files.length > 0) {
-      const file = fileInput.files[0];
-
-      // Simulate image upload and create URL
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result) {
-          // this.data.images.push({ imageUrl: reader.result as string });
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
   // Remove an image by index
-  removeImage(index: number): void {
-    this.data.images.splice(index, 1);
+  deleteImage(key: string, imgId: string, index: number): void {
+    console.log(`Attempting to delete image with key: ${key}`);
+
+    // Optimistically remove the image from the local array
+    const removedImage = this.data.images.splice(index, 1)[0];
+
+    this.s3Service.DeleteImageFromS3(key, imgId).subscribe({
+      next: (response) => {
+        console.log('Image successfully deleted from S3:', response);
+      },
+      error: (err) => {
+        console.error('Error deleting image from S3:', err.message);
+
+        // Rollback local deletion if server deletion fails
+        if (removedImage) {
+          this.data.images.splice(index, 0, removedImage);
+        }
+      },
+    });
   }
 
   // Save action
   onSave(): void {
-    console.log('Data saved:', this.data);
-    alert('Property details saved successfully! this is just a test!');
-  }
-  selectedFiles: FileList | null = null;
+   
+    if (this.images.length > 0) {
+      this.houseDataService.AddImages(this.images).subscribe({
+        next: (response) => {
+          console.log(response);
+        }, error(err) {
+          console.log(err.error)
+        },
+      })
+    }
 
-  onFilesSelected(event: Event): void {
+    console.log("Update data request : " + JSON.stringify(this.data))
+
+    const housedataRequst: HouseDataRequest = {
+      HouseTypeId: this.data.house.houseTypeId,
+      HouseTypeName: this.data.house.header,
+      HouseId: this.data.house.houseId,
+      Header: this.data.house.header,
+      Description: this.data.house.description,
+      Price: this.data.house.price,
+      ContactId: this.data.contact.contactId,
+      Phone: this.data.contact.phone?.toString(),
+      Email: '',
+      AddressId: this.data.address.addressId,
+      Street: this.data.address.street,
+      City: this.data.address.city,
+      State: '',
+      ZipCode: 0,
+      PostalCode: '',
+      Country: this.data.address.country,
+      IsAddressPublic: false,
+      ImageId: '',
+      ImageName: '',
+      Image: '',
+      ImageInfos: []
+    }
+ 
+
+
+    this.houseDataService.updateHouse(housedataRequst).subscribe({
+      next: (response) => {
+        console.log(response);
+      }, error(err) {
+
+      },
+    })
+
+  }
+
+  onImageChange(event: Event): void {
+    this.isUploading = true;
+    this.uploadMessage = "Uploading image...";
+
     const input = event.target as HTMLInputElement;
     if (input.files) {
       this.selectedFiles = input.files;
+      this.UploadImageS3();
     }
   }
-  
-  onUpload(): void {
+
+  UploadImageS3(): void {
     if (this.selectedFiles) {
       this.fileUploadService.uploadFiles(this.selectedFiles).subscribe({
         next: (response) => {
           console.log('Upload successful:', response);
-          if(response.success==true){
-            for(var i = 0; i < response.files.length; i ++){
-              var imageUrl = response.files[i].fileUrl;
-              var key = response.files[i]._Key;
-              
 
-              console.log(imageUrl);
-              console.log(key);
+          // Process each uploaded file and store its URL
+          for (let i = 0; i < response.files.length; i++) {
+            const imageUrl = response.files[i].fileUrl;
+            const key = response.files[i]._Key;
+
+            const newImage: Image = {
+              imageId: '',
+              imageName: "",
+              houseId: this.data.house.houseId,
+              imageUrl: imageUrl,
+              dateUploaded: new Date(),
+              _key: key
+            }
+
+            this.images.push(newImage);
+
+            if (i === response.files.length - 1) {
+              this.isUploading = false;
             }
           }
-          
         },
         error: (error) => {
           console.error('Error uploading files:', error);
-        }
+          this.isUploading = false;
+        },
       });
     } else {
       console.error('No files selected.');
+      this.isUploading = false;
     }
   }
-  
 }
 

@@ -20,6 +20,7 @@ export interface House {
 
      houseId?: any;
      userId?: any;
+     houseTypeId?:any;
      header?: any;
      description?: any;
      price?: any;
