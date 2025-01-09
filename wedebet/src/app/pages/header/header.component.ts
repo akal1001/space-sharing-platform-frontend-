@@ -7,6 +7,7 @@ import { NgIf } from '@angular/common';
 import { DataService } from '../../DataServices/data.service';
 import { SearchResultComponent } from '../search-result/search-result.component';
 import { AccountService } from '../../services/account.service';
+import { NavigationService } from '../../services/navigation.service';
 
 // import { DataService } from '../../DataServices/data.service';
 
@@ -72,14 +73,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.router.navigate(['/home']);
-    // if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-    //   this.addSearchBoxOnSmallDevices();
-    //   window.addEventListener('resize', () => {
-    //     this.addSearchBoxOnSmallDevices();
-    //   });
-    // }
-
+ 
+   
+   
+    
   }
 
   toggleMenu() {
@@ -198,19 +195,41 @@ export class HeaderComponent implements OnInit {
     }
 
   }
+
+  navigateToMain(){
+    this.router.navigate(['/main']);
+  }
+  
+
   navigateToHome() {
   
-    const currentRoute = this.router.url;
+    var currentUrl = this.router.url; 
+    this.dataservice.setCurrentUrlData(currentUrl)
+   
+    //window.location.reload();
+   
     
-    if (currentRoute === '/home') {
+    // if(currentUrl == '/upload' || currentUrl =='/account')
+    // {
+    
+    //       window.location.reload();
+       
+    //       localStorage.removeItem("houseData");
+    // }
+
+    // const currentRoute = this.router.url;
+    
+    // if (currentRoute === '/home') {
       
-      window.location.reload();
+   
+
     
       
-    } else {
+    // } else {
       
-      this.router.navigate(['/home']);
-    }
+    //   this.router.navigate(['/home']);
+    // }
+    this.router.navigate(['/home']);
   }
   
   navigateToUpload() {

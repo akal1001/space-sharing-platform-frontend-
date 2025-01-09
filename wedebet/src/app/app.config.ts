@@ -27,5 +27,11 @@ export const Somee_Config = {
 }
 
 
+export const API_key_Config = {
+  keyName:'X-API-KEY',
+  value:'my-secret-api-key'
+}
+
+
 
 

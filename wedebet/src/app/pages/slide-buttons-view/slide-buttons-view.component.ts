@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { DataService } from '../../DataServices/data.service';
 import { HouseDataService } from '../../services/houseData.service';
@@ -10,25 +10,38 @@ import { HouseDataService } from '../../services/houseData.service';
   templateUrl: './slide-buttons-view.component.html',
   styleUrl: './slide-buttons-view.component.css'
 })
-export class SlideButtonsViewComponent {
+export class SlideButtonsViewComponent implements OnInit {
   buttons = ['all'];
   constructor(private dataService: DataService, private housedatasrvice: HouseDataService) { }
-
-  data: any;
+   result:any;
+   data: any;
   ngOnInit() {
-    this.housedatasrvice.AvailablehouseTypes().subscribe(
-      {
-        next: (response) => {
 
-          this.data = response.data;
 
-        }, error(err) {
 
-        }, complete() {
+    this.result = localStorage.getItem("type");
+    this.data = JSON.parse(this.result);
+    console.log("data 2 " + JSON.parse(this.data))
 
-        },
-      })
+    // this.housedatasrvice.AvailablehouseTypes().subscribe(
+    //   {
+    //     next: (response) => {
 
+    //       this.data = response.data;
+
+    //       console.log("data 1" + this.data)
+
+    //     }, error(err) {
+
+    //     }, complete() {
+
+    //     },
+
+    //   });
+
+     
+
+     
   }
 
   onClicked(option: any, event: Event): void {

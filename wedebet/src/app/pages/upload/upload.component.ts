@@ -90,62 +90,45 @@ export class UploadComponent implements OnInit {
   onUpload() {
     this._message = null;
     this._message = "uploading ..."
+    this.houseDataService.uploadHouse(this.property).subscribe({
+      next: (response) => {
+        this._message = response.message;
+        console.log(this._message)
+        console.log(response.success)
 
-    this.accountService.ReturnUserDataFromLocalStorage().subscribe({
-      next: (info) => {
-        if (info?.token) {
-          // Now, proceed with the upload request
-          this.houseDataService.uploadHouse(this.property, info.token).subscribe({
-            next: (response) => {
-              this._message = response.message;
-              console.log(this._message)
-              console.log(response.success)
-
-              this.property = {
-                HouseTypeId: '',
-                HouseId: '',
-                HouseTypeName: '',
-                Header: '',
-                Description: '',
-                Price: 0,
-                DatePosted: new Date(),
-                ContactId: '',
-                Phone: '',
-                Email: '',
-                AddressId: '',
-                Street: '',
-                City: '',
-                State: '',
-                ZipCode: 0,
-                PostalCode: '',
-                Country: '',
-                IsAddressPublic: false,
-                DateUpdated: new Date(),
-                ImageId: '',
-                ImageName: '',
-                Image: '',
-                ImageInfos: [],
-                DateUploaded: new Date()
-              }
-
-              this.uploadedurls = [];
-
-            },
-            error: (error) => {
-              this._message = error;
-              console.log(this._message)
-            }
-          });
-        } else {
-          // Handle case where token is not available
-          this._message.error('Token is missing, please log in again');
-          console.log(this._message)
+        this.property = {
+          HouseTypeId: '',
+          HouseId: '',
+          HouseTypeName: '',
+          Header: '',
+          Description: '',
+          Price: 0,
+          DatePosted: new Date(),
+          ContactId: '',
+          Phone: '',
+          Email: '',
+          AddressId: '',
+          Street: '',
+          City: '',
+          State: '',
+          ZipCode: 0,
+          PostalCode: '',
+          Country: '',
+          IsAddressPublic: false,
+          DateUpdated: new Date(),
+          ImageId: '',
+          ImageName: '',
+          Image: '',
+          ImageInfos: [],
+          DateUploaded: new Date()
         }
+
+        this.uploadedurls = [];
+
       },
       error: (error) => {
-        this._message = error
-      },
-      complete: () => {
+        this._message = error;
+        console.log(this._message)
       }
     });
   }

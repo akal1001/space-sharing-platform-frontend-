@@ -9,8 +9,13 @@ body{
 
 .loading{
     display: flex !important;
-     justify-content: center !important;
+    height: 50% !important;
+    position: absolute;
+     justify-content: center !important; 
       align-items: center !important;
        width: 100% !important;
-        height: 50vh;
+        /* height: 50vh; */
+      
+       
+
     }

@@ -8,141 +8,54 @@ import { DataService } from '../../DataServices/data.service';
 
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
+import { House } from '../../interfaces/house';
 
 @Component({
   selector: 'app-favorite',
   standalone: true,
-  imports: [NgIf,NgFor],
+  imports: [NgIf, NgFor],
   templateUrl: './favorite.component.html',
   styleUrl: './favorite.component.css'
 })
 export class FavoriteComponent {
-  accountData:LoginResponse | undefined;
-  housetype: string = '';
-  admin:any;
-  mydata:any;
-  constructor(private dataService: DataService, private router: Router,private accountService:AccountService, private housedataSrvice:HouseDataService) {
+  houseData:any;
+  house:any[] = [];
+  constructor( private router: Router, private accountService: AccountService, private housedataSrvice: HouseDataService) {
 
   }
   ngOnInit(): void {
-    const storedData = localStorage.getItem('v'); 
-    if (storedData) {
-      const parsedData:LoginResponse = JSON.parse(storedData);
-     this.accountData = parsedData;
-  
-    } else {
-      console.log('No data found in localStorage');
-    }
-    this.MyPosts();
-    this.adminView();
+   this.GetMyPost();
   }
 
+  onDeleteFav(id: any) {
   
-  logout() {
-   
-    localStorage.removeItem('v'); 
-    localStorage.removeItem('_v'); 
-    window.location.reload();
-    //this.router.navigate(['/login']);
-
-  }
-  onEdit(editData:any){
-    this.dataService.setEditData(editData)
-    this.dataService.navTo('edit');
-  }
-  onDelete(id:any){
-    // alert("delete Not implemented yet!")
-    this.accountService.ReturnUserDataFromLocalStorage().subscribe(val=>{
-      console.log(val?.token);
-      var t = val?.token;
-      this.accountService.DeleteMyPost(id,t).subscribe({next:(response)=>{
-        console.log(response);
-        this.house = response.data;
-        //this.house = this.house.filter(d => d.house.houseId !== id)
-        this.MyPosts();
+    this.housedataSrvice.DeleteFavoriteHouse(id).subscribe({
+      next: (response) => {
+       
+        this.GetMyPost();
+      }, error(err) {
+        console.error(err.error);
       },
-      error(err) {
-        console.log(err.error);
-      },})
-      // if(val?.name === "admin")
-      // {
-      //   this.accountService.DeleteMyPost(id,t).subscribe({next:(response)=>{
-      //     console.log(response);
-      //     this.house = response.data;
-      //     //this.house = this.house.filter(d => d.house.houseId !== id)
-      //     this.MyPosts();
-      //   },
-      //   error(err) {
-      //     console.log(err.error);
-      //   },})
-      // }
-      // else{
-      //   alert("delete Not implemented yet!")
-      // }
-
-     
-    })
-
-  }
-  MyPosts(){
-    this.accountService.ReturnUserDataFromLocalStorage().subscribe(val=>{
-      console.log(val?.token);
-      var t = val?.token;
-
-      this.accountService.GetAllMySelectionPost(val?.token,1,10).subscribe({next:(response)=>{
-        this.house = response.data;
-        this.mydata = 1;
-      },error(err) {
-        
-      },})
-
-      // this.accountService.GetAllMyPost(t).subscribe({next:(response)=>{
-      //   console.log(response);
-      //   this.house = response.data;
-      //   this.mydata = 1;
-        
-      // },
-      // error(err) {
-      //   console.log(err);
-      // },})
-    })
-   
-  }
-
-
-
-
-  maxDescriptionLength = 100;
-  house: any;
-  contactData: any;
-
-  navToDetail(houseId:string){
-    this.dataService.setData(houseId);
-    this.router.navigate(['/detail']);
-
-  } 
-
-  getShortDescription(description: string): string {
-    if (description.length > this.maxDescriptionLength) {
-      return description.slice(0, this.maxDescriptionLength).trim() + '...';
-    }
-    return description;
-  }
-  adminView(){
-    this.accountService.ReturnUserDataFromLocalStorage().subscribe(val=>{
-      console.log(val?.token);
-      var t = val?.token;
-
-      if(val?.name === "admin")
-      {
-        this.admin = val.name;
-      }
     
     })
+
   }
-  navTo(targetRoute:any){
-    this.dataService.navTo(targetRoute)
-   
+
+  private GetMyPost(){
+    this.housedataSrvice.GetAllMySelectionPost(1,10).subscribe({next:(response)=>{
+    
+      this.houseData = response.data
+      console.log(this.houseData);
+      for(var i = 0; i < this.houseData.length; i ++){
+       console.log(response.data[i]);
+      // this.house.push(response.data[i])
+      }
+      //this.house = response.data.house;
+     
+    
+     },error(err) {
+       
+     },})
   }
 }
 

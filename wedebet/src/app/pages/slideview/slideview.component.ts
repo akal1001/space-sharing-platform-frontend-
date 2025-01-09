@@ -35,15 +35,15 @@ export class SlideviewComponent {
       console.log(val?.token);
       var t = val?.token;
 
-      this.accountService.GetAllMyPost(t).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.house = response.data;
-        },
-        error(err) {
-          console.log(err);
-        },
-      })
+      // this.accountService.GetAllMyPost(t).subscribe({
+      //   next: (response) => {
+      //     console.log(response);
+      //     this.house = response.data;
+      //   },
+      //   error(err) {
+      //     console.log(err);
+      //   },
+      // })
     })
   }
 }

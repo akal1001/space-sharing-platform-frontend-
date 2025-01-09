@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DataCacheService } from './data-cache.service';
+import { NavigationService } from './navigation.service';
 
-describe('DataCacheService', () => {
-  let service: DataCacheService;
+describe('NavigationService', () => {
+  let service: NavigationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DataCacheService);
+    service = TestBed.inject(NavigationService);
   });
 
   it('should be created', () => {

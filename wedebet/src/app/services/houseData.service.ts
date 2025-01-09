@@ -8,6 +8,8 @@ import { HouseDetail } from '../interfaces/house-detail';
 import { Image } from '../interfaces/image';
 import { AccountService } from './account.service';
 import { HouseDataRequest } from '../interfaces/house-data-request';
+import { ApikeyusertokenService } from './apikeyusertoken.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,50 +17,111 @@ import { HouseDataRequest } from '../interfaces/house-data-request';
 export class HouseDataService {
 
   private apiUrl = APP_CONFIG.apiUrl + "/house/";
-  constructor(private httpClient: HttpClient, private accountDataService: AccountService) {
+
+  constructor(private httpClient: HttpClient, private apikeyusertokenService: ApikeyusertokenService) {
 
   }
-  uploadHouse(uploadHouseRequest: any, token: string): Observable<any> {
-    const headers = new HttpHeaders().set('Authorization', token);
-    return this.httpClient.post(this.apiUrl + "_ph", uploadHouseRequest, { headers });
+  uploadHouse(uploadHouseRequest: any): Observable<any> {
+   
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        return this.httpClient.post(this.apiUrl + "_ph", uploadHouseRequest, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching available house types:', error);
+        return throwError(() => error); // Re-throw the error for the caller to handle
+      })
+    );
   }
 
-  houseTypes() {
-    let result = this.httpClient.get<any>(this.apiUrl + "_ght");
-    return result;
+  houseTypes():Observable<any> {
+    
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+      
+        return this.httpClient.get<any>(this.apiUrl + "_ght",{headers})
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error); // Re-throw the error for the caller to handle
+      })
+    );
+
   }
 
-  houses() {
-    let result = this.httpClient.get<House>(this.apiUrl + "_gh_s");
-    return result;
+  // houses() {
+
+  //   let result = this.httpClient.get<House>(this.apiUrl + "_gh_s");
+  //   return result;
+  // }
+
+
+  AvailablehouseTypes(): Observable<any> {
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}_gapht`;
+        return this.httpClient.get<any>(url, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching available house types:', error);
+        return throwError(() => error); // Re-throw the error for the caller to handle
+      })
+    );
   }
-
-
-
-  AvailablehouseTypes() {
-    let result = this.httpClient.get<any>(this.apiUrl + "_gapht");
-    return result;
-  }
+  
 
   houseDetail(houseId: string) {
+
     let result = this.httpClient.get<any>(this.apiUrl + "_ghd_b_id?houseId=" + houseId);
     return result;
   }
 
   InserHouseTypes(htype: string) {
-    let result = this.httpClient.post(this.apiUrl + "_pht?housetype=" + htype, "");
-    return result;
+
+  
+
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+      
+        return this.httpClient.post(this.apiUrl + "_pht?housetype=" + htype, {headers})
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error); // Re-throw the error for the caller to handle
+      })
+    );
+
   }
 
 
   getHouses(pageNumber: number, pageSize: number): Observable<any> {
-    const url = `${this.apiUrl}_gh_b_page?pageNumber=${pageNumber}&pageSize=${pageSize}`;
-    return this.httpClient.get<any>(url);
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}getHoussePage?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+        return this.httpClient.get<any>(url, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error); // Re-throw the error for the caller to handle
+      })
+    );
   }
+  
+
+
 
   getHousesByHouseTypeId(pageNumber: number, pageSize: number, housetypeId: string): Observable<any> {
-    const url = `${this.apiUrl}_gh_b_hti_page?pageNumber=${pageNumber}&pageSize=${pageSize}&houseTypeId=${housetypeId}`;
-    return this.httpClient.get<any>(url);
+
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}_gh_b_hti_page?pageNumber=${pageNumber}&pageSize=${pageSize}&houseTypeId=${housetypeId}`;
+        return this.httpClient.get<any>(url, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error); // Re-throw the error for the caller to handle
+      })
+    );
   }
 
   getNewPostHouseCount(lastFetchedDate: any): Observable<any> {
@@ -66,30 +129,43 @@ export class HouseDataService {
     const url = `${this.apiUrl}_gnphc?lastFetchedDate=${lastFetchedDate}`;
     return this.httpClient.get<any>(url);
   }
-  AddUserSelectionPost(houseId: any, token: any): Observable<any> {
-    const headers = new HttpHeaders().set('Authorization', token);
-    return this.httpClient.post(
-      `${this.apiUrl}pus?houseId=${houseId}`,
-      {}, // Empty body
-      { headers } // Pass headers correctly here
+
+
+  // AddUserSelectionPost(houseId: any, token: any): Observable<any> {
+
+  //   const headers = new HttpHeaders().set('Authorization', token);
+  //   return this.httpClient.post(
+  //     `${this.apiUrl}pus?houseId=${houseId}`,
+  //     {}, // Empty body
+  //     { headers } // Pass headers correctly here
+  //   );
+  // }
+
+  AddUserSelectionPost(houseId: any): Observable<any> {
+
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        return this.httpClient.post(
+          `${this.apiUrl}pus?houseId=${houseId}`,{}, { headers } 
+        );
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error); 
+      })
     );
+    
   }
 
   AddImages(images: any[]): Observable<any> {
-    return this.accountDataService.ReturnUserDataFromLocalStorage().pipe(
-      map((response) => response?.token),
-      switchMap((token) => {
-        if (!token) {
-          console.error('Token is null or undefined');
-          throw new Error('Token is null or undefined');
-        }
 
-        const headers = new HttpHeaders().set('Authorization', token);
-
-        // Log images being sent
-        console.log('Sending images:', images);
-
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
         return this.httpClient.post(`${this.apiUrl}PostImage`, images, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error); 
       })
     );
   }
@@ -97,34 +173,99 @@ export class HouseDataService {
 
   updateHouse(uploadHouseRequest: HouseDataRequest): Observable<any> {
 
-    
-    return this.accountDataService.ReturnUserDataFromLocalStorage().pipe(
-      map((response) => response?.token),
-      switchMap((token) => {
-        if (!token) {
-          console.error('Token is null or undefined');
-          throw new Error('Token is null or undefined');
-        }
-
-        const headers = new HttpHeaders().set('Authorization', token);
-        
-        console.log("update data : " + JSON.stringify(uploadHouseRequest))
-
-
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
         return this.httpClient.post<any>(`${this.apiUrl}UpdateHouse`, uploadHouseRequest, { headers })
-          .pipe(
-            catchError((error) => {
-              console.error('Error updating house:', error);
-              throw error;
-            })
-          );
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error); 
       })
-    )
+    );
+  }
+
+  DeleteFavoriteHouse(houseId: any): Observable<any> {
+  
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}DeleteFavorite?houseId=${houseId}`;
+        console.log('Request URL:', url);
+        console.log('Request Headers:', headers);
+  
+        return this.httpClient.delete<any>(url, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error deleting favorite house:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  GetUserPost(pageNumber: number, pageSize: number): Observable<any> {
+    
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        //return this.httpClient.get<any>(`${this.apiUrl}GetHouse`, { headers });
+        const url = `${this.apiUrl}GetHouse?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+        return this.httpClient.get<any>(url, { headers });
+  
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+  
+  
+  DeleteMyPost(houseId:any):Observable<any>{
+
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+    switchMap((headers) => {
+      return this.httpClient.delete<any>(`${this.apiUrl}DeleteHouse?houseId=`+ houseId, { headers });
+    }),
+    catchError((error) => {
+      console.error('Error fetching houses:', error);
+      return throwError(() => error);
+    })
+  );
+}
+
+  GetAllMySelectionPost(pageNumber: number, pageSize: number): Observable<any> {
+
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}_gs?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+        return this.httpClient.get<any>(url, { headers });
+    
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  GetTop3HousePost():Observable<any>{
+
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}top3?`;
+        return this.httpClient.get<any>(url, { headers });
+    
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error);
+      })
+    );
   }
 }
 
 
-
+// this.apikeyusertokenService.createHeaders(false).subscribe({next:()=>{},error(err) {
+       
+// },})
 
 
 

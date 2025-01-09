@@ -60,6 +60,18 @@ export class DataService {
 
 
 
+  private currentUrlSubject = new ReplaySubject<any>(1);
+  getCurrentUrl$ = this.currentUrlSubject.asObservable();
+
+  setCurrentUrlData(data: any) {
+    this.currentUrlSubject.next(data);
+  }
+
+
+
+
+
+
   navTo(componentName:string){
     this.router.navigate(['/'+ componentName]);
   } 

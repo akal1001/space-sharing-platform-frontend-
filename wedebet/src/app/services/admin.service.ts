@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { APP_CONFIG } from '../app.config';
-import { Observable } from 'rxjs';
+import { catchError, Observable, switchMap, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ApikeyusertokenService } from './apikeyusertoken.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +10,34 @@ import { HttpClient } from '@angular/common/http';
 export class AdminService {
   private apiUrl = APP_CONFIG.apiUrl + "/version/";
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private apikeyusertokenService: ApikeyusertokenService) { }
 
   addVersionServe(version: any): Observable<{ versionResponse: any }> {
     const versionDto = {
       "version": version
     };
-    let result = this.httpClient.post<any>(this.apiUrl + "addversion", versionDto);
-
-    return result;
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        return this.httpClient.post<any>(this.apiUrl + "addversion", versionDto, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error);
+      })
+    );
   }
 
-  
-  getversion() {
-    let result = this.httpClient.get<any>(this.apiUrl + "version");
-    return result;
+
+  getversion():Observable<any> {
+
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        return this.httpClient.get<any>(this.apiUrl + "version",{headers});
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error);
+      })
+    );
   }
 }

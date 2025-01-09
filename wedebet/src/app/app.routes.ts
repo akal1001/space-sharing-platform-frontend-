@@ -10,9 +10,11 @@ import { FavoriteComponent } from './pages/favorite/favorite.component';
 import { AccountComponent } from './pages/account/account.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { EditComponent } from './pages/edit/edit.component';
+import { MainComponent } from './pages/main/main.component';
 
 
 export const routes: Routes = [
+   {path:'main',component:MainComponent},
    {path:'admin',component:AdminComponent},
    { path: 'home', component: HomeComponent},
    { path: 'detail', component:DetailComponent},

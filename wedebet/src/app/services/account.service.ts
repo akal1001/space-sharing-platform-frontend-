@@ -1,38 +1,37 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { House } from '../interfaces/house';
 
 import { APP_CONFIG } from '../app.config';
 import { LoginResponse } from '../interfaces/login-response';
 import { HouseDataRequest } from '../interfaces/house-data-request';
 import { HouseDetail } from '../interfaces/house-detail';
+import { ApikeyusertokenService } from './apikeyusertoken.service';
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   private apiUrl = APP_CONFIG.apiUrl+"/account/";
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private apikeyusertokenService:ApikeyusertokenService) { }
   
-  // UserLoginServe1(UsernameOrEmail: any, password: any): Observable<{ loginResponseSuccess:any }> {
-
-  //   let result = this.httpClient.get<any>(this.apiUrl + "login", {
-  //     params: {
-  //       UsernameOrEmail: UsernameOrEmail,
-  //       password: password
-  //     },
-  //   });
-
-  //   return result;
+  
   UserLoginServe(UsernameOrEmail: string, password: string): Observable<any> {
     const loginRequest = {
       UsernameOrEmail: UsernameOrEmail,
       Password: password
     };
-  
-    // Send the login request to the backend API
-    return this.httpClient.post<any>(`${this.apiUrl}login`, loginRequest);
+
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        return this.httpClient.post<any>(`${this.apiUrl}login`, loginRequest, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error);
+      })
+    );
   }
   //create new user
   postNewUserService(username: any,password: any,email: any): Observable<{ success: boolean; message:string }>
@@ -42,8 +41,17 @@ export class AccountService {
        password:password,
        email:email
      }
-    return this.httpClient.post<any>(this.apiUrl +"create", signupRequestData);
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        return this.httpClient.post<any>(this.apiUrl +"create", signupRequestData,{headers});
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error);
+      })
+    );
   }
+  
   ReturnUserDataFromLocalStorage(): Observable<LoginResponse | null> {
     const storedData = localStorage.getItem('v');
     if (storedData) {
@@ -60,33 +68,4 @@ export class AccountService {
       return of(nullData);
     }
   }
-
-
-
-
-
-
-  GetAllMyPost(token: any): Observable<any> {
-    const headers = new HttpHeaders().set('Authorization', token);
-    return this.httpClient.get<any>(`${this.apiUrl}_gh`, { headers });
-  }
-
-  DeleteMyPost(houseId:any, token:any):Observable<any>{
-    const headers = new HttpHeaders().set('Authorization', token);
-    return this.httpClient.delete<any>(`${this.apiUrl}_dh?houseId=`+ houseId, { headers });
-  }
-
-
-  GetAllMySelectionPost(token: any, pageNumber: number, pageSize: number): Observable<any> {
-    const headers = new HttpHeaders().set('Authorization', token);
-    const url = `${this.apiUrl}_gs?pageNumber=${pageNumber}&pageSize=${pageSize}`;
-    return this.httpClient.get<any>(url, { headers });
-  }
-  
-
- 
-
-
-
- 
 }

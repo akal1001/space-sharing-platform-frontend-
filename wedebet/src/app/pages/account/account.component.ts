@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginResponse } from '../../interfaces/login-response';
 import { FormsModule, FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
@@ -8,111 +8,130 @@ import { DataService } from '../../DataServices/data.service';
 
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
+import { HouseDetail } from '../../interfaces/house-detail';
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [FormsModule, NgFor,NgIf],
+  imports: [FormsModule, NgFor, NgIf],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
 export class AccountComponent implements OnInit {
-  accountData:LoginResponse | undefined;
+  accountData: LoginResponse | undefined;
   housetype: string = '';
-  admin:any;
-  mydata:any;
-  constructor(private dataService: DataService, private router: Router,private accountService:AccountService, private housedataSrvice:HouseDataService) {
+  admin: any;
+  mydata: any;
+ 
+
+  constructor(private cdr: ChangeDetectorRef,private dataService: DataService, private router: Router, private accountService: AccountService, private housedataSrvice: HouseDataService) {
 
   }
   ngOnInit(): void {
-    const storedData = localStorage.getItem('v'); 
+    const storedData = localStorage.getItem('v');
     if (storedData) {
-      const parsedData:LoginResponse = JSON.parse(storedData);
-     this.accountData = parsedData;
-  
+      const parsedData: LoginResponse = JSON.parse(storedData);
+      this.accountData = parsedData;
+
     } else {
       console.log('No data found in localStorage');
     }
     this.MyPosts();
     this.adminView();
   }
-
+  housesdetails: HouseDetail[] = [];
+  pageNumber: number = 1;
+  isLoading: boolean = false;
+  private scrollTimeout: any;
   
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout);
+    }
+    this.scrollTimeout = setTimeout(() => {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && !this.isLoading) {
+        this.pageNumber += 1;
+        this.MyPosts();
+      }
+    }, 200); // Adjust debounce time as needed
+  }
+  
+  MyPosts(): void {
+    
+    this.isLoading = true;
+    this.housedataSrvice.GetUserPost(this.pageNumber, 15).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        if (response.data) {
+          this.housesdetails.push(...response.data);
+         // this.cdr.detectChanges();
+        //  console.log( this.housesdetails);
+
+        }
+      },
+      error: (err) => {
+        this.isLoading = false;
+        console.error(err.error);
+      },
+    });
+  }
+
+
   logout() {
-   
-    localStorage.removeItem('v'); 
-    localStorage.removeItem('_v'); 
+
+    localStorage.removeItem('v');
+    localStorage.removeItem('_v');
     window.location.reload();
     //this.router.navigate(['/login']);
 
   }
-  onEdit(editData:any){
+  onEdit(editData: any) {
     this.dataService.setEditData(editData)
     this.dataService.navTo('edit');
   }
-  onDelete(id:any){
-    // alert("delete Not implemented yet!")
-    this.accountService.ReturnUserDataFromLocalStorage().subscribe(val=>{
-      console.log(val?.token);
-      var t = val?.token;
-      this.accountService.DeleteMyPost(id,t).subscribe({next:(response)=>{
-        console.log(response);
-        this.house = response.data;
-        //this.house = this.house.filter(d => d.house.houseId !== id)
-        this.MyPosts();
+  onDelete(id: any) {
+    this.housedataSrvice.DeleteMyPost(id).subscribe({
+      next: (response) => {
+        
+       
+        const indexToRemove = this.housesdetails.findIndex(
+          (detail) => detail.house.houseId === id
+          
+        );
+         //alert(index)
+        if(response.success){
+             
+          if (indexToRemove >= 0 && indexToRemove < this.housesdetails.length) {
+            this.housesdetails.splice(indexToRemove, 1);
+            console.log(`Removed item at index: ${indexToRemove}`);
+          } else {
+            console.log("Invalid index. No item removed.");
+          }
+        
+        }
+            
       },
       error(err) {
         console.log(err.error);
-      },})
-      // if(val?.name === "admin")
-      // {
-      //   this.accountService.DeleteMyPost(id,t).subscribe({next:(response)=>{
-      //     console.log(response);
-      //     this.house = response.data;
-      //     //this.house = this.house.filter(d => d.house.houseId !== id)
-      //     this.MyPosts();
-      //   },
-      //   error(err) {
-      //     console.log(err.error);
-      //   },})
-      // }
-      // else{
-      //   alert("delete Not implemented yet!")
-      // }
-
-     
-    })
-
-  }
-  MyPosts(){
-    this.accountService.ReturnUserDataFromLocalStorage().subscribe(val=>{
-      console.log(val?.token);
-      var t = val?.token;
-
-      this.accountService.GetAllMyPost(t).subscribe({next:(response)=>{
-        console.log(response);
-        this.house = response.data;
-        this.mydata = 1;
-        
       },
-      error(err) {
-        console.log(err);
-      },})
     })
-   
+
   }
+
+
 
 
 
 
   maxDescriptionLength = 100;
-  house: any;
+
   contactData: any;
 
-  navToDetail(houseId:string){
+  navToDetail(houseId: string) {
     this.dataService.setData(houseId);
     this.router.navigate(['/detail']);
 
-  } 
+  }
 
   getShortDescription(description: string): string {
     if (description.length > this.maxDescriptionLength) {
@@ -120,20 +139,19 @@ export class AccountComponent implements OnInit {
     }
     return description;
   }
-  adminView(){
-    this.accountService.ReturnUserDataFromLocalStorage().subscribe(val=>{
+  adminView() {
+    this.accountService.ReturnUserDataFromLocalStorage().subscribe(val => {
       console.log(val?.token);
       var t = val?.token;
 
-      if(val?.name === "admin")
-      {
+      if (val?.name === "admin") {
         this.admin = val.name;
       }
-    
+
     })
   }
-  navTo(targetRoute:any){
+  navTo(targetRoute: any) {
     this.dataService.navTo(targetRoute)
-   
+
   }
 }
