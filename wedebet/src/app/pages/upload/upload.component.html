@@ -1,88 +1,70 @@
 <div class="upload-form-container">
-  <h2>Upload a Property</h2>
+  <h1>Upload a Property</h1>
   <form (ngSubmit)="onSubmit()" #propertyForm="ngForm" enctype="multipart/form-data">
-
-    <div class="form-group">
-      <label for="header">Property Header:</label>
-      <select id="header" name="header" [(ngModel)]="property.HouseTypeId" required>
-        <option value="" disabled>Select a property type</option>
-        <option *ngFor="let option of headerOptions" [value]="option.houseTypeId" >
-          {{ option.houseTypeName }}
-        </option>
-      </select>
-    </div>
-
- 
     
-    <!-- Show the text box if 'Other' is selected -->
-    <div *ngIf="property.HouseTypeId === '812828b7f3214274a1515e54f6446072'" class="form-group">
-      <label for="type">Enter property type:</label>
-      <input type="text" id="type" name="type" [(ngModel)]="property.HouseTypeName" required />
-      <div *ngIf="submitted && !property.HouseTypeName" class="text-danger">
-        Property type is required.
-      </div>
-    </div>
-    
-
-    <div class="form-group">
-      <label for="price">Price:</label>
-      <input
-        type="number"
-        id="price"
-        name="price"
-        [(ngModel)]="property.Price"
-        required
-        placeholder="$0.00"
-        min="0"
-        step="0.01"
-        class="form-control"
-      >
-      <div *ngIf="!property.Price && submitted" class="text-danger">
-        Price is required.
-      </div>
-    </div>
-
+    <!-- Property Header Group -->
+    <section class="form-section">
+      <h2>Property Information</h2>
       <div class="form-group">
-        <label for="fileInput" class="upload-button">Upload Image</label>
-        <input 
-          type="file" 
-          id="fileInput" 
-          multiple 
-          (change)="onImageChange($event)" 
-          accept="image/*" 
-          class="file-input" 
-          required 
-        />
-      
-        <!-- Image upload status -->
-        <p *ngIf="isUploading" class="loading-message">Image is uploading...</p>
-      
-        <div class="image-container">
-          <div *ngFor="let img of uploadedurls">
-            <img class="uploaded-image" [src]="img.url" *ngIf="img" alt="Uploaded Image">
-          </div>
+        <label for="header">Property Header:</label>
+        <select id="header" name="header" [(ngModel)]="property.HouseTypeId" required>
+          <option value="" disabled>Select a property type</option>
+          <option *ngFor="let option of headerOptions" [value]="option.houseTypeId">
+            {{ option.houseTypeName }}
+          </option>
+        </select>
+      </div>
+
+      <div *ngIf="property.HouseTypeId === '812828b7f3214274a1515e54f6446072'" class="form-group">
+        <label for="type">Enter property type:</label>
+        <input type="text" id="type" name="type" [(ngModel)]="property.HouseTypeName" required />
+        <div *ngIf="submitted && !property.HouseTypeName" class="text-danger">
+          Property type is required.
         </div>
       </div>
-      
 
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          [(ngModel)]="property.Price"
+          required
+          placeholder="$0.00"
+          min="0"
+          step="0.01"
+          class="form-control"
+        >
+        <div *ngIf="!property.Price && submitted" class="text-danger">Price is required.</div>
+      </div>
+    </section>
+
+    <!-- Address Group -->
+    <section class="form-section">
+      <h2>Address Information</h2>
       <div class="form-group">
         <label for="address">Address:</label>
         <input type="text" id="address" name="address" [(ngModel)]="property.Street" required />
         <div *ngIf="submitted && !property.Street" class="text-danger">Address is required.</div>
       </div>
-    
+
       <div class="form-group">
         <label for="country">Country:</label>
         <input type="text" id="country" name="country" [(ngModel)]="property.Country" required />
         <div *ngIf="submitted && !property.Country" class="text-danger">Country is required.</div>
       </div>
-    
+
       <div class="form-group">
         <label for="city">City:</label>
         <input type="text" id="city" name="city" [(ngModel)]="property.City" required />
         <div *ngIf="submitted && !property.City" class="text-danger">City is required.</div>
       </div>
-    
+    </section>
+
+    <!-- Contact Information Group -->
+    <section class="form-section">
+      <h2>Contact Information</h2>
       <div class="form-group">
         <label for="phone">Phone Number:</label>
         <input
@@ -91,22 +73,51 @@
           name="phone"
           [(ngModel)]="property.Phone"
           required
-          pattern=""
           placeholder="+1234567890"
         />
         <div *ngIf="submitted && !property.Phone" class="text-danger">Phone number is required.</div>
       </div>
-    
+    </section>
+
+    <!-- Image Upload Group -->
+    <section class="form-section">
+      <h2>Image Upload</h2>
+      <div class="form-group">
+        <label for="fileInput" class="upload-button">Upload Image:</label>
+        <input
+          type="file"
+          id="fileInput"
+          multiple
+          (change)="onImageChange($event)"
+          accept="image/*"
+          class="file-input"
+          required
+        />
+        <p *ngIf="isUploading" class="loading-message">Image is uploading...</p>
+
+        <div class="image-container">
+          <div *ngFor="let img of uploadedurls">
+            <img class="uploaded-image" [src]="img.url" *ngIf="img" alt="Uploaded Image">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Description -->
+    <section class="form-section">
+      <h2>Property Description</h2>
       <div class="form-group">
         <label for="description">Description:</label>
         <textarea id="description" name="description" [(ngModel)]="property.Description" rows="4" required></textarea>
         <div *ngIf="submitted && !property.Description" class="text-danger">Description is required.</div>
       </div>
-    
+    </section>
+
+    <!-- Submit Button -->
+    <div class="form-actions">
       <button type="submit" [disabled]="!propertyForm.form.valid" class="btn btn-primary">Submit</button>
-      <p>{{ _message }}</p>
-    </form>
+    </div>
+
+    <p>{{ _message }}</p>
+  </form>
 </div>
-
-
-

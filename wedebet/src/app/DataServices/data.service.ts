@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ReplaySubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +67,16 @@ export class DataService {
     this.currentUrlSubject.next(data);
   }
 
+
+  private cacheReadySubject = new BehaviorSubject<boolean>(false);
+
+  setCacheReady(isReady: boolean) {
+    this.cacheReadySubject.next(isReady);
+  }
+
+  getCacheReadyStatus() {
+    return this.cacheReadySubject.asObservable();
+  }
 
 
 

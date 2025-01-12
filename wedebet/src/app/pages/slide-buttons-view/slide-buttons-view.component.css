@@ -1,9 +1,11 @@
 .scrollable-container {
-    width: 99%; /* Adjust as needed */
+  width: 100%;
     overflow-x: auto;
     white-space: nowrap;
    
     border-radius: 5px;
+   
+   
    
   }
   
@@ -40,5 +42,12 @@
   .scrollable-container {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+
+
+  @media (min-width: 1024px) {
+    .scrollable-container {
+        margin-left: 240px;
+      }
   }
   

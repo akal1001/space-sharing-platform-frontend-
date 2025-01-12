@@ -37,9 +37,25 @@ export class IndexeddbService extends Dexie {
   async clearOldData(threshold: number): Promise<void> {
     const now = Date.now();
     await this.cachedData.where('timestamp').below(now - threshold).delete();
-  }
 
   
+  }
+  async deleteCacheData(key: string): Promise<void> {
+    try {
+      const result = await this.cachedData.delete(key);
+      if (result !== undefined) {
+        console.log(`Cache data with key '${key}' deleted successfully.`);
+      } else {
+        console.log(`No data found with key '${key}' to delete.`);
+      }
+    } catch (error) {
+      console.error('Failed to delete cache data:', error);
+    }
+  }
+  
+  
+
+ 
   
 }
 //   const CACHE_THRESHOLD = 24 * 60 * 60 * 1000; // 1 day in milliseconds

@@ -1,3 +1,30 @@
+
+<!-- <div class="home-container" >
+  <button class="back-button" >
+    &#8592;
+  </button>
+  <h1>{{ houseTypeName }}</h1>
+</div> -->
+
+  <div class="filter-container header">
+    <!-- <button class="back-button" >
+      &#8592;
+    </button> -->
+    <div class="header-content">
+      <h1>{{ houseTypeName }}</h1>
+      <p class="subtitle">Explore the best houses based on your selection</p>
+      <select class="filter-dropdown">
+        <option value="all">All</option>
+        <option value="priceLowToHigh">Price: Low to High</option>
+        <option value="priceHighToLow">Price: High to Low</option>
+        <option value="recent">Most Recent</option>
+      </select>
+    </div>
+  </div>  
+
+
+
+
 <div class="home-container">
   
   <div class="property-item" *ngFor="let d of filterdHousesdetails" >
@@ -6,12 +33,12 @@
       <h4>{{ d.house.header }}</h4>
       <p>{{ d.address.city }}</p>
       <!-- <p>{{ d.house.description }}</p> -->
-      <!-- <div class="description-container">
+      <div class="description-container">
         <p class="description-text">
           {{ getShortDescription(d.house.description) }}
           <span *ngIf="d.house.description.length > maxDescriptionLength" class="more-link">more</span>
         </p>
-      </div> -->
+      </div>
       <!-- <p>Posted on: <small>{{ d.house.datePosted| date: 'MMM dd, yyyy, hh:mm a' }}</small></p> -->
       <p>Posted on: <small>{{ d.house.datePosted| date: 'MMM dd, yyyy' }}</small></p>
       <!-- <i class="fas fa-heart"></i> -->

@@ -4,7 +4,7 @@
 
 .home-container {
   width: 100%;
-  min-height: 100vh;
+  /* min-height: 100vh; */
  
   margin: 0;
   display: flex;
@@ -134,7 +134,7 @@
 
 .description-text {
   display: -webkit-box;
-  -webkit-line-clamp: 1; /* Limit to 3 lines */
+
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

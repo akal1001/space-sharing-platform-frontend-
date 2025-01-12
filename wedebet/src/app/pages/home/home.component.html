@@ -3,28 +3,16 @@
   <div class="menu-container">
     <app-side-menu></app-side-menu>
   </div>
- 
-  
+  <div style="width: 100%; padding-top: 40px; padding-bottom: 40px;">
+    <app-slide-buttons-view></app-slide-buttons-view>
+  </div>
+
   <div class="home-container">
-   
-
-    <!-- <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100vh;">
-      <h3>Please wait...</h3>
-    </div> -->
- 
-
-  
     <div class="loading" *ngIf="housesdetails.length <1">
       <h3  >loading...</h3> 
   </div>
-    <div style="width: 100%; padding: 2%; ">
-      <app-slide-buttons-view></app-slide-buttons-view>
-    </div>
-   
-
-   
-
-
+  
+  
     <div class="property-item" *ngFor="let d of housesdetails" >
       <img [src]="d.images[0].imageUrl" (click)="_navTo(d,'detail')" alt="Property Image" class="property-image">
       <div class="property-info">

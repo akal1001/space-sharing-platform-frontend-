@@ -2,7 +2,7 @@
 import { ApiKeyInterceptorService } from './services/api-key-interceptor.service'
 import { Component, OnInit, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
 
 
@@ -36,21 +36,45 @@ export class AppComponent implements OnInit {
   data: any;
   version: any = "1.0.0";
   pageNumber = 1;
-  pageSize = 100;
-  constructor(private indexedDbService: IndexeddbService, private housedataservice: HouseDataService) { }
+  pageSize = 50;
+  constructor(private dataService:DataService, private router:Router, private indexedDbService: IndexeddbService, private housedataservice: HouseDataService) {
+   
+   }
 
 
   ngOnInit() {
+   
+
+    this.indexedDbService.deleteCacheData("api/data").then(() => {
+      console.log("Cache data deleted successfully.");
+    }).catch((error) => {
+      console.error("Error deleting cache data:", error);
+    });
+    
+    this.indexedDbService.deleteCacheData("api/types").then(() => {
+      console.log("Cache data deleted successfully.");
+    }).catch((error) => {
+      console.error("Error deleting cache data:", error);
+    });
+
+    this.indexedDbService.deleteCacheData("api/top3").then(() => {
+      console.log("Cache data deleted successfully.");
+    }).catch((error) => {
+      console.error("Error deleting cache data:", error);
+    });
 
     this.populateIndexedDB_Types();
     this.populateIndexedDB_Top3();
     this.populateIndexedDB_Houses();
 
-    //this.router.navigate(['/main'])
+   
+    this.router.navigate(['/main'])
     //this.router.navigate(['/home']);
 
 
   }
+
+
 
   async populateIndexedDB_Top3() {
 
@@ -61,6 +85,7 @@ export class AppComponent implements OnInit {
     if (cachedData) {
       console.log('Using cached data:', cachedData);
       this.data = cachedData;
+      this.dataService.setCacheReady(true);
       return;
     }
 
@@ -69,6 +94,7 @@ export class AppComponent implements OnInit {
       const response = await firstValueFrom(this.housedataservice.GetTop3HousePost());
       if (response.success && response.data.length > 0) {
         await this.indexedDbService.saveData(cacheKey, response.data);
+        this.dataService.setCacheReady(true);
       } else if (response.success) {
         console.log('No more data to load.');
       } else {
@@ -99,6 +125,7 @@ export class AppComponent implements OnInit {
         await this.indexedDbService.saveData(cacheKey, response.data);
       } else if (response.success) {
         console.log('No more data to load.');
+        this.dataService.setCacheReady(true);
       } else {
         console.error('Failed to fetch data from API.');
       }

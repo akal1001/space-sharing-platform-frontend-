@@ -20,18 +20,21 @@ export class MainComponent {
 
   }
   ngOnInit(): void {
-    this.GeTop3Post();
+    this.dataService.getCacheReadyStatus().subscribe((isReady) => {
+    
+      if (isReady) {
+        this.GeTop3Post();
+      }
+    });
   }
 
   onDeleteFav(id: any) {
-
-
   }
 
   private GeTop3Post() {
     this.indexeddbService.getData('api/top3').then((data) => {
       if (data) {
-        console.log('IndexedDB cached data:', data.data);
+      
         this.houseData = data.data;
       } else {
         console.log('No data found in IndexedDB cache.');
@@ -46,6 +49,9 @@ export class MainComponent {
     this.dataService.setData(data);
     this.dataService.navTo(targetRoute);
   }
+
+
+  
 
 }
 

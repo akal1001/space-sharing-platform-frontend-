@@ -8,13 +8,13 @@ import { CachedData, IndexeddbService } from '../../services/indexeddb.service';
 @Component({
   selector: 'app-filter-view',
   standalone: true,
-  imports: [NgIf, NgFor,  DatePipe, CurrencyPipe],
+  imports: [NgFor, NgIf,  DatePipe, CurrencyPipe],
   templateUrl: './filter-view.component.html',
   styleUrl: './filter-view.component.css'
 })
 export class FilterViewComponent implements OnInit {
   mydata: any;
-
+  houseTypeName:any;
   house: any;
   housesdetails: any;
   constructor(private dataService: DataService, private indexeddbService: IndexeddbService, private housedataservece:HouseDataService) {
@@ -26,12 +26,16 @@ export class FilterViewComponent implements OnInit {
     this.dataService.getFilterData$.subscribe({
       next: (mes) => {
         this.loadHouseByTypeIdData(mes.houseTypeId)
+        this.houseTypeName = mes.houseTypeName;
       }, error(err) {
         console.log(JSON.stringify(err.error))
 
       },
     })
   }
+
+
+
   filterdHousesdetails: HouseDetail[] = [];
 
   loadHouseByTypeIdData(houseTypeId: any): void {
@@ -77,7 +81,7 @@ export class FilterViewComponent implements OnInit {
     this.dataService.navTo(targetRoute);
   }
 
-  maxDescriptionLength = 50;
+  maxDescriptionLength = 300;
 
   getShortDescription(description: string): string {
     if (description.length > this.maxDescriptionLength) {
