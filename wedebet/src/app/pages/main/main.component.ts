@@ -5,44 +5,40 @@ import { HouseDataService } from '../../services/houseData.service';
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
 import { DataService } from '../../DataServices/data.service';
+import { IndexeddbService } from '../../services/indexeddb.service';
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [NgIf,NgFor],
+  imports: [NgIf, NgFor],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
 export class MainComponent {
-houseData:any;
-  house:any[] = [];
-  constructor( private router: Router, private dataService:DataService, private accountService: AccountService, private housedataSrvice: HouseDataService) {
+  houseData: any;
+  house: any[] = [];
+  constructor(private indexeddbService: IndexeddbService, private router: Router, private dataService: DataService, private accountService: AccountService, private housedataSrvice: HouseDataService) {
 
   }
   ngOnInit(): void {
-   this.GeTop3Post();
+    this.GeTop3Post();
   }
 
   onDeleteFav(id: any) {
-   
-   
+
+
   }
 
-  private GeTop3Post(){
-    this.housedataSrvice.GetTop3HousePost().subscribe({next:(response)=>{
-    
-      this.houseData = response.data
-      console.log(this.houseData);
-      for(var i = 0; i < this.houseData.length; i ++){
-       console.log(response.data[i]);
-      // localStorage.setItem("houseData",JSON.stringify(this.houseData))
-      // this.house.push(response.data[i])
+  private GeTop3Post() {
+    this.indexeddbService.getData('api/top3').then((data) => {
+      if (data) {
+        console.log('IndexedDB cached data:', data.data);
+        this.houseData = data.data;
+      } else {
+        console.log('No data found in IndexedDB cache.');
       }
-      //this.house = response.data.house;
-     
-    
-     },error(err) {
-       
-     },})
+    }).catch((error) => {
+      console.error('Error retrieving data from IndexedDB:', error);
+    });
   }
 
   _navTo(data: any, targetRoute: string) {

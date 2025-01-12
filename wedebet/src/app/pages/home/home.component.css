@@ -116,12 +116,15 @@
 
   .home-container {
     margin-left: 250px;
+    margin-left: 200px;
+    margin-right: 200px;
     gap: 1.2rem;
     width: auto;
   }
 
   .property-item {
     width: calc(25% - 1rem); /* 4 items per row on large screens */
+    width: calc(30.33% - 0.5rem); /* 3 items per row on tablets */
   }
 }
 .description-container {

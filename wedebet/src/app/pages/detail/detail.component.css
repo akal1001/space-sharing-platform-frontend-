@@ -5,6 +5,7 @@
   padding: 2%;
   background-color: #fff;
   color: #000;
+
 }
 
 .property-images, .property-details {
@@ -114,3 +115,13 @@
     color: #4caf50;
   }
 }
+
+  /* Large screens (Desktops and above) */
+  @media (min-width: 1024px) {
+    .property-layout {
+     
+      margin-left: 200px;
+      margin-right: 200px;
+    
+    }
+  }

@@ -9,7 +9,7 @@ import { LoginResponse } from '../../interfaces/login-response';
 @Component({
   selector: 'app-slideview',
   standalone: true,
-  imports: [NgIf, NgFor],
+  imports: [NgFor],
   templateUrl: './slideview.component.html',
   styleUrl: './slideview.component.css'
 })

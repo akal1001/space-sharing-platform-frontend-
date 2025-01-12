@@ -1,5 +1,5 @@
 
-import {ApiKeyInterceptorService} from './services/api-key-interceptor.service'
+import { ApiKeyInterceptorService } from './services/api-key-interceptor.service'
 import { Component, OnInit, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
@@ -16,6 +16,8 @@ import { VersionService } from './services/version.service';
 import { provideHttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HouseDataService } from './services/houseData.service';
 import { DataCacheService } from './services/data-cache.service';
+import { IndexeddbService } from './services/indexeddb.service';
+import { firstValueFrom } from 'rxjs';
 
 
 
@@ -32,86 +34,108 @@ import { DataCacheService } from './services/data-cache.service';
 export class AppComponent implements OnInit {
   title = 'wedebet';
   data: any;
-  version:any = "1.0.0";
-  constructor( private dataservice:DataService, private datacacheSerice:DataCacheService, private housedataservice:HouseDataService, private versionSrvice:VersionService, private router:Router) { }
+  version: any = "1.0.0";
+  pageNumber = 1;
+  pageSize = 100;
+  constructor(private indexedDbService: IndexeddbService, private housedataservice: HouseDataService) { }
 
-  
+
   ngOnInit() {
 
-   
-    this.router.navigate(['/main'])
-    this.dataservice.getCurrentUrl$.subscribe((currenturl)=>{
-      
-      //this.router.navigate(['/main']);
-    });
-   
-    this.versionSrvice.GetVersionServe().subscribe({next:(response)=>
-      {
-        console.log(response.success);
-        console.log(response.status);
-        console.log("varsion: " + response.data);
+    this.populateIndexedDB_Types();
+    this.populateIndexedDB_Top3();
+    this.populateIndexedDB_Houses();
 
-      },
-      error(err) {
-        console.log(err)
-    },complete() {
-        console.log(
-          "version check complete"
-        )
-    },})
-
-    this.preloadDataForType();
-    this.preloadData();
-   
+    //this.router.navigate(['/main'])
     //this.router.navigate(['/home']);
-   
+
 
   }
-  reload() {
-    location.reload();
+
+  async populateIndexedDB_Top3() {
+
+    const cacheKey = 'api/top3';
+    // Check if data exists in IndexedDB
+    const cachedData = await this.indexedDbService.getData(cacheKey);
+
+    if (cachedData) {
+      console.log('Using cached data:', cachedData);
+      this.data = cachedData;
+      return;
+    }
+
+    // Fetch data from API and save it to IndexedDB
+    try {
+      const response = await firstValueFrom(this.housedataservice.GetTop3HousePost());
+      if (response.success && response.data.length > 0) {
+        await this.indexedDbService.saveData(cacheKey, response.data);
+      } else if (response.success) {
+        console.log('No more data to load.');
+      } else {
+        console.error('Failed to fetch data from API.');
+      }
+    } catch (error) {
+      console.error('Error loading house data:', error);
+    }
   }
 
-  pageNumber = 1;
-  pageSize = 20;
-  preloadData(){
-    this.housedataservice.getHouses(this.pageNumber, this.pageSize).subscribe({
-      next: (response) => {
-        if (response.success && response.data.length > 0) {
-          console.log("Pagination successful for page: " + this.pageNumber);
-           
-         localStorage.setItem("houseData", JSON.stringify(response.data));
+  async populateIndexedDB_Types() {
 
-          this.pageNumber += 1;
-          this.datacacheSerice.setPageNumber(this.pageNumber);  // Store the updated page number in cache
-        } else if (response.success && response.data.length === 0) {
-          console.log("No more data to load.");
-        } else {
-          console.error("Pagination response failed.");
-        }
-      },
-      error: (err) => {
-        console.error('Error loading house data:', err);
-      },
-      complete: () => {
-      
-      },
-    });
+    const cacheKey = 'api/types';
+
+    // Check if data exists in IndexedDB
+    const cachedData = await this.indexedDbService.getData(cacheKey);
+
+    if (cachedData) {
+      console.log('Using cached data:', cachedData);
+      this.data = cachedData;
+      return;
+    }
+
+    // Fetch data from API and save it to IndexedDB
+    try {
+      const response = await firstValueFrom(this.housedataservice.AvailablehouseTypes());
+      if (response.success && response.data.length > 0) {
+        await this.indexedDbService.saveData(cacheKey, response.data);
+      } else if (response.success) {
+        console.log('No more data to load.');
+      } else {
+        console.error('Failed to fetch data from API.');
+      }
+    } catch (error) {
+      console.error('Error loading house data:', error);
+    }
   }
-  preloadDataForType(){
-    this.housedataservice.AvailablehouseTypes().subscribe(
-      {
-        next: (response) => {
 
-          this.data = response.data;
-          localStorage.setItem("type", JSON.stringify(this.data));
+  async populateIndexedDB_Houses() {
+    const cacheKey = 'api/data';
 
-        }, error(err) {
+    // Check if data exists in IndexedDB
+    const cachedData = await this.indexedDbService.getData(cacheKey);
 
-        }, complete() {
+    if (cachedData) {
+      console.log('Using cached data:', cachedData);
+      this.data = cachedData;
+      return;
+    }
 
-        },
-      })
+    // Fetch data from API and save it to IndexedDB
+    try {
+      const response = await firstValueFrom(this.housedataservice.getHouses(this.pageNumber, this.pageSize));
+      if (response.success && response.data.length > 0) {
+        console.log(`Data fetched successfully for page ${this.pageNumber}`);
+
+        await this.indexedDbService.saveData(cacheKey, response.data);
+
+        this.pageNumber++;
+      } else if (response.success) {
+        console.log('No more data to load.');
+      } else {
+        console.error('Failed to fetch data from API.');
+      }
+    } catch (error) {
+      console.error('Error loading house data:', error);
+    }
   }
 }
-
 

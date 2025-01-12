@@ -10,29 +10,30 @@ import { Housetype } from '../../interfaces/housetype';
 @Component({
   selector: 'app-side-menu',
   standalone: true,
-  imports: [NgIf, NgFor],
+  imports: [NgFor],
   templateUrl: './side-menu.component.html',
   styleUrl: './side-menu.component.css'
 })
 
 export class SideMenuComponent {
   constructor(private dataService: DataService, private housedatasrvice: HouseDataService) { }
-
+  localdata:any;
   data: any;
   ngOnInit() {
-    this.housedatasrvice.AvailablehouseTypes().subscribe(
-      {
-        next: (response) => {
+    // this.housedatasrvice.AvailablehouseTypes().subscribe(
+    //   {
+    //     next: (response) => {
 
-          this.data = response.data;
+    //       this.data = response.data;
 
-        }, error(err) {
+    //     }, error(err) {
 
-        }, complete() {
+    //     }, complete() {
 
-        },
-      })
-
+    //     },
+    //   })
+    this.localdata = localStorage.getItem('type');
+     this.data = JSON.parse(this.localdata);
   }
 
   isHomeChecked = false; 

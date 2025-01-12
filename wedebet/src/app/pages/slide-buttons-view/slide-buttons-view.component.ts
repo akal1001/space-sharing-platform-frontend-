@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { DataService } from '../../DataServices/data.service';
 import { HouseDataService } from '../../services/houseData.service';
+import { IndexeddbService } from '../../services/indexeddb.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-slide-buttons-view',
@@ -12,16 +14,14 @@ import { HouseDataService } from '../../services/houseData.service';
 })
 export class SlideButtonsViewComponent implements OnInit {
   buttons = ['all'];
-  constructor(private dataService: DataService, private housedatasrvice: HouseDataService) { }
+  constructor(private dataService: DataService, private router:Router, private indexeddbService:IndexeddbService, private housedatasrvice: HouseDataService) { }
    result:any;
    data: any;
   ngOnInit() {
 
 
-
-    this.result = localStorage.getItem("type");
-    this.data = JSON.parse(this.result);
-    console.log("data 2 " + JSON.parse(this.data))
+    this.HouseTypes();
+    
 
     // this.housedatasrvice.AvailablehouseTypes().subscribe(
     //   {
@@ -42,6 +42,18 @@ export class SlideButtonsViewComponent implements OnInit {
      
 
      
+  }
+  HouseTypes(){
+    this.indexeddbService.getData('api/types').then((data) => {
+      if (data) {
+        console.log('IndexedDB cached data:', data.data);
+        this.data = data.data;
+      } else {
+        console.log('No data found in IndexedDB cache.');
+      }
+    }).catch((error) => {
+      console.error('Error retrieving data from IndexedDB:', error);
+    });
   }
 
   onClicked(option: any, event: Event): void {
@@ -64,6 +76,9 @@ export class SlideButtonsViewComponent implements OnInit {
     this.dataService.setFilterData(data);
   
     console.log('Filter Data:', data);
+   
+
+    this.router.navigate(['/filterView']);
   }
 }
   

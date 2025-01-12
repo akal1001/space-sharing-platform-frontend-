@@ -74,7 +74,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
  
-   
+     this.router
    
     
   }
@@ -203,19 +203,19 @@ export class HeaderComponent implements OnInit {
 
   navigateToHome() {
   
-    var currentUrl = this.router.url; 
-    this.dataservice.setCurrentUrlData(currentUrl)
+   var currentUrl = this.router.url; 
+    //this.dataservice.setCurrentUrlData(currentUrl)
    
     //window.location.reload();
    
     
-    // if(currentUrl == '/upload' || currentUrl =='/account')
-    // {
+    if(currentUrl == '/upload' || currentUrl =='/account')
+    {
     
-    //       window.location.reload();
-       
-    //       localStorage.removeItem("houseData");
-    // }
+         // window.location.reload();
+          //this.router.navigate(['/home']);
+          //localStorage.removeItem("houseData");
+    }
 
     // const currentRoute = this.router.url;
     
