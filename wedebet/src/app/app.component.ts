@@ -43,8 +43,6 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-   
-
     this.indexedDbService.deleteCacheData("api/data").then(() => {
       console.log("Cache data deleted successfully.");
     }).catch((error) => {
@@ -64,9 +62,8 @@ export class AppComponent implements OnInit {
     });
 
     this.populateIndexedDB_Types();
-    this.populateIndexedDB_Top3();
-    this.populateIndexedDB_Houses();
-
+    this.populateIndexedDB_Main();
+    
    
     this.router.navigate(['/main'])
     //this.router.navigate(['/home']);
@@ -74,13 +71,13 @@ export class AppComponent implements OnInit {
 
   }
 
+  async populateIndexedDB_Main() {
 
-
-  async populateIndexedDB_Top3() {
-
-    const cacheKey = 'api/top3';
+    const cachLocation = "api/location";
+    const cacheKeyTop3 = 'api/top3';
+    const cacheKeyData = 'api/data';
     // Check if data exists in IndexedDB
-    const cachedData = await this.indexedDbService.getData(cacheKey);
+    const cachedData = await this.indexedDbService.getData(cacheKeyTop3);
 
     if (cachedData) {
       console.log('Using cached data:', cachedData);
@@ -91,9 +88,16 @@ export class AppComponent implements OnInit {
 
     // Fetch data from API and save it to IndexedDB
     try {
-      const response = await firstValueFrom(this.housedataservice.GetTop3HousePost());
+      const response = await firstValueFrom(this.housedataservice.GetTop3HousePostByLocation());
       if (response.success && response.data.length > 0) {
-        await this.indexedDbService.saveData(cacheKey, response.data);
+        const threeItem:any = [];
+        for(var i = 0; i < response.data.length; i ++){
+          threeItem.push(response.data[i]);
+          if(i == 2) break;
+        }
+        await this.indexedDbService.saveData(cacheKeyTop3, threeItem);
+        await this.indexedDbService.saveData(cachLocation, response.location);
+        await this.indexedDbService.saveData(cacheKeyData, response.data);
         this.dataService.setCacheReady(true);
       } else if (response.success) {
         console.log('No more data to load.');
@@ -134,35 +138,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async populateIndexedDB_Houses() {
-    const cacheKey = 'api/data';
-
-    // Check if data exists in IndexedDB
-    const cachedData = await this.indexedDbService.getData(cacheKey);
-
-    if (cachedData) {
-      console.log('Using cached data:', cachedData);
-      this.data = cachedData;
-      return;
-    }
-
-    // Fetch data from API and save it to IndexedDB
-    try {
-      const response = await firstValueFrom(this.housedataservice.getHouses(this.pageNumber, this.pageSize));
-      if (response.success && response.data.length > 0) {
-        console.log(`Data fetched successfully for page ${this.pageNumber}`);
-
-        await this.indexedDbService.saveData(cacheKey, response.data);
-
-        this.pageNumber++;
-      } else if (response.success) {
-        console.log('No more data to load.');
-      } else {
-        console.error('Failed to fetch data from API.');
-      }
-    } catch (error) {
-      console.error('Error loading house data:', error);
-    }
-  }
+ 
 }
 

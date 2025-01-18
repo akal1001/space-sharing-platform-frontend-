@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { APP_CONFIG } from '../app.config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, finalize, map, Observable, switchMap, throwError } from 'rxjs';
+import { catchError, finalize, from, map, Observable, switchMap, throwError } from 'rxjs';
 import { Housetype } from '../interfaces/housetype';
 import { House } from '../interfaces/house';
 import { HouseDetail } from '../interfaces/house-detail';
@@ -9,6 +9,7 @@ import { Image } from '../interfaces/image';
 import { AccountService } from './account.service';
 import { HouseDataRequest } from '../interfaces/house-data-request';
 import { ApikeyusertokenService } from './apikeyusertoken.service';
+import { IndexeddbService } from './indexeddb.service';
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class HouseDataService {
 
   private apiUrl = APP_CONFIG.apiUrl + "/house/";
 
-  constructor(private httpClient: HttpClient, private apikeyusertokenService: ApikeyusertokenService) {
+  constructor(private httpClient: HttpClient, private indexeddbService:IndexeddbService,  private apikeyusertokenService: ApikeyusertokenService) {
 
   }
   uploadHouse(uploadHouseRequest: any): Observable<any> {
@@ -76,9 +77,7 @@ export class HouseDataService {
     return result;
   }
 
-  InserHouseTypes(htype: string) {
-
-  
+  InserHouseTypes1(htype: string) {
 
     return this.apikeyusertokenService.createHeaders(false).pipe(
       switchMap((headers) => {
@@ -93,6 +92,15 @@ export class HouseDataService {
 
   }
 
+  InserHouseTypes(htype: string) {
+    return this.httpClient.post('/api/proxy/house-types', { housetype: htype }).pipe(
+      catchError((error) => {
+        console.error('Error forwarding request:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 
   getHouses(pageNumber: number, pageSize: number): Observable<any> {
     return this.apikeyusertokenService.createHeaders(false).pipe(
@@ -103,6 +111,38 @@ export class HouseDataService {
       catchError((error) => {
         console.error('Error fetching houses:', error);
         return throwError(() => error); // Re-throw the error for the caller to handle
+      })
+    );
+  }
+  getHousesByLocation(pageNumber: number, pageSize: number): Observable<any> {
+    return from(this.indexeddbService.getData('api/location')).pipe(
+      switchMap((data) => {
+        if (data) {
+          const storedLocation = data.data; // Assuming `data` has a `data` property
+          console.log(`Using cached location: ${storedLocation.country}`);
+          return this.fetchHouses(storedLocation, pageNumber, pageSize);
+        } else {
+          console.warn('No data found in IndexedDB cache.');
+          return throwError(() => new Error('Location data not found in cache.'));
+        }
+      }),
+      catchError((error) => {
+        console.error('Error retrieving location data:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+  
+  private fetchHouses(location: Location, pageNumber: number, pageSize: number): Observable<any> {
+
+    const url = `${this.apiUrl}getHoussByLocationPage?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        return this.httpClient.post<any>(url, location, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error);
       })
     );
   }
@@ -260,6 +300,23 @@ export class HouseDataService {
       })
     );
   }
+
+
+  GetTop3HousePostByLocation():Observable<any>{
+
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}location?`;
+        return this.httpClient.get<any>(url, { headers });
+    
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 }
 
 

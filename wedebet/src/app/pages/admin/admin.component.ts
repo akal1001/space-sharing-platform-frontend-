@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HouseDataService } from '../../services/houseData.service';
-
+import { NgFor } from '@angular/common';
 
 import { Router } from '@angular/router';
 import { LoginResponse } from '../../interfaces/login-response';
@@ -13,7 +13,7 @@ import { AdminService } from '../../services/admin.service';
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgFor],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
@@ -27,6 +27,8 @@ export class AdminComponent {
      },error:(error)=>{
         console.log(error.error);
      }})
+
+     this.GeGEOLoc();
   }
   onSubmitType() {
     this.housedataservice.InserHouseTypes(this.housetype).subscribe({next:(response)=>
@@ -47,5 +49,15 @@ export class AdminComponent {
       console.log(err)
     },});
     
+   }
+
+   geoLoc:any;
+
+   GeGEOLoc(){
+    this.addminService.getGeoLocation().subscribe({next:(response)=>{
+      this.geoLoc = response;
+    },error(err) {
+      
+    },})
    }
 }

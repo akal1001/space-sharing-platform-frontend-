@@ -7,17 +7,18 @@
 </div> -->
 
   <div class="filter-container header">
-    <!-- <button class="back-button" >
-      &#8592;
-    </button> -->
+   
     <div class="header-content">
+      <button class="back-button" >
+        &#8592;
+      </button>
       <h1>{{ houseTypeName }}</h1>
       <p class="subtitle">Explore the best houses based on your selection</p>
-      <select class="filter-dropdown">
+      <select class="filter-dropdown" (change)="GetSelectedValue($event)">
         <option value="all">All</option>
         <option value="priceLowToHigh">Price: Low to High</option>
         <option value="priceHighToLow">Price: High to Low</option>
-        <option value="recent">Most Recent</option>
+      
       </select>
     </div>
   </div>  
@@ -27,7 +28,7 @@
 
 <div class="home-container">
   
-  <div class="property-item" *ngFor="let d of filterdHousesdetails" >
+  <div class="property-item" *ngFor="let d of filteredHousesdetails" >
     <img [src]="d.images[0].imageUrl" (click)="_navTo(d,'detail')" alt="Property Image" class="property-image">
     <div class="property-info">
       <h4>{{ d.house.header }}</h4>
@@ -36,7 +37,7 @@
       <div class="description-container">
         <p class="description-text">
           {{ getShortDescription(d.house.description) }}
-          <span *ngIf="d.house.description.length > maxDescriptionLength" class="more-link">more</span>
+          <span *ngIf="d.house.description.length > maxDescriptionLength" class="more-link"(click)="_navTo(d,'detail')">more</span>
         </p>
       </div>
       <!-- <p>Posted on: <small>{{ d.house.datePosted| date: 'MMM dd, yyyy, hh:mm a' }}</small></p> -->

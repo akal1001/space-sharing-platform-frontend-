@@ -43,10 +43,7 @@
  
   /* Small screens (Phones in portrait mode) */
   @media (max-width: 480px) {
-    .property-item {
-    
-      /* width: calc(33.33% - 0.5rem);  */
-    }
+   
   }
   
   /* Small screens (Phones in landscape mode) */
@@ -65,4 +62,69 @@
       margin-left: 200px;
     }
    
+  }
+
+
+
+
+  
+
+  
+  .header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+   
+   
+  }
+  
+  .title {
+    width: 100%;
+    height: 100px;
+    background: rgb(206, 204, 204); /* Gradient for a softer look */
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  }
+  
+  .location-container {
+    margin: 0;
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    padding-bottom: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color:gray;  /* Darker color for contrast */
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5; /* Light background to contrast the title */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow to add dimension */
+  }
+  
+  
+  @media (max-width: 600px) {
+    .location-container {
+      font-size: 16px;  /* Adjust font size on smaller screens */
+      padding: 0 10px;  /* Less padding on smaller screens */
+    }
+  }
+  
+  body {
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+  
+  .header-container, .title, .location-container {
+    max-width: 100%; /* Ensure these containers do not exceed the screen width */
+    overflow: hidden; /* Prevent any content from spilling out horizontally */
   }

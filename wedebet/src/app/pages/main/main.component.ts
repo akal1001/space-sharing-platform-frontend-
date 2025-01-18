@@ -15,6 +15,7 @@ import { IndexeddbService } from '../../services/indexeddb.service';
 })
 export class MainComponent {
   houseData: any;
+  isLoading:boolean = true;
   house: any[] = [];
   constructor(private indexeddbService: IndexeddbService, private router: Router, private dataService: DataService, private accountService: AccountService, private housedataSrvice: HouseDataService) {
 
@@ -31,6 +32,7 @@ export class MainComponent {
   onDeleteFav(id: any) {
   }
 
+  location = {"country":"", "region":"", "city":""};
   private GeTop3Post() {
     this.indexeddbService.getData('api/top3').then((data) => {
       if (data) {
@@ -42,6 +44,24 @@ export class MainComponent {
     }).catch((error) => {
       console.error('Error retrieving data from IndexedDB:', error);
     });
+
+
+    // //for locations 
+    this.indexeddbService.getData('api/location').then((data) => {
+      if (data) {
+       
+       this.location.country = data.data.country;
+       this.location.region = data.data.region;
+       this.location.city = data.data.city;
+       this.isLoading = false;
+       
+      } else {
+        console.log('No data found in IndexedDB cache.');
+      }
+    }).catch((error) => {
+      console.error('Error retrieving data from IndexedDB:', error);
+    });
+
   }
 
   _navTo(data: any, targetRoute: string) {

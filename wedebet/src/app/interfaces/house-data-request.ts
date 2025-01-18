@@ -15,7 +15,7 @@ export interface HouseDataRequest {
     AddressId?: string;
     Street?: string;
     City?: string;
-    State: string;
+    State?: string;
     ZipCode: number;
     PostalCode: string;
     Country?: string;

@@ -5,24 +5,71 @@ import { NgFor } from '@angular/common';
 import { HouseDataService } from '../../services/houseData.service';
 import { HouseDetail } from '../../interfaces/house-detail';
 import { CachedData, IndexeddbService } from '../../services/indexeddb.service';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-filter-view',
   standalone: true,
-  imports: [NgFor, NgIf,  DatePipe, CurrencyPipe],
+  imports: [NgFor, NgIf, FormsModule, DatePipe, CurrencyPipe],
   templateUrl: './filter-view.component.html',
   styleUrl: './filter-view.component.css'
 })
 export class FilterViewComponent implements OnInit {
   mydata: any;
-  houseTypeName:any;
+  houseTypeName: any;
   house: any;
   housesdetails: any;
-  constructor(private dataService: DataService, private indexeddbService: IndexeddbService, private housedataservece:HouseDataService) {
+  selectedFilter: string = 'all';
+  filteredHousesdetails: HouseDetail[] = [];
+  likedHouses: { [key: string]: boolean } = {}; // Object to track liked status
+  maxDescriptionLength = 100;
 
-
-  }
+  constructor(private dataService: DataService, private indexeddbService: IndexeddbService, private housedataservece: HouseDataService) {}
   ngOnInit(): void {
 
+    this.dataService.getFilterData$.subscribe({
+      next: (mes) => {
+        this.loadHouseByTypeIdData(mes.houseTypeId)
+        this.houseTypeName = mes.houseTypeName;
+      }, error(err) {
+        console.log(JSON.stringify(err.error))
+      },
+    })
+    this.attachDropdownListener();
+    this.backbutton();
+  }
+
+  attachDropdownListener() {
+
+    const dropdown = document.querySelector('.filter-dropdown') as HTMLSelectElement;
+    if (dropdown) {
+      dropdown.addEventListener('change', (event: Event) => {
+        const selectedValue = (event.target as HTMLSelectElement).value;
+        console.log('Selected value:', selectedValue);
+      });
+    } else {
+      console.error('Dropdown element not found.');
+    }
+
+  }
+
+  GetSelectedValue(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+
+    // Perform sorting based on the selected value
+    if (selectedValue === 'priceLowToHigh') {
+      this.filteredHousesdetails.sort((a, b) => a.house.price - b.house.price);
+    } else if (selectedValue === 'priceHighToLow') {
+      this.filteredHousesdetails.sort((a, b) => b.house.price - a.house.price);
+    }
+    else if (selectedValue === 'all') {
+
+      this.resetToDefaultOrder();
+    }
+
+    console.log('Sorted houses:', this.filteredHousesdetails);
+  }
+
+  resetToDefaultOrder() {
     this.dataService.getFilterData$.subscribe({
       next: (mes) => {
         this.loadHouseByTypeIdData(mes.houseTypeId)
@@ -35,26 +82,16 @@ export class FilterViewComponent implements OnInit {
   }
 
 
-
-  filterdHousesdetails: HouseDetail[] = [];
-
   loadHouseByTypeIdData(houseTypeId: any): void {
     this.indexeddbService.getData('api/data')
       .then((data: CachedData | undefined) => {
 
-        const  cachedDatas = data?.data;
-        this.filterdHousesdetails = cachedDatas.filter((d: { house: { houseTypeId: any; }; }) => d.house.houseTypeId === houseTypeId);
-        
-        if (data?.data.length > 0) 
-        {
-          console.log("new data " + JSON.stringify(this.filterdHousesdetails))
-          // Filter the data based on houseTypeId
-        
-  
-          
-          // Log or use the filtered data as needed
-          if (this.filterdHousesdetails.length > 0) {
-            console.log('Filtered houses:', this.filterdHousesdetails);
+        const cachedDatas = data?.data;
+        this.filteredHousesdetails = cachedDatas.filter((d: { house: { houseTypeId: any; }; }) => d.house.houseTypeId === houseTypeId);
+
+        if (data?.data.length > 0) {
+          if (this.filteredHousesdetails.length > 0) {
+            console.log('Filtered houses:', this.filteredHousesdetails);
           } else {
             console.log('No houses found with the specified houseTypeId:', houseTypeId);
           }
@@ -66,7 +103,6 @@ export class FilterViewComponent implements OnInit {
         console.error('Error retrieving data from IndexedDB:', error);
       });
   }
-  
 
 
   _navTo(data: any, targetRoute: string) {
@@ -81,7 +117,7 @@ export class FilterViewComponent implements OnInit {
     this.dataService.navTo(targetRoute);
   }
 
-  maxDescriptionLength = 300;
+ 
 
   getShortDescription(description: string): string {
     if (description.length > this.maxDescriptionLength) {
@@ -89,10 +125,6 @@ export class FilterViewComponent implements OnInit {
     }
     return description;
   }
-
-
-  
-  likedHouses: { [key: string]: boolean } = {}; // Object to track liked status
 
   toggleLike(houseId: string): void {
     // Check if the user is logged in through the service
@@ -111,4 +143,20 @@ export class FilterViewComponent implements OnInit {
       },
     });
   }
+
+
+  backbutton() {
+    const backButton = document.querySelector('.back-button') as HTMLButtonElement;
+  
+    if (backButton) {
+      backButton.addEventListener('click', () => {
+        console.log('Back button clicked!');
+        // Navigate to the previous page
+        window.history.back();
+      });
+    } else {
+      console.error('Back button element not found.');
+    }
+  }
+  
 }

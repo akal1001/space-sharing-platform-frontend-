@@ -1,9 +1,9 @@
 
 
-  <div class="menu-container">
+  <!-- <div class="menu-container">
     <app-side-menu></app-side-menu>
-  </div>
-  <div style="width: 100%; padding-top: 40px; padding-bottom: 40px;">
+  </div> -->
+  <div class="slideContainer" style="padding-top: 40px; padding-bottom: 40px;">
     <app-slide-buttons-view></app-slide-buttons-view>
   </div>
 
@@ -17,6 +17,7 @@
       <img [src]="d.images[0].imageUrl" (click)="_navTo(d,'detail')" alt="Property Image" class="property-image">
       <div class="property-info">
         <h4>{{ d.house.header }}</h4>
+        <!-- <p>{{ d.address.state }}</p> -->
         <p>{{ d.address.city }}</p>
         <!-- <p>{{ d.house.description }}</p> -->
         <!-- <div class="description-container">

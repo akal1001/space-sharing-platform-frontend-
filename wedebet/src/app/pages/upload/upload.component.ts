@@ -70,6 +70,7 @@ export class UploadComponent implements OnInit {
 
 
   onSubmit() {
+    
     this.submitted = true;
 
     const phonePattern = /^\+?\d{10,13}$/; // Adjust regex as needed
@@ -90,6 +91,8 @@ export class UploadComponent implements OnInit {
   onUpload() {
     this._message = null;
     this._message = "uploading ..."
+  
+    
     this.houseDataService.uploadHouse(this.property).subscribe({
       next: (response) => {
         this._message = response.message;

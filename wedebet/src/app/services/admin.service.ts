@@ -40,4 +40,15 @@ export class AdminService {
       })
     );
   }
+  getGeoLocation(){
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        return this.httpClient.get<any>(this.apiUrl + "location",{headers});
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error);
+      })
+    );
+  }
 }

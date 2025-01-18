@@ -22,7 +22,7 @@ import { IndexeddbService } from '../../services/indexeddb.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SideMenuComponent, NgIf, NgFor, DatePipe, CurrencyPipe, SlideButtonsViewComponent],
+  imports: [NgIf, NgFor, DatePipe, CurrencyPipe, SlideButtonsViewComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -32,8 +32,8 @@ export class HomeComponent implements OnInit {
   contactData: any;
   filteredData: any = null;
 
-  pageNumber = 1;
-  pageSize = 100;
+  pageNumber = 2;
+  pageSize = 50;
   isLoading = false; // Prevent duplicate requests
 
 
@@ -132,11 +132,46 @@ export class HomeComponent implements OnInit {
 
 
 
-
-  loadHouseData(): void {
+  loadHouseData1(): void {
     const cacheKey = 'api/data';
     this.isLoading = true; // Prevent additional requests while loading
     this.housedataservice.getHouses(this.pageNumber, this.pageSize).subscribe({
+      next: (response) => {
+        if (response.success && response.data.length > 0) {
+          console.log("Pagination successful for page: " + this.pageNumber);
+
+          this.indexeddbService.saveData(cacheKey, response.data);
+          for(var i = 0; i < response.data.length; i ++)
+          {
+            this.housesdetails.push(response.data[i]);
+          }
+         
+
+          this.pageNumber += 1;
+          this.dataCacheService.setPageNumber(this.pageNumber);  // Store the updated page number in cache
+        } else if (response.success && response.data.length === 0) {
+          console.log("No more data to load.");
+        } else {
+          console.error("Pagination response failed.");
+        }
+      },
+      error: (err) => {
+        console.error('Error loading house data:', err);
+      },
+      complete: () => {
+        this.isLoading = false; // Allow new requests after completion
+      },
+    });
+  }
+  loadHouseData(): void {
+    const cacheKey = 'api/data';
+    this.isLoading = true;
+
+ 
+  
+
+    // Prevent additional requests while loading
+    this.housedataservice.getHousesByLocation(this.pageNumber, this.pageSize).subscribe({
       next: (response) => {
         if (response.success && response.data.length > 0) {
           console.log("Pagination successful for page: " + this.pageNumber);

@@ -88,7 +88,7 @@ export class EditComponent {
       AddressId: this.data.address.addressId,
       Street: this.data.address.street,
       City: this.data.address.city,
-      State: '',
+      State:this.data.address.state,
       ZipCode: 0,
       PostalCode: '',
       Country: this.data.address.country,

@@ -30,4 +30,25 @@
       <button type="submit" [disabled]="!versionForm.form.valid" class="submit-button">Submit</button>
     </div>
   </form>
+  <table>
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>IP</th>
+        <th>Country</th>
+        <th>Region</th>
+        <th>City</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of geoLoc">
+        <td>{{ d.userId }}</td>
+        <td>{{ d.ip }}</td>
+        <td>{{ d.country }}</td>
+        <td>{{ d.region }}</td>
+        <td>{{ d.city }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
 </div>
