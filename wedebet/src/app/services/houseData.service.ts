@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
 import { APP_CONFIG } from '../app.config';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, finalize, from, map, Observable, switchMap, throwError } from 'rxjs';
-import { Housetype } from '../interfaces/housetype';
-import { House } from '../interfaces/house';
-import { HouseDetail } from '../interfaces/house-detail';
-import { Image } from '../interfaces/image';
-import { AccountService } from './account.service';
+import { HttpClient } from '@angular/common/http';
+import { catchError, from, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { HouseDataRequest } from '../interfaces/house-data-request';
 import { ApikeyusertokenService } from './apikeyusertoken.service';
 import { IndexeddbService } from './indexeddb.service';
@@ -22,6 +17,57 @@ export class HouseDataService {
   constructor(private httpClient: HttpClient, private indexeddbService:IndexeddbService,  private apikeyusertokenService: ApikeyusertokenService) {
 
   }
+
+  fetchLocationWithMaxId() {
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        return this.httpClient.get<any>(`${this.apiUrl}locationWithMaxId`, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error changing location:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  fetchHouseDataByLocation(loadRequest: { maxId: string; location: string }): Observable<any> {
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) =>
+        this.httpClient.post<any>(
+          `${this.apiUrl}loadData`,
+          loadRequest, // Directly pass loadRequest as the body
+          { headers }
+        )
+      ),
+      catchError((error) => {
+        console.error('Error loading data:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+
+
+
+  GetDataByLocationWithMaxId(maxId: any, location: any) {
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        return this.httpClient.post<any>(
+          `${this.apiUrl}loadData?maxid=${maxId}`,
+          {location}, // Pass location in the body
+          { headers }
+        );
+      }),
+      catchError((error) => {
+        console.error('Error loading data:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+  
+
+
+
   uploadHouse(uploadHouseRequest: any): Observable<any> {
    
     return this.apikeyusertokenService.createHeaders(true).pipe(
@@ -50,11 +96,7 @@ export class HouseDataService {
 
   }
 
-  // houses() {
 
-  //   let result = this.httpClient.get<House>(this.apiUrl + "_gh_s");
-  //   return result;
-  // }
 
 
   AvailablehouseTypes(): Observable<any> {
@@ -115,12 +157,15 @@ export class HouseDataService {
     );
   }
   getHousesByLocation(pageNumber: number, pageSize: number): Observable<any> {
-    return from(this.indexeddbService.getData('api/location')).pipe(
+   
+    return from(this.indexeddbService.getDecriptedData('location')).pipe(
       switchMap((data) => {
         if (data) {
-          const storedLocation = data.data; // Assuming `data` has a `data` property
-          console.log(`Using cached location: ${storedLocation.country}`);
+        
+          const storedLocation = data; // Assuming `data` has a `data` property
+         
           return this.fetchHouses(storedLocation, pageNumber, pageSize);
+       
         } else {
           console.warn('No data found in IndexedDB cache.');
           return throwError(() => new Error('Location data not found in cache.'));
@@ -133,9 +178,9 @@ export class HouseDataService {
     );
   }
   
-  private fetchHouses(location: Location, pageNumber: number, pageSize: number): Observable<any> {
-
-    const url = `${this.apiUrl}getHoussByLocationPage?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+  private fetchHouses(location: any, pageNumber: number, pageSize: number): Observable<any> {
+    
+    const url = `${this.apiUrl}getHoussByLocationPage?lastId=${pageNumber}&pageSize=${pageSize}`;
     return this.apikeyusertokenService.createHeaders(false).pipe(
       switchMap((headers) => {
         return this.httpClient.post<any>(url, location, { headers });
@@ -302,17 +347,51 @@ export class HouseDataService {
   }
 
 
-  GetTop3HousePostByLocation():Observable<any>{
+  GetTop3HousePostByLocation(): Observable<{ success: boolean; message: string; data: any[]; location: any | null }> {
+    const userInf = localStorage.getItem('v');
+    const isUserLoggedIn = userInf !== null;
 
-    return this.apikeyusertokenService.createHeaders(true).pipe(
+   
+  
+    const url = isUserLoggedIn 
+      ? `${this.apiUrl}location2` 
+      : `${this.apiUrl}location`;
+  
+    return this.apikeyusertokenService.createHeaders(isUserLoggedIn).pipe(
       switchMap((headers) => {
-        const url = `${this.apiUrl}location?`;
+        const request = isUserLoggedIn
+          ? this.httpClient.post<any>(url, {}, { headers })
+          : this.httpClient.get<any>(url, { headers });
+  
+        return request.pipe(
+          tap((response) => {
+            console.log('Backend Response:', response);
+          }),
+          catchError((error) => this.handleError(error))
+        );
+      })
+    );
+  }
+  
+  private handleError(error: any): Observable<{ success: boolean; message: string; data: any[]; location: any | null }> {
+    console.error('Error fetching houses:', error);
+    return of({
+      success: false,
+      message: 'An error occurred while fetching house data.',
+      data: [],
+      location: null,
+    });
+  }
+  
+  geMappingCountry(): Observable<any> {
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}mapping`;
         return this.httpClient.get<any>(url, { headers });
-    
       }),
       catchError((error) => {
         console.error('Error fetching houses:', error);
-        return throwError(() => error);
+        return throwError(() => error); // Re-throw the error for the caller to handle
       })
     );
   }

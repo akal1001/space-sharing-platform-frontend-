@@ -7,5 +7,5 @@ export interface HouseDetail {
     address:Address;
     contact:Contact;
     images:Image[];
-
+    
 }

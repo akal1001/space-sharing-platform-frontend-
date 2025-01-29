@@ -26,7 +26,7 @@ export interface House {
      price?: any;
     
      images?: Image;
-     datePosted: Date | undefined;
+     datePosted: Date;
      contact?: Contact
      address?: Address;
      houseImageURL?: string;

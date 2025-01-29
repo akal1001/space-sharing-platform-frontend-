@@ -79,3 +79,44 @@ textarea {
 .btn-primary:hover {
   background-color: #45a049;
 }
+
+
+
+ul {
+  border: none;
+  max-height: 150px;
+  overflow-y: auto;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: #f0f0f0;
+}
+.text-danger{
+  color: red;
+}
+
+
+
+.btn-disabled {
+  background-color: #d6d6d6; /* Light gray for disabled state */
+  color: #a0a0a0;          /* Dimmed text color */
+  cursor: not-allowed;     /* Indicate the button is not clickable */
+  width: 100%;
+  height: 40px;
+}
+
+.btn-primary {
+  background-color: #007bff; /* Blue for enabled state */
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  height: 40px;
+}

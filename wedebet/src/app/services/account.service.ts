@@ -68,4 +68,19 @@ export class AccountService {
       return of(nullData);
     }
   }
+
+  ChangeUserLocation(ip: any) {
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        return this.httpClient.post<any>(`${this.apiUrl}ChangeLocation?ip=${ip}`, {}, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error changing location:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  
+  
 }

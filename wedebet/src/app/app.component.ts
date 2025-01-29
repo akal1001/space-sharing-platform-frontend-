@@ -43,26 +43,25 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-    this.indexedDbService.deleteCacheData("api/data").then(() => {
-      console.log("Cache data deleted successfully.");
-    }).catch((error) => {
-      console.error("Error deleting cache data:", error);
-    });
+    // this.indexedDbService.deleteCacheData("api/data").then(() => {
+    //   console.log("Cache data deleted successfully.");
+    // }).catch((error) => {
+    //   console.error("Error deleting cache data:", error);
+    // });
     
-    this.indexedDbService.deleteCacheData("api/types").then(() => {
-      console.log("Cache data deleted successfully.");
-    }).catch((error) => {
-      console.error("Error deleting cache data:", error);
-    });
+    // this.indexedDbService.deleteCacheData("api/type").then(() => {
+    //   console.log("Cache data deleted successfully.");
+    // }).catch((error) => {
+    //   console.error("Error deleting cache data:", error);
+    // });
 
-    this.indexedDbService.deleteCacheData("api/top3").then(() => {
-      console.log("Cache data deleted successfully.");
-    }).catch((error) => {
-      console.error("Error deleting cache data:", error);
-    });
+    // this.indexedDbService.deleteCacheData("api/top3").then(() => {
+    //   console.log("Cache data deleted successfully.");
+    // }).catch((error) => {
+    //   console.error("Error deleting cache data:", error);
+    // });
 
-    this.populateIndexedDB_Types();
-    this.populateIndexedDB_Main();
+   
     
    
     this.router.navigate(['/main'])
@@ -71,72 +70,7 @@ export class AppComponent implements OnInit {
 
   }
 
-  async populateIndexedDB_Main() {
 
-    const cachLocation = "api/location";
-    const cacheKeyTop3 = 'api/top3';
-    const cacheKeyData = 'api/data';
-    // Check if data exists in IndexedDB
-    const cachedData = await this.indexedDbService.getData(cacheKeyTop3);
-
-    if (cachedData) {
-      console.log('Using cached data:', cachedData);
-      this.data = cachedData;
-      this.dataService.setCacheReady(true);
-      return;
-    }
-
-    // Fetch data from API and save it to IndexedDB
-    try {
-      const response = await firstValueFrom(this.housedataservice.GetTop3HousePostByLocation());
-      if (response.success && response.data.length > 0) {
-        const threeItem:any = [];
-        for(var i = 0; i < response.data.length; i ++){
-          threeItem.push(response.data[i]);
-          if(i == 2) break;
-        }
-        await this.indexedDbService.saveData(cacheKeyTop3, threeItem);
-        await this.indexedDbService.saveData(cachLocation, response.location);
-        await this.indexedDbService.saveData(cacheKeyData, response.data);
-        this.dataService.setCacheReady(true);
-      } else if (response.success) {
-        console.log('No more data to load.');
-      } else {
-        console.error('Failed to fetch data from API.');
-      }
-    } catch (error) {
-      console.error('Error loading house data:', error);
-    }
-  }
-
-  async populateIndexedDB_Types() {
-
-    const cacheKey = 'api/types';
-
-    // Check if data exists in IndexedDB
-    const cachedData = await this.indexedDbService.getData(cacheKey);
-
-    if (cachedData) {
-      console.log('Using cached data:', cachedData);
-      this.data = cachedData;
-      return;
-    }
-
-    // Fetch data from API and save it to IndexedDB
-    try {
-      const response = await firstValueFrom(this.housedataservice.AvailablehouseTypes());
-      if (response.success && response.data.length > 0) {
-        await this.indexedDbService.saveData(cacheKey, response.data);
-      } else if (response.success) {
-        console.log('No more data to load.');
-        this.dataService.setCacheReady(true);
-      } else {
-        console.error('Failed to fetch data from API.');
-      }
-    } catch (error) {
-      console.error('Error loading house data:', error);
-    }
-  }
 
  
 }

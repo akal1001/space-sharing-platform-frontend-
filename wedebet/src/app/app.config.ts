@@ -32,6 +32,11 @@ export const API_key_Config = {
   value:'my-secret-api-key'
 }
 
+export const Cryptokey_Config = {
+  key:'Fmn//nGFz234s8vsfJ2WUw=='
+  
+}
+
 
 
 

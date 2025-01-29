@@ -28,6 +28,7 @@ export class FilterViewComponent implements OnInit {
 
     this.dataService.getFilterData$.subscribe({
       next: (mes) => {
+       
         this.loadHouseByTypeIdData(mes.houseTypeId)
         this.houseTypeName = mes.houseTypeName;
       }, error(err) {
@@ -81,27 +82,44 @@ export class FilterViewComponent implements OnInit {
     })
   }
 
-
+  cachedDatas:any[]=[];
   loadHouseByTypeIdData(houseTypeId: any): void {
-    this.indexeddbService.getData('api/data')
-      .then((data: CachedData | undefined) => {
 
-        const cachedDatas = data?.data;
-        this.filteredHousesdetails = cachedDatas.filter((d: { house: { houseTypeId: any; }; }) => d.house.houseTypeId === houseTypeId);
 
-        if (data?.data.length > 0) {
-          if (this.filteredHousesdetails.length > 0) {
-            console.log('Filtered houses:', this.filteredHousesdetails);
-          } else {
-            console.log('No houses found with the specified houseTypeId:', houseTypeId);
-          }
-        } else {
-          console.log('No data found in IndexedDB cache.');
+    this.indexeddbService.getDecriptedData('data')
+    .then((data: CachedData | any) => {
+      if (!data) {
+        console.log('No data found in IndexedDB cache.');
+        return [];
+      }
+  
+      let filteredHouses: any[] = [];
+  
+      if (Array.isArray(data)) {
+        // If data is an array
+        filteredHouses = data.filter(item => item.house.houseTypeId === houseTypeId);
+      } else {
+        // If data is a single object
+        if (data.house.houseTypeId === houseTypeId) {
+          filteredHouses = [data];
         }
-      })
-      .catch((error) => {
-        console.error('Error retrieving data from IndexedDB:', error);
-      });
+      }
+  
+      if (filteredHouses.length > 0) {
+        console.log('Filtered houses:', filteredHouses);
+      } else {
+        console.log('No houses found with the specified houseTypeId:', houseTypeId);
+      }
+  
+      this.filteredHousesdetails = filteredHouses;
+      return filteredHouses;
+    })
+    .catch((error) => {
+      console.error('Error retrieving data from IndexedDB:', error);
+    });
+  
+  
+  
   }
 
 

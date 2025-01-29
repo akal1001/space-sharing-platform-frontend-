@@ -1,7 +1,6 @@
 <div class="upload-form-container">
-
   <form (ngSubmit)="onSubmit()" #propertyForm="ngForm" enctype="multipart/form-data">
-    
+
     <!-- Property Header Group -->
     <section class="form-section">
       <h3>Property Information</h3>
@@ -27,6 +26,7 @@
         <label for="price">Price:</label>
         <input
           type="number"
+          (input)="sharedInputValidator.onInputChange($event, 5, 'price')"
           id="price"
           name="price"
           [(ngModel)]="property.Price"
@@ -36,34 +36,15 @@
           step="0.01"
           class="form-control"
         >
-        <div *ngIf="!property.Price && submitted" class="text-danger">Price is required.</div>
+        <div *ngIf="sharedInputValidator.exceededLimits['price']" class="text-danger">Exceeds maximum length!</div>
+        <div *ngIf="submitted && !property.Price" class="text-danger">Price is required.</div>
       </div>
+
       <div class="form-group">
         <label for="description">Description:</label>
-        <textarea id="description" name="description" [(ngModel)]="property.Description" rows="4" required></textarea>
+        <textarea id="description" (input)="sharedInputValidator.onInputChange($event, 400, 'description')" name="description" [(ngModel)]="property.Description" rows="4" required></textarea>
+        <div *ngIf="sharedInputValidator.exceededLimits['description']" class="text-danger">Exceeds maximum length!</div>
         <div *ngIf="submitted && !property.Description" class="text-danger">Description is required.</div>
-      </div>
-    </section>
-    <section class="form-section">
-      <h3>Image Upload</h3>
-      <div class="form-group">
-        <label for="fileInput" class="upload-button">Upload Image:</label>
-        <input
-          type="file"
-          id="fileInput"
-          multiple
-          (change)="onImageChange($event)"
-          accept="image/*"
-          class="file-input"
-          required
-        />
-        <p *ngIf="isUploading" class="loading-message">Image is uploading...</p>
-
-        <div class="image-container">
-          <div *ngFor="let img of uploadedurls">
-            <img class="uploaded-image" [src]="img.url" *ngIf="img" alt="Uploaded Image">
-          </div>
-        </div>
       </div>
     </section>
 
@@ -72,24 +53,46 @@
       <h3>Address Information</h3>
       <div class="form-group">
         <label for="address">Address:</label>
-        <input type="text" id="address" name="address" [(ngModel)]="property.Street" required />
+        <input type="text" id="address" name="address" (input)="sharedInputValidator.onInputChange($event, 50, 'address')" [(ngModel)]="property.Street" required />
+        <div *ngIf="sharedInputValidator.exceededLimits['address']" class="text-danger">Exceeds maximum length!</div>
         <div *ngIf="submitted && !property.Street" class="text-danger">Address is required.</div>
       </div>
 
-      <div class="form-group">
+      <div>
         <label for="country">Country:</label>
-        <input type="text" id="country" name="country" [(ngModel)]="property.Country" required />
-        <div *ngIf="submitted && !property.Country" class="text-danger">Country is required.</div>
+        <input 
+          type="text" 
+          id="country" 
+          name="country" 
+          (input)="sharedInputValidator.onInputChange($event,15,'country')" 
+          [formControl]="searchControl" 
+          [(ngModel)]="property.Country" 
+        />
+        <ul *ngIf="(filteredOptions | async) && displayOptions">
+          <li *ngFor="let option of filteredOptions | async" (click)="onOptionSelected(option)">
+            {{ option }}
+          </li>
+        </ul>
+        <div *ngIf="sharedInputValidator.exceededLimits['country']" class="text-danger">
+          Exceeds maximum length!
+        </div>
+        <div *ngIf="submitted && !property.Country" class="text-danger">
+          Country is required.
+        </div>
       </div>
+      
 
       <div class="form-group">
         <label for="city">City:</label>
-        <input type="text" id="city" name="city" [(ngModel)]="property.City" required />
+        <input type="text" id="city" name="city" (input)="sharedInputValidator.onInputChange($event, 15, 'city')" [(ngModel)]="property.City" required />
+        <div *ngIf="sharedInputValidator.exceededLimits['city']" class="text-danger">Exceeds maximum length!</div>
         <div *ngIf="submitted && !property.City" class="text-danger">City is required.</div>
       </div>
+
       <div class="form-group">
-        <label for="State">State/Region:</label>
-        <input type="text" id="state" name="state" [(ngModel)]="property.State" required />
+        <label for="state">State/Region:</label>
+        <input type="text" id="state" name="state" (input)="sharedInputValidator.onInputChange($event, 15, 'state')" [(ngModel)]="property.State" required />
+        <div *ngIf="sharedInputValidator.exceededLimits['state']" class="text-danger">Exceeds maximum length!</div>
         <div *ngIf="submitted && !property.State" class="text-danger">State is required.</div>
       </div>
     </section>
@@ -103,32 +106,70 @@
           type="tel"
           id="phone"
           name="phone"
+          (input)="sharedInputValidator.onInputChange($event, 11, 'phone')"
           [(ngModel)]="property.Phone"
           required
           placeholder="+1234567890"
         />
+        <div *ngIf="sharedInputValidator.exceededLimits['phone']" class="text-danger">Exceeds maximum length!</div>
         <div *ngIf="submitted && !property.Phone" class="text-danger">Phone number is required.</div>
       </div>
     </section>
 
-    <!-- Image Upload Group -->
-  
 
-    <!-- Description -->
-    <!-- <section class="form-section">
-      <h3>Property Description</h3>
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" [(ngModel)]="property.Description" rows="4" required></textarea>
-        <div *ngIf="submitted && !property.Description" class="text-danger">Description is required.</div>
+  <section class="form-section">
+    <h3>Image Upload</h3>
+    <div class="form-group">
+      <label for="fileInput" class="upload-button">Upload Image:</label>
+      <input
+        type="file"
+        id="fileInput"
+        multiple
+        (change)="onImageChange($event)"
+        accept="image/*"
+        class="file-input"
+        required
+      />
+      <p *ngIf="isUploading" class="loading-message">Image is uploading...</p>
+
+      <div class="image-container">
+        <div *ngFor="let img of uploadedurls">
+          <img class="uploaded-image" [src]="img.url" *ngIf="img" alt="Uploaded Image">
+        </div>
       </div>
-    </section> -->
-
-    <!-- Submit Button -->
-    <div class="form-actions">
-      <button type="submit" [disabled]="!propertyForm.form.valid" class="btn btn-primary">Submit</button>
     </div>
+  </section>
 
+    <!-- <div class="form-actions">
+      <button
+        type="submit"[disabled]="
+        sharedInputValidator.exceededLimits['price'] || 
+        sharedInputValidator.exceededLimits['description'] || 
+        sharedInputValidator.exceededLimits['address'] || 
+        sharedInputValidator.exceededLimits['city'] || 
+        sharedInputValidator.exceededLimits['state'] || 
+        sharedInputValidator.exceededLimits['country'] || 
+        sharedInputValidator.exceededLimits['phone']"
+        class="btn btn-primary"
+      >
+        Submit
+      </button> -->
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          [disabled]="hasExceededLimits() || !propertyForm.form.valid || isUploading"
+          [ngClass]="{
+            'btn-primary': !hasExceededLimits() && propertyForm.form.valid && !isUploading,
+            'btn-disabled': hasExceededLimits() || !propertyForm.form.valid || isUploading
+          }"
+          class="btn"
+        >
+          Submit
+        </button>
+
+      <p *ngIf="submitted && !propertyForm.form.valid" class="text-danger">Please fill out the form correctly before submitting.</p>
+    </div>
     <p>{{ _message }}</p>
   </form>
 </div>

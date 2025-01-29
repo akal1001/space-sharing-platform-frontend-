@@ -5,17 +5,21 @@
 <div class="header-container">
   <div class="title">Property Listings</div>
   
-  <div class="location-container">{{location.country}} {{location.city}}</div>
+  <div class="location-container"> {{location.city}}</div>
 </div>
 
 <div *ngIf="isLoading" class="loading">
   <h3>loading...</h3>
+ 
+</div>
+<div *ngIf="prompt!==null" class="loading">
+  <h3 >{{prompt}}</h3>
 </div>
 
 
 <div class="scrollable-container">
   <div class="scrollable-content">
-    <div class="property-item" *ngFor="let d of houseData">
+    <div class="property-item" *ngFor="let d of top3houseData">
       <img [src]="d.images[0]?.imageUrl" alt="Property Image" (click)="_navTo(d, 'home')" class="property-image">
       <div class="property-info">
         <h4>{{ d.house.header }}</h4>

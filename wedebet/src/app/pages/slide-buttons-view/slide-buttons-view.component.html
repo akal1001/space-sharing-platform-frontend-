@@ -2,8 +2,8 @@
   <div class="scrollable-container">
     <div class="scrollable-content">
      
-      <button *ngFor="let button of data"  (click)="onClicked(button, $event)" class="scroll-button">
-        {{ button.houseTypeName }}
+      <button *ngFor="let button of houseTyeps"  (click)="onClicked(button, $event)" class="scroll-button">
+        {{ button.header }}
       </button>
     </div>
   </div>

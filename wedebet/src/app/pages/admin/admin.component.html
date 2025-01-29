@@ -1,5 +1,20 @@
 
  <h4>{{appVerison}}</h4>
+
+
+ <div>
+  <label for="location-dropdown">Change Location:</label>
+  <select id="location-dropdown" (change)="changeLocation($event)">
+    <option *ngFor="let location of ipLocations" [value]="location.ip">
+      {{ location.country }} ({{ location.ip }})
+    </option>
+  </select>
+</div>
+
+<p *ngIf="selectedLocation">Selected Location: {{ selectedLocation }}</p>
+
+
+
 <div class="form-container">
   <form (ngSubmit)="onSubmitType()"  #houseTypeForm="ngForm">
     <div class="form-group">
@@ -38,15 +53,18 @@
         <th>Country</th>
         <th>Region</th>
         <th>City</th>
+        <th>date</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let d of geoLoc">
-        <td>{{ d.userId }}</td>
+        <td>{{ d.userId}}</td>
         <td>{{ d.ip }}</td>
         <td>{{ d.country }}</td>
         <td>{{ d.region }}</td>
         <td>{{ d.city }}</td>
+        <td>{{ d.timezone | date:'short' }}</td>
+       
       </tr>
     </tbody>
   </table>

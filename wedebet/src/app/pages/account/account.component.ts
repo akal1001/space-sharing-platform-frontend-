@@ -9,6 +9,7 @@ import { DataService } from '../../DataServices/data.service';
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
 import { HouseDetail } from '../../interfaces/house-detail';
+import { IndexeddbService } from '../../services/indexeddb.service';
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -22,10 +23,12 @@ export class AccountComponent implements OnInit {
   admin: any;
   mydata: any;
  
+ 
 
-  constructor(private cdr: ChangeDetectorRef,private dataService: DataService, private router: Router, private accountService: AccountService, private housedataSrvice: HouseDataService) {
+  constructor(private indexeddbService: IndexeddbService,private dataService: DataService, private router: Router, private accountService: AccountService, private housedataSrvice: HouseDataService) {
 
   }
+
   ngOnInit(): void {
     const storedData = localStorage.getItem('v');
     if (storedData) {
@@ -154,4 +157,7 @@ export class AccountComponent implements OnInit {
     this.dataService.navTo(targetRoute)
 
   }
+
+
+
 }

@@ -1,21 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { SideMenuComponent } from '../side-menu/side-menu.component';
-import { DetailComponent } from '../detail/detail.component'
 import { DataService } from '../../DataServices/data.service';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { House } from '../../interfaces/house';
 import { NgIf, DatePipe, CurrencyPipe } from '@angular/common';
 import { NgFor } from '@angular/common';
 import { HouseDataService } from '../../services/houseData.service';
-import { Route } from '@angular/router';
-import { VersionService } from '../../services/version.service';
-import { FilterViewComponent } from '../filter-view/filter-view.component';
 import { HouseDetail } from '../../interfaces/house-detail';
-import { count, from, Observable } from 'rxjs';
 import { DataCacheService } from '../../services/data-cache.service';
-import { AccountService } from '../../services/account.service';
 import { SlideButtonsViewComponent } from '../../pages/slide-buttons-view/slide-buttons-view.component';
-import { NavigationService } from '../../services/navigation.service';
 import { IndexeddbService } from '../../services/indexeddb.service';
 
 
@@ -31,94 +21,78 @@ export class HomeComponent implements OnInit {
   house: any;
   contactData: any;
   filteredData: any = null;
-
-  pageNumber = 2;
-  pageSize = 50;
+  prompt: any = null;
+  pageNumber:any;
+  pageSize = 30;
   isLoading = false; // Prevent duplicate requests
 
-
-  housesdetails: HouseDetail[] = [];  // Initialize as empty array
+  housesDetails: HouseDetail[] = []; // Initialize as empty array
   data: HouseDetail[] = [];
+  _houseTypeId = "";
 
-  _houseTypeId: string = "";
+  houseTyeps:any[]=[];
 
+  hasMoreData = true;
+  likedHouses: { [key: string]: boolean } = {}; // Object to track liked status
 
-  constructor(private indexeddbService: IndexeddbService, private navigationService: NavigationService, private dataService: DataService, private accountService: AccountService, private dataCacheService: DataCacheService, private versionservice: VersionService, private housedataservice: HouseDataService, private router: Router) {
-
+  constructor(private indexeddbService: IndexeddbService,private dataService: DataService,private dataCacheService: DataCacheService,private houseDataService: HouseDataService) {
     this.dataService.getFilterData$.subscribe({
       next: (value) => {
         this.filteredData = value;
-        this.pageNumber = 1
-        this.housesdetails = [];  // Use cached data
+        this.pageNumber = this.pageNumber = Number(sessionStorage.getItem("lastId"));
+        this.housesDetails = [];
         this.data = [];
-        console.log("data comes from slide buttons " + this.filteredData.houseTypeId)
         this._houseTypeId = this.filteredData.houseTypeId;
-        this.loadHouseByTypeIdData(this._houseTypeId);
-
-      }, error: (eror) => {
-        console.log(eror.error);
-
-      }
-    })
-  }
-
-  hd: any;
-  ngOnInit(): void {
-
-
-    this.indexeddbService.getData('api/data').then((data) => {
-      if (data) {
-        console.log('IndexedDB cached data:', data.data);
-        this.housesdetails = data.data;
-      } else {
-        console.log('No data found in IndexedDB cache.');
-      }
-    }).catch((error) => {
-      console.error('Error retrieving data from IndexedDB:', error);
+      },
+      error: (error) => {
+        console.error(error);
+      },
     });
-
-
-
-    this._houseTypeId = "";
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-
-    // alert(hd);
-
-
-    //this.CheckVersion();
   }
 
-  // @HostListener('window:scroll', [])
-  // onScroll(): void {
-  //   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && !this.isLoading) {
-  //     if(this._houseTypeId != "")
-  //     {
-  //       this.loadHouseByTypeIdData(this._houseTypeId);
-  //     }
-  //     else{
-  //       localStorage.removeItem("houseData");
-  //       this.loadHouseData();
-  //     }
-
-  //   }
-  // }
-
-  hasMoreData: boolean = true;
-  @HostListener('window:scroll', [])
+  ngOnInit(): void {
+    
+    this.loadData("data", "housesDetails");
+   
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+ 
+  private async loadData(cacheKey: string, property: string): Promise<void> {
+    console.log(`Polling started for ${cacheKey}...`); 
+    while (true) {
+      try {
+        const data = await this.indexeddbService.getDecriptedData(cacheKey);
+  
+        if (Array.isArray(data) && data.length > 0) {
+          if (property === "housesDetails") {
+            this.housesDetails = data;
+          }
+          break; 
+        }
+      } catch (error) {
+        console.error(`Error retrieving data for ${cacheKey}:`, error);
+      }
+  
+      await this.delay(1000); // Wait 1 second before trying again
+    }
+    console.log(`Polling stopped for ${cacheKey}.`); // Log when polling stops
+  }
+  
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+  @HostListener("window:scroll", [])
   debounceScroll = this.debounce(async () => {
-    const offset = 200;
     const scrollPosition = window.innerHeight + window.scrollY;
     const triggerPoint = document.body.offsetHeight / 2;
 
     if (scrollPosition >= triggerPoint && !this.isLoading && this.hasMoreData) {
-      this.isLoading = true;
-      return this.loadHouseData();
-
+      this.loadHouseData();
     }
   }, 200);
 
-  debounce(func: Function, delay: number) {
+  debounce(func: Function, delay: number): Function {
     let timer: any;
     return (...args: any[]) => {
       clearTimeout(timer);
@@ -126,160 +100,47 @@ export class HomeComponent implements OnInit {
     };
   }
 
-
- 
-
-
-
-
-  loadHouseData1(): void {
-    const cacheKey = 'api/data';
-    this.isLoading = true; // Prevent additional requests while loading
-    this.housedataservice.getHouses(this.pageNumber, this.pageSize).subscribe({
-      next: (response) => {
-        if (response.success && response.data.length > 0) {
-          console.log("Pagination successful for page: " + this.pageNumber);
-
-          this.indexeddbService.saveData(cacheKey, response.data);
-          for(var i = 0; i < response.data.length; i ++)
-          {
-            this.housesdetails.push(response.data[i]);
-          }
-         
-
-          this.pageNumber += 1;
-          this.dataCacheService.setPageNumber(this.pageNumber);  // Store the updated page number in cache
-        } else if (response.success && response.data.length === 0) {
-          console.log("No more data to load.");
-        } else {
-          console.error("Pagination response failed.");
-        }
-      },
-      error: (err) => {
-        console.error('Error loading house data:', err);
-      },
-      complete: () => {
-        this.isLoading = false; // Allow new requests after completion
-      },
-    });
-  }
   loadHouseData(): void {
-    const cacheKey = 'api/data';
+    const cacheKey = "data";
     this.isLoading = true;
-
- 
-  
-
-    // Prevent additional requests while loading
-    this.housedataservice.getHousesByLocation(this.pageNumber, this.pageSize).subscribe({
+    this.pageNumber = Number(sessionStorage.getItem("lastId"));
+   
+   
+    this.houseDataService.getHousesByLocation(this.pageNumber, this.pageSize).subscribe({
       next: (response) => {
-        if (response.success && response.data.length > 0) {
-          console.log("Pagination successful for page: " + this.pageNumber);
-
-          this.indexeddbService.saveData(cacheKey, response.data);
-          for(var i = 0; i < response.data.length; i ++)
+      
+        if (response.success && response.data.length > 0)
           {
-            this.housesdetails.push(response.data[i]);
-          }
-         
 
-          this.pageNumber += 1;
-          this.dataCacheService.setPageNumber(this.pageNumber);  // Store the updated page number in cache
+            const lowestId = Math.min(...response.data.map((item: { house: { id: any; }; }) => item.house.id));
+            sessionStorage.setItem("lastId", lowestId.toString())
+
+          this.housesDetails.push(...response.data);
+
+          this.indexeddbService.saveDataAndEncrypted(cacheKey, this.housesDetails);
+
+
+
+          this.dataCacheService.setPageNumber(this.pageNumber);
         } else if (response.success && response.data.length === 0) {
           console.log("No more data to load.");
+          this.hasMoreData = false;
         } else {
           console.error("Pagination response failed.");
         }
       },
       error: (err) => {
-        console.error('Error loading house data:', err);
+        console.error("Error loading house data:", err);
       },
       complete: () => {
-        this.isLoading = false; // Allow new requests after completion
+        this.isLoading = false;
       },
     });
   }
-  fd: any;
-  filterdHousesdetails: HouseDetail[] = [];
-  loadHouseByTypeIdData(houseTypeId: any) {
-
-
-    this.indexeddbService.getData('api/data').then((data) => {
-      if (data) {
-          
-        this.housesdetails = data.data;
-
-        const filteredHouses = this.housesdetails.filter(house => house.house.houseTypeId === houseTypeId);
-        console.log("filtered data  new: + " + filteredHouses);
-        for (var i = 0; i < this.filterdHousesdetails.length; i++) {
-         // this.housesdetails.unshift(filteredHouses[i]);
-           console.log("is data filtered " + filteredHouses[houseTypeId]);
-          this.housesdetails = filteredHouses;
-
-
-        }
-
-      } else {
-        console.log('No data found in IndexedDB cache.');
-      }
-    }).catch((error) => {
-      console.error('Error retrieving data from IndexedDB:', error);
-    });
-  
-
-
-
-
-    // this.isLoading = true; // Prevent additional requests while loading
-    // this.housedataservice.getHousesByHouseTypeId(this.pageNumber, this.pageSize,houseTypeId).subscribe({
-    //   next: (response) => {
-    //     if (response.success && response.data.length > 0) {
-    //       console.log("Pagination successful for page: " + this.pageNumber);
-    //       this.housesdetails.push(...response.data);
-    //       this.dataCacheService.setCache(this.housesdetails); // Store data in cache
-    //       this.pageNumber += 1;
-    //       this.dataCacheService.setPageNumber(this.pageNumber);  // Store the updated page number in cache
-    //     } else if (response.success && response.data.length === 0) {
-    //       console.log("No more data to load.");
-    //     } else {
-    //       console.error("Pagination response failed.");
-    //     }
-    //   },
-    //   error: (err) => {
-    //     console.error('Error loading house data:', err);
-    //   },
-    //   complete: () => {
-    //     this.isLoading = false; // Allow new requests after completion
-    //   },
-    // });
-  }
-
-
-
-  _navTo(data: any, targetRoute: string) {
-
-    this.dataService.setData(data);
-    this.dataService.navTo(targetRoute);
-  }
-
-
-
-  getShortDescription(description: string): string {
-    if (description.length > this.maxDescriptionLength) {
-      return description.slice(0, this.maxDescriptionLength).trim() + '...';
-    }
-    return description;
-  }
-
-
-
-  likedHouses: { [key: string]: boolean } = {}; // Object to track liked status
 
   toggleLike(houseId: string): void {
-    // Check if the user is logged in through the service
-    this.housedataservice.AddUserSelectionPost(houseId).subscribe({
+    this.houseDataService.AddUserSelectionPost(houseId).subscribe({
       next: () => {
-        // Toggle the liked state for the specific house
         this.likedHouses[houseId] = !this.likedHouses[houseId];
         console.log(`House ID: ${houseId}, Liked: ${this.likedHouses[houseId]}`);
       },
@@ -287,31 +148,39 @@ export class HomeComponent implements OnInit {
         if (err.status === 401) {
           alert("Please log in to access this feature.");
         } else {
-          console.error('Error while liking the house:', err);
+          console.error("Error while liking the house:", err);
         }
       },
     });
   }
 
+  filterHouses(city: string): HouseDetail[] {
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
 
-
-  isCount1() {
-    const lastFetchedTimestamp = sessionStorage.getItem('lastFetchedTimestamp');
-
-    this.housedataservice.getNewPostHouseCount(lastFetchedTimestamp).subscribe((data) => {
-
-
-
-      if (data.data > 0) {
-        this.dataService.setNewPostCountData(data.data);
-        //this.pageNumber = 1;
-        // this.data = [];
-        // this.dataCacheService.clearCache();
-      }
-      console.log("data cont : " + data.data)
-
-    })
+    return this.housesDetails.filter(
+      (house) =>
+        house.address.city === city &&
+        new Date(house.house.datePosted) >= threeDaysAgo
+    );
   }
+
+  getShortDescription(description: string): string {
+    return description.length > this.maxDescriptionLength
+      ? `${description.slice(0, this.maxDescriptionLength).trim()}...`
+      : description;
+  }
+
+  navigateTo(data: any, targetRoute: string): void {
+    this.dataService.setData(data);
+    this.dataService.navTo(targetRoute);
+  }
+
+  
+
+
 }
+
+
 
 

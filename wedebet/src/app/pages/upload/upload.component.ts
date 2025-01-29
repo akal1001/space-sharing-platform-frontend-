@@ -1,7 +1,7 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule, NgForm, FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, NgForm, FormBuilder, ReactiveFormsModule, FormGroup, Validators, FormControl, Form } from '@angular/forms';
 
 
 import { AccountService } from '../../services/account.service';
@@ -10,11 +10,13 @@ import { HouseDataService } from '../../services/houseData.service';
 import { Housetype } from '../../interfaces/housetype';
 import { Router } from '@angular/router';
 import { FileUploadService } from '../../services/file-upload.service';
+import { debounceTime, map, Observable, of, startWith } from 'rxjs';
+import {SharedInputValidator} from '../../services/SharedInputValidator'
 
 @Component({
   selector: 'app-upload',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor, CommonModule],
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css'
 })
@@ -30,13 +32,195 @@ export class UploadComponent implements OnInit {
   //isUploading: boolean = false;
 
 
-  constructor(private http: HttpClient, private fileUploadService: FileUploadService, private router: Router, private houseDataService: HouseDataService, private accountService: AccountService) {
+  searchControl = new FormControl('');
+   options: string[] = [
+    'Afghanistan',
+    'Algeria',
+    'Albania',
+    'Angola',
+    'Argentina',
+    'Armenia',
+    'Australia',
+    'Austria',
+    'Azerbaijan',
+    'Bahrain',
+    'Bangladesh',
+    'Barbados',
+    'Belarus',
+    'Belize',
+    'Belgium',
+    'Bosnia and Herzegovina',
+    'Brazil',
+    'Bhutan',
+    'Bulgaria',
+    'Cambodia',
+    'Canada',
+    'China',
+    'Costa Rica',
+    'Croatia',
+    'Cuba',
+    'Czech Republic',
+    'Denmark',
+    'Dominica',
+    'Egypt',
+    'El Salvador',
+    'Estonia',
+    'Ethiopia',
+    'Finland',
+    'Fiji',
+    'France',
+    'Georgia',
+    'Germany',
+    'Ghana',
+    'Grenada',
+    'Guatemala',
+    'Hong Kong',
+    'Hungary',
+    'Iceland',
+    'India',
+    'Indonesia',
+    'Iran',
+    'Iraq',
+    'Israel',
+    'Italy',
+    'Jamaica',
+    'Japan',
+    'Jordan',
+    'Kazakhstan',
+    'Kenya',
+    'Kiribati',
+    'Kosovo',
+    'Kuwait',
+    'Kyrgyzstan',
+    'Laos',
+    'Latvia',
+    'Lebanon',
+    'Liechtenstein',
+    'Lithuania',
+    'Luxembourg',
+    'Macedonia',
+    'Malaysia',
+    'Maldives',
+    'Mexico',
+    'Moldova',
+    'Monaco',
+    'Mongolia',
+    'Morocco',
+    'Myanmar',
+    'Namibia',
+    'Nepal',
+    'Netherlands',
+    'New Zealand',
+    'Nicaragua',
+    'Nigeria',
+    'North Korea',
+    'Norway',
+    'Oman',
+    'Pakistan',
+    'Palau',
+    'Panama',
+    'Papua New Guinea',
+    'Philippines',
+    'Poland',
+    'Portugal',
+    'Qatar',
+    'Romania',
+    'Russia',
+    'Saint Kitts and Nevis',
+    'Saint Lucia',
+    'Saint Vincent and the Grenadines',
+    'Senegal',
+    'Serbia',
+    'Singapore',
+    'Slovakia',
+    'Slovenia',
+    'South Africa',
+    'South Korea',
+    'Spain',
+    'Sri Lanka',
+    'Sudan',
+    'Sweden',
+    'Switzerland',
+    'Syria',
+    'Taiwan',
+    'Tajikistan',
+    'Tanzania',
+    'Thailand',
+    'The Gambia',
+    'Trinidad and Tobago',
+    'Turkey',
+    'Turkmenistan',
+    'Uganda',
+    'United Arab Emirates',
+    'United Kingdom',
+    'United States',
+    'Uzbekistan',
+    'Vanuatu',
+    'Vietnam',
+    'Zimbabwe'
+  ];
+  
+  
+  
+  filteredOptions!: Observable<string[]>;
+
+
+
+
+
+  constructor(public sharedInputValidator:SharedInputValidator, private http: HttpClient, private fileUploadService: FileUploadService, private router: Router, private houseDataService: HouseDataService, private accountService: AccountService) {
     this.houseTypes();
     const localDateTime = new Date().toLocaleString();
   }
   ngOnInit(): void {
+   
+
+   this.setupFilter();
+
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  onSubmit1(): void {
+    this.submitted = true; // Set to true when the user submits
+    // Other form submission logic here...
+  }
+
+
+  inputChangeCount = 0; // Counter to track input changes
+  displayOptions = true; // Flag to control dropdown visibility
+
+
+  private setupFilter() {
+    this.filteredOptions = this.searchControl.valueChanges.pipe(
+      startWith(''), // Initialize with an empty string
+      debounceTime(200), // Add a short delay for performance
+      map(value => this.filterOptions(value || '')) // Trigger filtering on every input change
+    );
+  }
+   filterValue:any=[];
+
+   private filterOptions(value: string): string[] {
+    // Trim and lowercase the input for consistent matching
+    this.filterValue = value.trim().toLowerCase();
+  
+    // Dynamically filter options based on the input
+    return this.filterValue.length > 0
+      ? this.options.filter(option => option.toLowerCase().startsWith(this.filterValue))
+      : []; // Return an empty array if the input is empty
+  }
+
+  onOptionSelected(option: string): void {
+    this.searchControl.setValue(option); // Set the selected value
+    
+    this.inputChangeCount = 0;
+    this.displayOptions = false;
+
+    // After a short delay, allow the dropdown to reappear on new input
+    setTimeout(() => (this.displayOptions = true), 100); // Adjust delay as needed
+    
+  }
+
 
   property: HouseDataRequest = {
 
@@ -66,24 +250,29 @@ export class UploadComponent implements OnInit {
     DateUploaded: new Date()
   };
 
+
+  @ViewChild('propertyForm') propertyForm!: NgForm; // Use ViewChild to reference the form
+
   submitted = false;
 
-
+ 
   onSubmit() {
-    
     this.submitted = true;
-
-    const phonePattern = /^\+?\d{10,13}$/; // Adjust regex as needed
-    if (this.property.Phone && !phonePattern.test(this.property.Phone)) {
-      this._message = 'Please enter a valid phone number.';
-      // alert(this._message);
-
+   
+  
+    if (this.propertyForm.valid && !this.hasExceededLimits() && !this.isUploading) {
+    
+      this.onUpload();
+    } else {
+      // Optionally, provide feedback if form is invalid
+      console.log("Form is invalid");
     }
-
-    console.log(this.property);
-    this.onUpload();
-
   }
+  hasExceededLimits(): boolean {
+    return Object.values(this.sharedInputValidator.exceededLimits).some((limitExceeded) => limitExceeded);
+  }
+
+  
 
 
 
@@ -98,8 +287,8 @@ export class UploadComponent implements OnInit {
         this._message = response.message;
         console.log(this._message)
         console.log(response.success)
-
-        this.property = {
+        this.submitted = false;
+        this.property = {    
           HouseTypeId: '',
           HouseId: '',
           HouseTypeName: '',
