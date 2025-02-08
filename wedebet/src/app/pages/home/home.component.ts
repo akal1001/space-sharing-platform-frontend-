@@ -171,9 +171,9 @@ export class HomeComponent implements OnInit {
       : description;
   }
 
-  navigateTo(data: any, targetRoute: string): void {
+  navigateTo(data: any, targetRoute: string, id:string): void {
     this.dataService.setData(data);
-    this.dataService.navTo(targetRoute);
+    this.dataService.navToWithId(targetRoute, id);
   }
 
   

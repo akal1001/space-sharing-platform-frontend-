@@ -24,19 +24,6 @@ export class SlideButtonsViewComponent implements OnInit {
   this.loadHouseTypes();
   }
 
-  // async loadHouseTypes(){
-  //   while(true){
-  //     const data:any = await this.indexeddbService.getDecriptedData("data");
-  //     console.log("data " + JSON.stringify(data));
-  //     var result = await this.CreateHouseTypes(data);
-  //     console.log("result : " + result);
-     
-  //     this.houseTyeps = result;
-  //     //const result =  this.loadHouseTypesData(data.data);
-  //     console.log("house types data :" + JSON.stringify(result))
-  //   }
-   
-  // }
 
   async loadHouseTypes() {
     try {
@@ -51,14 +38,9 @@ export class SlideButtonsViewComponent implements OnInit {
           await this.delay(1000); // Wait for 1 second before retrying
           continue;
         }
-  
-        console.log("Data retrieved: ", JSON.stringify(data));
-  
         const result = await this.CreateHouseTypes(data);
-        console.log("Result: ", result);
-  
         this.houseTyeps = result; // Update the `houseTyeps` property
-        console.log("House types data: ", JSON.stringify(result));
+        // console.log("House types data: ", JSON.stringify(result));
       }
     } catch (error) {
       console.error("Error while loading house types: ", error);

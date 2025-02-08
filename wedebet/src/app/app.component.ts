@@ -2,7 +2,7 @@
 import { ApiKeyInterceptorService } from './services/api-key-interceptor.service'
 import { Component, OnInit, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
 
 
@@ -18,6 +18,7 @@ import { HouseDataService } from './services/houseData.service';
 import { DataCacheService } from './services/data-cache.service';
 import { IndexeddbService } from './services/indexeddb.service';
 import { firstValueFrom } from 'rxjs';
+import { NavigationService } from './services/navigation.service';
 
 
 
@@ -37,34 +38,24 @@ export class AppComponent implements OnInit {
   version: any = "1.0.0";
   pageNumber = 1;
   pageSize = 50;
-  constructor(private dataService:DataService, private router:Router, private indexedDbService: IndexeddbService, private housedataservice: HouseDataService) {
+  constructor(private router:Router, private navService:NavigationService) {
    
    }
 
 
-  ngOnInit() {
-    // this.indexedDbService.deleteCacheData("api/data").then(() => {
-    //   console.log("Cache data deleted successfully.");
-    // }).catch((error) => {
-    //   console.error("Error deleting cache data:", error);
-    // });
-    
-    // this.indexedDbService.deleteCacheData("api/type").then(() => {
-    //   console.log("Cache data deleted successfully.");
-    // }).catch((error) => {
-    //   console.error("Error deleting cache data:", error);
-    // });
+   ngOnInit() {
+  
+    // const currentUrl = this.router.url;
+    // console.log(currentUrl)
 
-    // this.indexedDbService.deleteCacheData("api/top3").then(() => {
-    //   console.log("Cache data deleted successfully.");
-    // }).catch((error) => {
-    //   console.error("Error deleting cache data:", error);
-    // });
+  
+  
 
+  // var url = this.navService.getCurrentUrl();
+  
+  // alert(url);
    
-    
-   
-    this.router.navigate(['/main'])
+    this.router.navigate(['/main']);
     //this.router.navigate(['/home']);
 
 
@@ -74,4 +65,3 @@ export class AppComponent implements OnInit {
 
  
 }
-

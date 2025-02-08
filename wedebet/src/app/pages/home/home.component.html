@@ -13,10 +13,11 @@
      
     </div> -->
     <div *ngIf="housesDetails.length <=0" class="loading">
+      {{"no data"}}
       <h3 >{{prompt}}</h3>
     </div>
     <div class="property-item" *ngFor="let d of housesDetails" >
-      <img [src]="d.images[0].imageUrl" (click)="navigateTo(d,'detail')" alt="Property Image" class="property-image">
+      <img [src]="d.images[0].imageUrl" (click)="navigateTo(d,'detail', d.house.houseId)" alt="Property Image" class="property-image">
       <div class="property-info">
         <h4>{{ d.house.header }}</h4>
         <!-- <p>{{ d.address.state }}</p> -->

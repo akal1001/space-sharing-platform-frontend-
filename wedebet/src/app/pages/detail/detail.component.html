@@ -1,5 +1,7 @@
+
 <div class="property-layout">
 
+  <!-- Property Images -->
   <div class="property-images">
     <div class="property-image-gallery">
       <img
@@ -9,12 +11,12 @@
         class="main-image"
       />
     </div>
-    
+
     <div class="additional-images" *ngIf="houeseDetail.images.length > 1">
       <h3>Gallery</h3>
       <div class="gallery-grid">
         <img
-          *ngFor="let image of houeseDetail.images.slice(0)"
+          *ngFor="let image of houeseDetail.images"
           [src]="image.imageUrl"
           alt="Additional Property Image"
           class="gallery-image"
@@ -24,33 +26,40 @@
     </div>
   </div>
 
-
+  <!-- Property Details -->
   <div class="property-details">
-    
     <div class="property-info">
-      <h2>{{ houeseDetail.house.header }}</h2>
+      <h2>{{ houeseDetail.house.header }}<span class="property-price">{{ "$ " + houeseDetail.house.price }}</span></h2> 
       <p>{{ houeseDetail.house.description }}</p>
-      <div class="property-meta">
-        <span>{{ houeseDetail.images.length || 0 }} Pics</span>
-        <span class="property-price">{{ "$ " + houeseDetail.house.price }}</span>
-      </div>
+      <p style="font-weight: bold;">
+        {{ houeseDetail.address.street }}, 
+        {{ houeseDetail.address.city }}, 
+        {{ houeseDetail.address.state || 'N/A' }} 
+        {{ houeseDetail.address.zipCode || '' }}, 
+        {{ houeseDetail.address.country || 'N/A' }}
+      </p>
+      <!-- <div class="property-meta">
+        <h1 class="property-price">{{ "$ " + houeseDetail.house.price }}</h1>
+      </div> -->
     </div>
 
- 
-    <div class="property-address" *ngIf="houeseDetail.address">
+    <!-- Address -->
+    <!-- <div class="property-address" *ngIf="houeseDetail.address">
       <h3>Address</h3>
-      <p><strong>Street:</strong> {{ houeseDetail.address.street }}</p>
-      <p><strong>City:</strong> {{ houeseDetail.address.city }}</p>
-      <p><strong>State:</strong> {{ houeseDetail.address.state || 'Not Available' }}</p>
-      <p><strong>Zip Code:</strong> {{ houeseDetail.address.zipCode || 'Not Available' }}</p>
-      <p><strong>Country:</strong> {{ houeseDetail.address.country || 'Not Available' }}</p>
-    </div>
+      <p>
+        {{ houeseDetail.address.street }}, 
+        {{ houeseDetail.address.city }}, 
+        {{ houeseDetail.address.state || 'N/A' }} 
+        {{ houeseDetail.address.zipCode || '' }}, 
+        {{ houeseDetail.address.country || 'N/A' }}
+      </p>
+    </div> -->
 
-
+    <!-- Contact Info -->
     <div class="property-contact" *ngIf="houeseDetail.contact">
-      <h3>Contact Info</h3>
-      <p><strong>Phone:</strong> {{ houeseDetail.contact.phone }}</p>
-      <p><strong>Email:</strong> {{ houeseDetail.contact.email || 'Not Available' }}</p>
+      <h3>Contact</h3>
+      <a [href]="'tel:' + houeseDetail.contact.phone">{{ houeseDetail.contact.phone }}</a>
     </div>
+    
   </div>
 </div>

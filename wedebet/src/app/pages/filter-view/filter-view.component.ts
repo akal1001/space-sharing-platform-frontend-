@@ -121,7 +121,10 @@ export class FilterViewComponent implements OnInit {
   
   
   }
-
+  navigateTo(data: any, targetRoute: string, id:string): void {
+    this.dataService.setData(data);
+    this.dataService.navToWithId(targetRoute, id);
+  }
 
   _navTo(data: any, targetRoute: string) {
 

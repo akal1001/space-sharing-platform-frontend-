@@ -82,6 +82,9 @@ export class DataService {
 
 
 
+  navToWithId(componentName:string, id:string){
+    this.router.navigate(['/'+ componentName,id]);
+  } 
   navTo(componentName:string){
     this.router.navigate(['/'+ componentName]);
   } 

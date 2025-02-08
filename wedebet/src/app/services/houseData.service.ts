@@ -113,10 +113,23 @@ export class HouseDataService {
   }
   
 
-  houseDetail(houseId: string) {
+  houseDetail1(houseId: any) {
 
     let result = this.httpClient.get<any>(this.apiUrl + "_ghd_b_id?houseId=" + houseId);
     return result;
+  }
+
+  houseDetail(houseId: any): Observable<any> {
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}_ghd_b_id?houseId=${houseId}`;
+        return this.httpClient.get<any>(url, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error); // Re-throw the error for the caller to handle
+      })
+    );
   }
 
   InserHouseTypes1(htype: string) {

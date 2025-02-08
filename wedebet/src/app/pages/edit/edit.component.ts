@@ -61,12 +61,14 @@ export class EditComponent {
   }
 
   // Save action
+  updating:any;
   onSave(): void {
-   
+    this.updating = "updating..."
+    console.log(this.updating)
     if (this.images.length > 0) {
       this.houseDataService.AddImages(this.images).subscribe({
         next: (response) => {
-          console.log(response);
+         
         }, error(err) {
           console.log(err.error)
         },
@@ -104,6 +106,11 @@ export class EditComponent {
     this.houseDataService.updateHouse(housedataRequst).subscribe({
       next: (response) => {
         console.log(response);
+        
+        if(response.success){
+          this.updating = "updated successfully";
+          console.log(this.updating)
+         }
       }, error(err) {
 
       },

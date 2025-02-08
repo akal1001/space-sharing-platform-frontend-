@@ -7,6 +7,7 @@ import { HouseDetail } from '../../interfaces/house-detail';
 import { House } from '../../interfaces/house';
 import { Address } from '../../interfaces/address';
 import { Contact } from '../../interfaces/contact';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-detail',
@@ -26,31 +27,41 @@ export class DetailComponent implements OnInit {
   };
   
     // Placeholder for house data
-  constructor(private dataService: DataService, private housedataserveice:HouseDataService) {
+  constructor(private dataService: DataService,private route: ActivatedRoute, private housedataserveice:HouseDataService) {
 
   }
   ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    console.log('Received ID:', id);
+
+    
     window.scrollTo({ top: 0, behavior: 'smooth' });
     this.dataService.data$.subscribe(housId => {
      
       this.houeseDetail = housId
       this.selectedImage = this.houeseDetail.images[0].imageUrl;
       console.log(this.houeseDetail)
-      // this.housedataserveice.houseDetail(housId).subscribe(response => 
-      // {
-      //   this.houeseDetail = response.data
-      //      console.log(this.houeseDetail);
-          
-      //  this.selectedImage =  this.houeseDetail?.images[0].imageUrl || null;
-      //  // this.houeeDetail = data.data;
-       
+
     
-      // });
     })
 
-   
+    this.housedataserveice.houseDetail(id).subscribe(response => 
+      {
+        //alert(response)
+        this.houeseDetail = response.data
+           console.log(this.houeseDetail);
+          
+       this.selectedImage =  this.houeseDetail?.images[0].imageUrl || null;
+       // this.houeeDetail = data.data;
+       
+    
+      });
   }
   updateMainImage(imageUrl: string) {
     this.selectedImage = imageUrl;
+  }
+
+  callPhone() {
+    window.location.href = `tel:${this.houeseDetail.contact.phone}`;
   }
 }

@@ -80,6 +80,7 @@ export class AdminComponent {
   changeLocation(event: any): void {
     this.selectedLocation = event.target.value;
     console.log('Selected IP Location:', this.selectedLocation);
+    this.indexeddbService.deleteCacheData("location")
     this.indexeddbService.deleteCacheData("data")
     this.indexeddbService.deleteCacheData("Type")
 
