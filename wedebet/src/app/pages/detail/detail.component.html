@@ -57,8 +57,8 @@
 
     <!-- Contact Info -->
     <div class="property-contact" *ngIf="houeseDetail.contact">
-      <h3>Contact</h3>
-      <a [href]="'tel:' + houeseDetail.contact.phone">{{ houeseDetail.contact.phone }}</a>
+      <!-- <h3>Contact</h3> -->
+      <p>Contact : <a [href]="'tel:' + houeseDetail.contact.phone">{{ houeseDetail.contact.phone }}</a></p>  
     </div>
     
   </div>

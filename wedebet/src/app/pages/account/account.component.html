@@ -27,7 +27,7 @@
   <div class="home-container">
    
     <div class="property-item" *ngFor="let d of housesdetails" >
-      <img [src]="d.images[0].imageUrl" alt="Property Image" class="property-image">
+      <img [src]="d.images[0].imageUrl" alt="Property Image" class="property-image" (click)="navigateTo(d,'detail', d.house.houseId)">
       <div class="property-info">
         <h4>{{ d.house.header }}</h4>
         <p>{{ d.address.city }}</p>

@@ -116,6 +116,10 @@
     .property-item {
       width: calc(50% - 0.5rem); /* 2 items per row in portrait mode */
     }
+    .property-info {
+      padding: 0;
+      margin: 0;
+    }
   }
   
   /* Small screens (Phones in landscape mode) */
@@ -126,7 +130,10 @@
       margin: 0%;
       justify-content: center;  /* Center the items */
     }
-  
+    .property-info {
+      padding: 0;
+      margin: 0;
+    }
     .property-item {
       width: calc(32% - 0.5rem) !important;
       /* width: calc(33.33% - 0.5rem) !important; */
@@ -207,9 +214,9 @@ p {
   margin-top: 20px;
   font-size: 14px;
   color: #333;
-  background-color: #f9f9f9;
-  padding: 10px;
-  border-left: 4px solid #007bff;
+ 
+  padding:5%;
+
   border-radius: 4px;
 }
 

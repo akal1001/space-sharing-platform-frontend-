@@ -158,6 +158,9 @@ export class AccountComponent implements OnInit {
 
   }
 
-
+  navigateTo(data: any, targetRoute: string, id:string): void {
+    this.dataService.setData(data);
+    this.dataService.navToWithId(targetRoute, id);
+  }
 
 }

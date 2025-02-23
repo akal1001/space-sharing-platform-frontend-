@@ -221,6 +221,7 @@
     font-size: 14px;
     color: #555;
     float:right;
+    margin: 5%;
   }
   
   @media (max-width: 768px) {

@@ -20,7 +20,7 @@ import { House } from '../../interfaces/house';
 export class FavoriteComponent {
   houseData:any;
   house:any[] = [];
-  constructor( private router: Router, private accountService: AccountService, private housedataSrvice: HouseDataService) {
+  constructor( private router: Router, private accountService: AccountService, private dataService:DataService, private housedataSrvice: HouseDataService) {
 
   }
   ngOnInit(): void {
@@ -56,6 +56,11 @@ export class FavoriteComponent {
      },error(err) {
        
      },})
+  }
+
+  navigateTo(data: any, targetRoute: string, id:string): void {
+    this.dataService.setData(data);
+    this.dataService.navToWithId(targetRoute, id);
   }
 }
 

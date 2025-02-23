@@ -13,7 +13,7 @@
      
     </div> -->
     <div *ngIf="housesDetails.length <=0" class="loading">
-      {{"no data"}}
+      {{"loading..."}}
       <h3 >{{prompt}}</h3>
     </div>
     <div class="property-item" *ngFor="let d of housesDetails" >

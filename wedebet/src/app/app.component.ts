@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
   
   // alert(url);
    
-    this.router.navigate(['/main']);
+   this.router.navigate(['/main']);
     //this.router.navigate(['/home']);
 
 
