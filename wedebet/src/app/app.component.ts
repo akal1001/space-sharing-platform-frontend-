@@ -42,26 +42,13 @@ export class AppComponent implements OnInit {
    
    }
 
-
    ngOnInit() {
-  
-    // const currentUrl = this.router.url;
-    // console.log(currentUrl)
 
-  
-  
+    const fullUrl = window.location.href;
+    const baseUrl = fullUrl.split('/').slice(0, 4).join('/');  // Gives the base URL, e.g., http://localhost:4200/detail
 
-  // var url = this.navService.getCurrentUrl();
-  
-  // alert(url);
-   
-   this.router.navigate(['/main']);
-    //this.router.navigate(['/home']);
-
-
+    if (baseUrl !== `${window.location.origin}/detail`) {
+      this.router.navigate(['/main']);
+    }
   }
-
-
-
- 
 }

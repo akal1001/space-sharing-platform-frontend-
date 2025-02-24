@@ -14,7 +14,9 @@ import { MainComponent } from './pages/main/main.component';
 import { FilterViewComponent } from './pages/filter-view/filter-view.component';
 
 
+
 export const routes: Routes = [
+
    { path: '', redirectTo: 'main', pathMatch: 'full' }, // Default route
    { path: 'main', component: MainComponent },
    { path: 'admin', component: AdminComponent },
