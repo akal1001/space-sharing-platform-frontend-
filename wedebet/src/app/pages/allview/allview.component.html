@@ -1,0 +1,22 @@
+
+<div *ngFor="let country of data" class="country">
+  <div class="box" (click)="toggleExpand(country)">
+    {{ country.name }}
+  </div>
+
+  <div *ngIf="country.expanded">
+    <div *ngFor="let state of country.states" class="state">
+      <div class="box state-box" (click)="toggleExpand(state)">
+        {{ state.name }}
+      </div>
+
+      <div *ngIf="state.expanded">
+        <div *ngFor="let city of state.cities" class="city" (click)="GetCountryRegionCity(country, state, city)">
+          <div class="box city-box">
+            {{ city.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

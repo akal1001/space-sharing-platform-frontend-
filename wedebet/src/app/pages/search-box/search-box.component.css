@@ -1,0 +1,74 @@
+.search-container {
+  position: relative;
+  width: 300px;
+  z-index: 100;
+}
+
+.search-box {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  color: gray;
+}
+
+.search-results {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.search-results li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.search-results li:hover,
+.search-results li.selected {
+  background-color: lightblue;
+}
+
+
+
+.location-button {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Add padding */
+  font-size: 16px; /* Increase font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition for background */
+}
+
+.location-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.location-button:focus {
+  outline: none; /* Remove outline on focus */
+  box-shadow: 0 0 3px #5a5a5a; /* Add focus shadow for accessibility */
+}
+
+.button-text {
+  font-weight: bold; /* Make text bold */
+}

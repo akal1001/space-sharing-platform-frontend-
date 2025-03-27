@@ -1,0 +1,26 @@
+.box {
+    width: 150px; /* Fixed width */
+    text-align: center; /* Center text */
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    display: block; /* Ensure full width inside container */
+    cursor: pointer;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .state-box {
+    margin-left: 20px;
+    background-color: #e0e0e0;
+  }
+  
+  .city-box {
+    margin-left: 40px;
+    background-color: #d0d0d0;
+  }
+  .country, .state {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align boxes properly */
+  }

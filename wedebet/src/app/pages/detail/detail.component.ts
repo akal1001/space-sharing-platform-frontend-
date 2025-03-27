@@ -25,22 +25,26 @@ export class DetailComponent implements OnInit {
     contact: {} as Contact, 
     images: [] 
   };
+
+  IsDetailData:boolean = false;
   
     // Placeholder for house data
   constructor(private dataService: DataService,private route: ActivatedRoute, private housedataserveice:HouseDataService) {
 
   }
   ngOnInit(): void {
+    console.log("house detail empty " + this.houeseDetail.images.length);
     const id = this.route.snapshot.paramMap.get('id');
     console.log('Received ID:', id);
 
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    this.dataService.data$.subscribe(housId => {
+    this.dataService.data$.subscribe(house => {
      
-      this.houeseDetail = housId
+     
+      this.houeseDetail = house
       this.selectedImage = this.houeseDetail.images[0].imageUrl;
-      console.log(this.houeseDetail)
+      //console.log(this.houeseDetail)
 
     
     })
@@ -49,12 +53,14 @@ export class DetailComponent implements OnInit {
       {
         //alert(response)
         this.houeseDetail = response.data
-           console.log(this.houeseDetail);
+        if(this.houeseDetail.images.length>0){
+          this.IsDetailData = true;
+        }
           
        this.selectedImage =  this.houeseDetail?.images[0].imageUrl || null;
        // this.houeeDetail = data.data;
        
-    
+       //console.log("house detail widdata " + this.houeseDetail.images.length);
       });
   }
   updateMainImage(imageUrl: string) {

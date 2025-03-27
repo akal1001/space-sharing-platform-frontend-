@@ -10,7 +10,14 @@
     </option>
   </select>
 </div>
-
+<div>
+  <label for="location-dropdown">Change Location2:</label>
+  <select id="location-dropdown" (change)="changeLocation2($event)">
+    <option *ngFor="let location of ipLocations" [value]="location.ip">
+      {{ location.country }} ({{ location.ip }})
+    </option>
+  </select>
+</div>
 <p *ngIf="selectedLocation">Selected Location: {{ selectedLocation }}</p>
 
 

@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "bet1-e2157"
-  }
+    "default": "betnow-32807"
+  },
+  "targets": {},
+  "etags": {}
 }

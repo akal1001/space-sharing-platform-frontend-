@@ -32,7 +32,7 @@
     <img [src]="d.images[0].imageUrl" (click)="navigateTo(d,'detail', d.house.houseId)" alt="Property Image" class="property-image">
     <div class="property-info">
       <!-- <h4>{{ d.house.header }}</h4> -->
-      <h2>{{ d.house.header }}<span class="property-price">{{ "$ " + d.house.price }}</span></h2> 
+      <p><b> {{ d.house.header }}<span class="property-price">{{ "$ " + d.house.price }}</span></b></p> 
       <!-- <p>{{ d.address.city }}</p> -->
       <!-- <p>{{ d.house.description }}</p> -->
       <div class="description-container">

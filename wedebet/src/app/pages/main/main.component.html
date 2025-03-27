@@ -1,12 +1,14 @@
 
-<div style="display: flex;  justify-content: center; align-items: center; width: 100%; height:50px; background-color:white;font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 28px; font-weight: 700; color: #fff; text-transform: uppercase;">
+<!-- <div style="display: flex;  justify-content: center; align-items: center; width: 100%; height:50px; background-color:white;font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 28px; font-weight: 700; color: #fff; text-transform: uppercase;">
  
+</div> -->
+<div class="header-container"[ngStyle]="{'background-image': 'url(' + cityImage + ')'}">
+  <app-search-box></app-search-box>
+ 
+  <div class="location-container">{{ "Current  "+ location.city }}</div>
 </div>
-<div class="header-container">
-  <div class="title">Property Listings</div>
-  
-  <div class="location-container"> {{location.city}}</div>
-</div>
+
+
 
 <div *ngIf="isLoading" class="loading">
   <h3>loading...</h3>
@@ -28,7 +30,16 @@
       </div>
     </div>
   </div>
+ 
 </div>
+<div class="image-text-container">
+  <img class="city-image"  [src]="cityImage">
+  <div class="text-content">
+    <h3> {{quickInfo}}</h3>
+    <p>{{chatdata}}</p>
+  </div>
+</div>
+
 
 
 

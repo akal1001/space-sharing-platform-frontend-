@@ -12,6 +12,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { EditComponent } from './pages/edit/edit.component';
 import { MainComponent } from './pages/main/main.component';
 import { FilterViewComponent } from './pages/filter-view/filter-view.component';
+import { AllviewComponent } from './pages/allview/allview.component';
 
 
 
@@ -28,6 +29,7 @@ export const routes: Routes = [
    { path: 'favorite', component: FavoriteComponent },
    { path: 'account', component: AccountComponent },
    { path: 'edit', component: EditComponent },
-   { path: 'filterView', component: FilterViewComponent }
+   { path: 'filterView', component: FilterViewComponent },
+   { path: 'allview', component: AllviewComponent }
  ];
  

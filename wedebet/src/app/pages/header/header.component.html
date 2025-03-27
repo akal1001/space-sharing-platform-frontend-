@@ -3,13 +3,9 @@
 
     <header class="header">
       <div class="header-container">
-        <div class="logo" (click)="navigateToHome()">Logo</div>
-        <input class="search-box" type="text" 
-        placeholder="Search.." [(ngModel)]="searchText"
-         (focus)="onFocus()"
-         (blur)="onBlur()"
-         (input)="onSearch(searchText)" />
-        
+        <div class="logo" (click)="navigateToHome()"><img style="width: auto; height: 50px;" src="https://betapp.s3.amazonaws.com/5a3e89bc-6176-48b3-a005-933688eb8553.png"></div>
+        <!-- <input class="search-box" type="text"placeholder="Search.." [(ngModel)]="searchText"(focus)="onFocus()"(blur)="onBlur()"(input)="onSearch(searchText)" />
+         -->
         <div class="right-div">
           <button *ngIf="IsNewPost" class="new-item-btn" (click)="ItemViewed()">New</button>
           <button class="login-btn" value="" (click)="navigateToHome()">Home</button>

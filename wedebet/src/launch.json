@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "pwa-chrome",
+        "request": "launch",
+        "name": "Launch Chrome with Angular",
+        "url": "http://localhost:4200",
+        "webRoot": "${workspaceFolder}/src",
+        "sourceMaps": true,
+        "trace": true
+      },
+      {
+        "type": "pwa-chrome",
+        "request": "attach",
+        "name": "Attach to Chrome",
+        "port": 9222,
+        "webRoot": "${workspaceFolder}/src",
+        "sourceMaps": true
+      }
+    ]
+  }
+  

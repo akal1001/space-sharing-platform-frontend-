@@ -1,0 +1,15 @@
+
+
+  <div class="search-container">
+    <input type="text" class="search-box" [(ngModel)]="query" (input)="onSearchChange()" (focus)="onFocus()"
+      (blur)="onBlur()" placeholder="Search by city, region..." />
+  
+      <ul *ngIf="showResults && filteredData.length > 0" class="search-results">
+        <li *ngFor="let item of filteredData; let i = index" 
+            [class.selected]="selectedIndex === i"
+            (mousedown)="selectItem(item)">
+          {{ item.name }} ({{ item.type }} - {{ item.country }} - {{ item.state }})
+        </li>
+      </ul>
+   
+  </div>

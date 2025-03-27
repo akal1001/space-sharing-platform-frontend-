@@ -1,6 +1,8 @@
+<div *ngIf="!IsDetailData" class="loading-container">
+  <p>Loading...</p>
+</div>
 
-<div class="property-layout">
-
+<div *ngIf="IsDetailData" class="property-layout">
   <!-- Property Images -->
   <div class="property-images">
     <div class="property-image-gallery">
@@ -11,55 +13,28 @@
         class="main-image"
       />
     </div>
-
-    <div class="additional-images" *ngIf="houeseDetail.images.length > 1">
-      <h3>Gallery</h3>
-      <div class="gallery-grid">
-        <img
-          *ngFor="let image of houeseDetail.images"
-          [src]="image.imageUrl"
-          alt="Additional Property Image"
-          class="gallery-image"
-          (click)="updateMainImage(image.imageUrl)"
-        />
-      </div>
-    </div>
   </div>
 
   <!-- Property Details -->
   <div class="property-details">
     <div class="property-info">
-      <h2>{{ houeseDetail.house.header }}<span class="property-price">{{ "$ " + houeseDetail.house.price }}</span></h2> 
+      <p><b>{{ houeseDetail.house.header }}</b>
+        <span class="property-price">{{ "$ " + houeseDetail.house.price }}</span>
+      </p>
       <p>{{ houeseDetail.house.description }}</p>
-      <p style="font-weight: bold;">
-        {{ houeseDetail.address.street }}, 
+      <p><b>{{ houeseDetail.address.street }}, 
         {{ houeseDetail.address.city }}, 
-        {{ houeseDetail.address.state || 'N/A' }} 
-        {{ houeseDetail.address.zipCode || '' }}, 
-        {{ houeseDetail.address.country || 'N/A' }}
+        {{ houeseDetail.address.state }} 
+        {{ houeseDetail.address.zipCode }}, 
+        {{ houeseDetail.address.country }}</b>
       </p>
-      <!-- <div class="property-meta">
-        <h1 class="property-price">{{ "$ " + houeseDetail.house.price }}</h1>
-      </div> -->
+      <p>Contact: 
+        <a [href]="'tel:' + houeseDetail.contact.phone">{{ houeseDetail.contact.phone }}</a>
+      </p>  
     </div>
-
-    <!-- Address -->
-    <!-- <div class="property-address" *ngIf="houeseDetail.address">
-      <h3>Address</h3>
-      <p>
-        {{ houeseDetail.address.street }}, 
-        {{ houeseDetail.address.city }}, 
-        {{ houeseDetail.address.state || 'N/A' }} 
-        {{ houeseDetail.address.zipCode || '' }}, 
-        {{ houeseDetail.address.country || 'N/A' }}
-      </p>
-    </div> -->
-
-    <!-- Contact Info -->
-    <div class="property-contact" *ngIf="houeseDetail.contact">
-      <!-- <h3>Contact</h3> -->
-      <p>Contact : <a [href]="'tel:' + houeseDetail.contact.phone">{{ houeseDetail.contact.phone }}</a></p>  
-    </div>
-    
   </div>
+ <div *ngIf="houeseDetail.images.length>1" class="all-imgs">
+  <p>Image gallery</p>
+  <img *ngFor="let i of houeseDetail.images" [src]="i.imageUrl" alt="Property Image" />
+</div>
 </div>

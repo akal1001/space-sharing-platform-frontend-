@@ -18,6 +18,7 @@ export class HouseDataService {
 
   }
 
+  
   fetchLocationWithMaxId() {
     return this.apikeyusertokenService.createHeaders(false).pipe(
       switchMap((headers) => {
@@ -64,7 +65,21 @@ export class HouseDataService {
       })
     );
   }
-  
+  //last inserted id
+  GetHouseMaxId() {
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        return this.httpClient.get<any>(
+          `${this.apiUrl}GetMaxHouseId`,
+          { headers }
+        );
+      }),
+      catchError((error) => {
+        console.error('Error loading data:', error);
+        return throwError(() => error);
+      })
+    );
+  }
 
 
 
@@ -72,7 +87,7 @@ export class HouseDataService {
    
     return this.apikeyusertokenService.createHeaders(true).pipe(
       switchMap((headers) => {
-        return this.httpClient.post(this.apiUrl + "_ph", uploadHouseRequest, { headers });
+        return this.httpClient.post(this.apiUrl + "postHouse", uploadHouseRequest, { headers });
       }),
       catchError((error) => {
         console.error('Error fetching available house types:', error);
@@ -122,7 +137,7 @@ export class HouseDataService {
   houseDetail(houseId: any): Observable<any> {
     return this.apikeyusertokenService.createHeaders(false).pipe(
       switchMap((headers) => {
-        const url = `${this.apiUrl}_ghd_b_id?houseId=${houseId}`;
+        const url = `${this.apiUrl}GetHouseById?houseId=${houseId}`;
         return this.httpClient.get<any>(url, { headers });
       }),
       catchError((error) => {
@@ -147,14 +162,7 @@ export class HouseDataService {
 
   }
 
-  InserHouseTypes(htype: string) {
-    return this.httpClient.post('/api/proxy/house-types', { housetype: htype }).pipe(
-      catchError((error) => {
-        console.error('Error forwarding request:', error);
-        return throwError(() => error);
-      })
-    );
-  }
+  
 
 
   getHouses(pageNumber: number, pageSize: number): Observable<any> {
@@ -282,6 +290,28 @@ export class HouseDataService {
     );
   }
 
+  // return this.httpClient.post(this.apiUrl+'house-types', { housetype: htype }).pipe(
+  //   catchError((error) => {
+  //     console.error('Error forwarding request:', error);
+  //     return throwError(() => error);
+  //   })
+  // );
+  InserHouseTypes(htype: string) {
+    return this.apikeyusertokenService.createHeaders(true).pipe(
+      switchMap((headers) => {
+        return this.httpClient.post(this.apiUrl + 'AddHouseType', { housetype: htype }, { headers }).pipe(
+          catchError((error) => {
+            console.error('Error forwarding request:', error);
+            return throwError(() => error);
+          })
+        );
+      })
+    );
+  }
+  
+
+
+
   DeleteFavoriteHouse(houseId: any): Observable<any> {
   
     return this.apikeyusertokenService.createHeaders(true).pipe(
@@ -333,7 +363,7 @@ export class HouseDataService {
 
     return this.apikeyusertokenService.createHeaders(true).pipe(
       switchMap((headers) => {
-        const url = `${this.apiUrl}_gs?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+        const url = `${this.apiUrl}GetUsersSavedData?pageNumber=${pageNumber}&pageSize=${pageSize}`;
         return this.httpClient.get<any>(url, { headers });
     
       }),
@@ -400,6 +430,33 @@ export class HouseDataService {
     return this.apikeyusertokenService.createHeaders(false).pipe(
       switchMap((headers) => {
         const url = `${this.apiUrl}mapping`;
+        return this.httpClient.get<any>(url, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error); // Re-throw the error for the caller to handle
+      })
+    );
+  }
+
+  //for admi
+  getallHousesLocations(): Observable<any> {
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}alllocations`;
+        return this.httpClient.get<any>(url, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching houses:', error);
+        return throwError(() => error); // Re-throw the error for the caller to handle
+      })
+    );
+  }
+  //return single line json array
+  getallformattedlocations(): Observable<any> {
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}formattedlocations`;
         return this.httpClient.get<any>(url, { headers });
       }),
       catchError((error) => {
