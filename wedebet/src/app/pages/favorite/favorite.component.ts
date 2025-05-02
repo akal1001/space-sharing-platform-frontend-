@@ -24,7 +24,7 @@ export class FavoriteComponent {
 
   }
   ngOnInit(): void {
-   this.GetMyPost();
+   this.GetUserFavePosts();
   }
 
   onDeleteFav(id: any) {
@@ -32,7 +32,7 @@ export class FavoriteComponent {
     this.housedataSrvice.DeleteFavoriteHouse(id).subscribe({
       next: (response) => {
        
-        this.GetMyPost();
+        this.GetUserFavePosts();
       }, error(err) {
         console.error(err.error);
       },
@@ -41,8 +41,8 @@ export class FavoriteComponent {
 
   }
 
-  private GetMyPost(){
-    this.housedataSrvice.GetAllMySelectionPost(1,10).subscribe({next:(response)=>{
+  private GetUserFavePosts(){
+    this.housedataSrvice.GetAllMySelectionPost(1,50).subscribe({next:(response)=>{
     
       this.houseData = response.data
       console.log(this.houseData);

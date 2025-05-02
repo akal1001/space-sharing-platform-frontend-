@@ -5,7 +5,19 @@
 <div class="header-container"[ngStyle]="{'background-image': 'url(' + cityImage + ')'}">
   <app-search-box></app-search-box>
  
-  <div class="location-container">{{ "Current  "+ location.city }}</div>
+  <ng-container *ngIf="location.country === 'Ethiopia'; else showRegion">
+    <div class="location-container">
+      {{ location.city }} {{ location.country }}
+    </div>
+  </ng-container>
+  
+  <ng-template #showRegion>
+    <div class="location-container">
+      {{ location.city }} {{ location.region }}
+    </div>
+  </ng-template>
+  
+ 
 </div>
 
 

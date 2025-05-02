@@ -7,22 +7,6 @@
 
 }
 
-h1, h2, h3 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: gray;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  text-transform: uppercase;
-  font-weight: 300;
-}
-
-.form-section {
-  background-color: #fff;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-}
 
 .form-group {
   margin-bottom: 15px;
@@ -62,6 +46,7 @@ textarea {
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid #ddd;
+  font-weight: bold;
 }
 
 .btn-primary {

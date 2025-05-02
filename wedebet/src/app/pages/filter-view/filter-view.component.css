@@ -1,248 +1,182 @@
 .menu-container {
-    display: none;
-  }
-  
-  .home-container {
-    width: 100%;
-   
-  
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem;
-    /* background-color: rgb(245, 240, 240); */
-    text-align: center;
-    padding: 0;
-    /* gap: 0.5rem; */
-    /* Center the flex items */
-    justify-content: center;  /* Centers items horizontally */
-  
-   
-  }
-  
-  .property-item {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 0%;
-   
-    box-sizing: border-box;
-  }
-  
-  .property-image {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-   
-   
-  }
-  
-  .property-info {
-    padding: 0.5rem;
-    /* font-family: 'Noto Sans Ethiopic', sans-serif; */
-    /* font-family: "Noto Serif Ethiopic", "Abyssinica SIL", serif; */
-   
-  }
-  
-  .property-info h4 {
-    margin: 0.5rem 0;
-    font-size: 1.1rem;
-    color: #333;
-    
-  }
-  
-  .property-info p {
-    margin: 0.25rem 0;
-    font-size: 0.9rem;
-    color: #666;
-    /* font-family: "Noto Serif Ethiopic", "Abyssinica SIL", serif; */
-  
-    word-spacing: 0.2em
-  }
-  
-  .property-info small {
-    color: #999;
-  }
-  
-  
-  
-  /* Small screens (Phones in portrait mode) */
-  @media (max-width: 480px) and (orientation: portrait) {
-    .property-item {
-      min-height: 200px;
-      width: calc(50% - 0.5rem); /* 2 items per row in portrait mode */
-      width: calc(100%); 
-      margin-left: 2%;
-      margin-right: 2%;
-      
-    }
-    .property-image {
-      width: 100%;
-      height:250px;
-      object-fit: cover;
-    }
-    .property-item{
-      margin: 0%;
-      gap: 0;
-      margin-bottom: 2%;
-    }
-  }
-  
-  /* Small screens (Phones in landscape mode) */
-  @media (max-width: 844px) and (orientation: landscape) {
-    .home-container {
-      display: flex;
-      flex-wrap: wrap;  /* Ensures items wrap */
-      margin: 0%;
-      justify-content: center;  /* Center the items */
-    }
-  
-    .property-item {
-      width: calc(32% - 0.5rem) !important;
-      /* width: calc(33.33% - 0.5rem) !important; */
-    }
-  }
-  
- /* Medium screens (Tablets) */
-@media (min-width: 481px) and (orientation: portrait) {
-  .property-item {
-    width: calc(49.33% - 0.5rem); /* 3 items per row on tablets */
-  }
-
+  display: none;
 }
 
-@media (min-width: 1024px) and (orientation: landscape) {
-  .property-item {
-    width: calc(32.33% - 0.5rem); /* 3 items per row on tablets */
-  }
-
+.home-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+ 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding-top: 30px;
+  
 }
-  /* Large screens (Desktops and above) */
-  @media (min-width: 1025px) {
-    .menu-container {
-      display: block;
-      position: fixed;
-      height: 100vh;
-      width: 250px;
-      overflow-y: auto;
-    }
-  
-    .home-container {
-      margin-left: 200px;
-      margin-right: 200px;
-      gap: 1.2rem;
-      width: auto;
-    }
-   
-    .property-item {
-    
-      width: calc(25% - 1rem); /* 4 items per row on large screens */
-      width: calc(30.33% - 0.5rem); /* 3 items per row on tablets */
-    }
-  }
-  .description-container {
-    /* position: relative; */
-    width: 100%;
-  }
-  
-  .description-text {
-    display: -webkit-box;
-    /* -webkit-line-clamp: 1; Limit to 3 lines */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.5em; /* Adjust based on your design */
-    min-height: 3.5em;
-    /* max-height: 4.5em;  */
-    white-space: normal;
-    text-align: justify;
-  
-    font-family: 'Noto Sans Ethiopic', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-  }
-  
-  .more-link {
-    color: blue;  /* Link color */
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  
-  
-  
-  
-  .property-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.1rem;
-  }
-  
-  .property-images {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  .property-price {
-    font-size: 1.3rem;
-    font-weight: lighter;
-    color: #28a745; /* Green color */
-  }
-  
-  .property-meta i {
-    margin-right: 8px;
-  }
-  
 
-
-
-
-
-
-.header-content {
+.property-item {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 1%;
+ 
 }
 
-.top-row {
+.property-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* Header layout */
+.property-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.25rem 0;
+  gap: 0.5rem;
+}
+
+.property-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  color: #333;
+  margin: 0;
+  flex: 1;
+  text-align: left;
+}
+
+.property-actions {
   display: flex;
   align-items: center;
-  gap: 10px; /* Adjust spacing between items */
+  gap: 1.2rem; /* Adjust this value to control spacing */
 }
 
-.back-button {
-  background: none;
-  border: none;
-  font-size: 24px;
+.property-price {
+  font-size: 1.1rem;
+  color: black;
+  margin: 0;
+}
+
+.like-icon {
   cursor: pointer;
+  font-size: 1.2rem;
+  transition: color 0.3s;
 }
 
-.title {
-  font-size: 20px;
-  font-weight: bold;
+
+
+.property-info {
+  padding: 0.5rem;
+  padding: 3%;
 }
 
-.filter-dropdown {
-  padding: 5px;
+.description-container {
+  width: 100%;
+  /* padding: 1%; */
+  
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
-.subtitle {
-  margin-top: 5px;
-  text-align: center;
-  font-size: 14px;
+.description-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5em;
+  min-height: 3.5em;
+  white-space: normal;
+  text-align: justify;
+  font-family: 'Noto Sans Ethiopic', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-top: 0%;
+  margin-bottom: 0%;
   color: gray;
 }
 
+.more-link {
+  color: rgb(144, 144, 215);
+  text-decoration: underline;
+  cursor: pointer;
+}
 
-.property-price {
+.property-address {
   font-weight: bold;
-  color: #2a9d8f;
-  float: right;
-  font-size: larger;
-  margin-right: 5%;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #444;
+  margin-top: 0.5rem;
+}
+
+/* Responsive Styles */
+
+/* Phones (portrait) */
+@media (max-width: 480px) and (orientation: portrait) {
+  .property-item {
+    width: 100%;
+    margin: 3% 3% 3% 3%;
+    margin: 0;
+    margin-bottom: 0;
+  }
+
+  .property-image {
+    height: 250px;
+  }
+
+  .description-text {
+    width: 100%;
+  }
+}
+
+/* Phones (landscape) */
+@media (max-width: 844px) and (orientation: landscape) {
+  .property-item {
+    width: calc(32% - 0.5rem) !important;
+  }
+}
+
+/* Tablets (portrait) */
+@media (min-width: 481px) and (orientation: portrait) {
+  .property-item {
+    width: calc(49.33% - 0.5rem);
+  }
+}
+
+/* Tablets (landscape) */
+@media (min-width: 1024px) and (orientation: landscape) {
+  .property-item {
+    width: calc(32.33% - 0.5rem);
+  }
+}
+
+/* Desktops and larger */
+@media (min-width: 1025px) {
+  .menu-container {
+    display: block;
+    position: fixed;
+    height: 100vh;
+    width: 250px;
+    overflow-y: auto;
+  }
+
+  .home-container {
+    margin-left: 200px;
+    margin-right: 200px;
+    gap: 1.2rem;
+    width: auto;
+  }
+
+  .property-item {
+    width: calc(30.33% - 0.5rem);
+  }
 }

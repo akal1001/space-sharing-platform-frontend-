@@ -23,7 +23,8 @@ export class DetailComponent implements OnInit {
     house: {} as House, 
     address: {} as Address, 
     contact: {} as Contact, 
-    images: [] 
+    images: [] ,
+    isLiked:false
   };
 
   IsDetailData:boolean = false;

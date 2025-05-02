@@ -12,10 +12,11 @@
 
    
 
+    <button *ngIf="admin !== null && admin !== undefined" class="logout-btn" (click)="navTo('ameharic')">Ameharic translate</button>
     <button *ngIf="admin !== null && admin !== undefined" class="logout-btn" (click)="navTo('admin')">Admin</button>
     <button *ngIf="admin !== null && admin !== undefined" class="logout-btn" (click)="navTo('admin')">Post View</button>
     <button *ngIf="admin !== null && admin !== undefined" class="logout-btn" (click)="navTo('allview')">all View</button>
-    
+    <button *ngIf="admin !== null && admin !== undefined" class="logout-btn" (click)="clearLoc()">clear location change</button>
   </div>
   <div style="display: flex; justify-content: center; align-items: center; width: 100%; height:80px; background-color:lightgray;font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 28px; font-weight: 700; color: #fff; text-transform: uppercase;">
     My Property Listings

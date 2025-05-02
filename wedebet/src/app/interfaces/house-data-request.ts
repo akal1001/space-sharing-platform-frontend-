@@ -5,7 +5,7 @@ export interface HouseDataRequest {
     HouseId: string;
     Header: string;
     Description: string;
-    Price: number;  
+    Price: number | null;  
     DatePosted?: Date;
     
     ContactId?: string;
@@ -27,6 +27,7 @@ export interface HouseDataRequest {
     Image: string;
     ImageInfos: ImgInfo[];  
     DateUploaded?: Date;
+    Country_Translated_English?:string;
 }
  class ImgInfo{
     key:string | undefined;

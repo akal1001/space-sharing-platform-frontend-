@@ -1,28 +1,29 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../DataServices/data.service';
-import { NgIf, DatePipe, CurrencyPipe } from '@angular/common';
+import { NgIf, DatePipe, CurrencyPipe, NgClass } from '@angular/common';
 import { NgFor } from '@angular/common';
 import { HouseDataService } from '../../services/houseData.service';
 import { HouseDetail } from '../../interfaces/house-detail';
 import { DataCacheService } from '../../services/data-cache.service';
 import { SlideButtonsViewComponent } from '../../pages/slide-buttons-view/slide-buttons-view.component';
 import { IndexeddbService } from '../../services/indexeddb.service';
+import { Translator } from '../../Classes/translator';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgIf, NgFor, DatePipe, CurrencyPipe, SlideButtonsViewComponent],
+  imports: [NgIf, NgFor, NgClass, DatePipe, CurrencyPipe, SlideButtonsViewComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  maxDescriptionLength = 30;
+  maxDescriptionLength = 240;
   house: any;
   contactData: any;
   filteredData: any = null;
   prompt: any = null;
-  pageNumber:any;
+  pageNumber: any;
   pageSize = 30;
   isLoading = false; // Prevent duplicate requests
 
@@ -30,12 +31,15 @@ export class HomeComponent implements OnInit {
   data: HouseDetail[] = [];
   _houseTypeId = "";
 
-  houseTyeps:any[]=[];
+  houseTyeps: any[] = [];
 
   hasMoreData = true;
-  likedHouses: { [key: string]: boolean } = {}; // Object to track liked status
 
-  constructor(private indexeddbService: IndexeddbService,private dataService: DataService,private dataCacheService: DataCacheService,private houseDataService: HouseDataService) {
+
+
+  translator: Translator = new Translator();
+
+  constructor(private indexeddbService: IndexeddbService, private dataService: DataService, private dataCacheService: DataCacheService, private houseDataService: HouseDataService) {
     this.dataService.getFilterData$.subscribe({
       next: (value) => {
         this.filteredData = value;
@@ -51,37 +55,54 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
+    this.translator = new Translator();
     this.loadData("data", "housesDetails");
-   
     window.scrollTo({ top: 0, behavior: "smooth" });
+
   }
+
+
  
+
+
+
+
+
+
+ 
+  likedHouses: { [houseId: string]: boolean } = {};
   private async loadData(cacheKey: string, property: string): Promise<void> {
-    console.log(`Polling started for ${cacheKey}...`); 
+    console.log(`Polling started for ${cacheKey}...`);
+
+  
+
+
     while (true) {
       try {
+
         const data = await this.indexeddbService.getDecriptedData(cacheKey);
-  
+
         if (Array.isArray(data) && data.length > 0) {
           if (property === "housesDetails") {
             this.housesDetails = data;
+
           }
-          break; 
+          break;
         }
       } catch (error) {
         console.error(`Error retrieving data for ${cacheKey}:`, error);
       }
-  
-      await this.delay(1000); // Wait 1 second before trying again
+
+      await this.delay(1000);
     }
-    console.log(`Polling stopped for ${cacheKey}.`); // Log when polling stops
+    console.log(`Polling stopped for ${cacheKey}.`);
   }
-  
+
   private delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-  
+
   @HostListener("window:scroll", [])
   debounceScroll = this.debounce(async () => {
     const scrollPosition = window.innerHeight + window.scrollY;
@@ -102,18 +123,23 @@ export class HomeComponent implements OnInit {
 
   loadHouseData(): void {
     const cacheKey = "data";
-    this.isLoading = true;
+   
     this.pageNumber = Number(sessionStorage.getItem("lastId"));
-   
-   
-    this.houseDataService.getHousesByLocation(this.pageNumber, this.pageSize).subscribe({
-      next: (response) => {
-      
-        if (response.success && response.data.length > 0)
-          {
 
-            const lowestId = Math.min(...response.data.map((item: { house: { id: any; }; }) => item.house.id));
-            sessionStorage.setItem("lastId", lowestId.toString())
+    let userToken='';
+    var _token = localStorage.getItem('v');
+    if(_token){
+      userToken = JSON.parse(_token).token;
+    }
+
+    this.houseDataService.getHousesByLocation(this.pageNumber, this.pageSize, userToken).subscribe({
+      next: (response) => {
+
+
+        if (response.success && response.data.length > 0) {
+
+          const lowestId = Math.min(...response.data.map((item: { house: { id: any; }; }) => item.house.id));
+          sessionStorage.setItem("lastId", lowestId.toString())
 
           this.housesDetails.push(...response.data);
 
@@ -137,12 +163,16 @@ export class HomeComponent implements OnInit {
       },
     });
   }
-
+  
+  userSavedhouseIds: string[] = []; // should be fetched from backend or service
   toggleLike(houseId: string): void {
     this.houseDataService.AddUserSelectionPost(houseId).subscribe({
       next: () => {
-        this.likedHouses[houseId] = !this.likedHouses[houseId];
-        console.log(`House ID: ${houseId}, Liked: ${this.likedHouses[houseId]}`);
+        // Update local state after successful request
+        const house = this.housesDetails.find(h => h.house.houseId === houseId);
+        if (house) {
+          house.isLiked = !house.isLiked;
+        }
       },
       error: (err) => {
         if (err.status === 401) {
@@ -153,6 +183,17 @@ export class HomeComponent implements OnInit {
       },
     });
   }
+  
+  // toggleLike(houseId: string) {
+  //   const index = this.userSavedhouseIds.indexOf(houseId);
+  //   if (index > -1) {
+  //     this.userSavedhouseIds.splice(index, 1);
+  //   } else {
+  //     this.userSavedhouseIds.push(houseId);
+  //   }
+
+  //   // Save to backend or localStorage if needed
+  // }
 
   filterHouses(city: string): HouseDetail[] {
     const threeDaysAgo = new Date();
@@ -165,18 +206,14 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  getShortDescription(description: string): string {
-    return description.length > this.maxDescriptionLength
-      ? `${description.slice(0, this.maxDescriptionLength).trim()}...`
-      : description;
-  }
 
-  navigateTo(data: any, targetRoute: string, id:string): void {
+
+  navigateTo(data: any, targetRoute: string, id: string): void {
     this.dataService.setData(data);
     this.dataService.navToWithId(targetRoute, id);
   }
 
-  
+
 
 
 }

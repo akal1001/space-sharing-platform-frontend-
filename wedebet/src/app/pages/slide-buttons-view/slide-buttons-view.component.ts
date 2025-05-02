@@ -55,22 +55,29 @@ export class SlideButtonsViewComponent implements OnInit {
   
 
   private async CreateHouseTypes(response: any): Promise<any[]> {
-   
     if (!response || !Array.isArray(response)) {
-      console.error('Invalid response data:', response);
-      return []; 
+        console.error('Invalid response data:', response);
+        return [];
     }
+
     const uniqueHouseTypes = new Map();
+
     response.forEach((item: { house: { houseTypeId: any; header: any } }) => {
-      const houseTypeId = item.house.houseTypeId;
-      const header = item.house.header;
-      if (!uniqueHouseTypes.has(houseTypeId)) {
-        uniqueHouseTypes.set(houseTypeId, { houseTypeId, header });
-      }
+        const houseTypeId = item.house.houseTypeId;
+        const header = item.house.header;
+        
+        if (!uniqueHouseTypes.has(houseTypeId)) {
+            uniqueHouseTypes.set(houseTypeId, { houseTypeId, header });
+        }
     });
-    console.log("t " + uniqueHouseTypes)
-    return Array.from(uniqueHouseTypes.values());
-  }
+
+    // Convert to an array and prepend the default "all" option
+    const houseTypesArray = Array.from(uniqueHouseTypes.values());
+    //houseTypesArray.unshift({ houseTypeId: "all", header: "Full View" });
+
+    return houseTypesArray;
+}
+
   
     
   // private delay(ms: number): Promise<void> {
@@ -79,12 +86,9 @@ export class SlideButtonsViewComponent implements OnInit {
   
 
   onClicked(option: any, event: Event): void {
-    const target = event.target as HTMLButtonElement;
-    if(option =="all"){
-      location.reload();
-      return;
-    }
     
+    const target = event.target as HTMLButtonElement;
+       
     if (!target) {
       console.error('Event target is not a valid button element');
       return;

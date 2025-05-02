@@ -39,6 +39,22 @@ export class DataService {
     this.filtterDataSubject.next(data);
   }
 
+  clearFilterData() {
+    this.filtterDataSubject.next(null);
+  }
+
+
+  private searchDataSubject = new ReplaySubject<any>(1);
+  getSearchInputData$ = this.searchDataSubject.asObservable();
+
+  setSearchInputData(data: any) {
+    this.searchDataSubject.next(data);
+  }
+
+  clearSearchInputData() {
+    this.searchDataSubject.next(null);
+  }
+
 
   //new post found 
   private newPostCountSubject = new ReplaySubject<any>(1);

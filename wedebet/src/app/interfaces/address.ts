@@ -10,4 +10,5 @@ export interface Address {
     state?: string;
     street?: string;
     zipCode?: string;
+    Country_Translated_English?:string;
 }

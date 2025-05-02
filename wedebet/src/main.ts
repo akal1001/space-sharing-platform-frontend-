@@ -16,4 +16,5 @@ bootstrapApplication(AppComponent, {
 })
   .catch((err) => console.error(err));
 
-  
+  //to ingnor console.log() 
+  //console.log = () => {};

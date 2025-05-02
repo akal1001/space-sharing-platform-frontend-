@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../DataServices/data.service';
-import { CurrencyPipe, DatePipe, NgIf } from '@angular/common';
+import { CurrencyPipe, DatePipe, NgClass, NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
 import { HouseDataService } from '../../services/houseData.service';
 import { HouseDetail } from '../../interfaces/house-detail';
 import { CachedData, IndexeddbService } from '../../services/indexeddb.service';
 import { FormsModule } from '@angular/forms';
+import { Cryptokey_Config } from '../../app.config';
+import { filter } from 'rxjs';
+import { Translator } from '../../Classes/translator';
 @Component({
   selector: 'app-filter-view',
   standalone: true,
-  imports: [NgFor, NgIf, FormsModule, DatePipe, CurrencyPipe],
+  imports: [NgFor, NgIf, FormsModule,NgClass, DatePipe, CurrencyPipe],
   templateUrl: './filter-view.component.html',
   styleUrl: './filter-view.component.css'
 })
@@ -23,69 +26,73 @@ export class FilterViewComponent implements OnInit {
   likedHouses: { [key: string]: boolean } = {}; // Object to track liked status
   maxDescriptionLength = 100;
 
+  translator:Translator = new Translator();
+
+  isLoading:boolean = false;
   constructor(private dataService: DataService, private indexeddbService: IndexeddbService, private housedataservece: HouseDataService) {}
   ngOnInit(): void {
-
+    this.isLoading = true;
+    this.filteredHousesdetails = [];
     this.dataService.getFilterData$.subscribe({
       next: (mes) => {
-       
+         
         this.loadHouseByTypeIdData(mes.houseTypeId)
         this.houseTypeName = mes.houseTypeName;
+
+
       }, error(err) {
         console.log(JSON.stringify(err.error))
       },
     })
-    this.attachDropdownListener();
-    this.backbutton();
+  // this.dataService.clearFilterData();
+   
+
+  this.dataService.getSearchInputData$.pipe(
+    filter(mes => !!mes && typeof mes === 'object' && !!mes.country)
+  )
+  .subscribe({
+    next: async (mes) => {
+      this.dataService.clearFilterData();
+
+      if (mes.city === undefined) {
+        mes.city = "undefined";
+      }
+
+      const searchdata = {
+        country: mes.country,
+        region: mes.region,
+        city: mes.city
+      };
+      const encryptedData = this.indexeddbService.encrypt(
+        JSON.stringify(searchdata),
+        Cryptokey_Config.key
+      );
+      const maxIdData = await this.indexeddbService.getEncryptedData('maxId');
+      const loadRequest = {
+        maxId: maxIdData?.data,
+        location: encryptedData,
+        token:''
+      };
+
+      this.fetchHouseData(loadRequest);
+      //alert("feach requestd");
+    },
+    error(err) {
+      console.log(JSON.stringify(err.error));
+    }
+  });
+
+    //this.dataService.clearSearchInputData();
+    
   }
 
-  attachDropdownListener() {
-
-    const dropdown = document.querySelector('.filter-dropdown') as HTMLSelectElement;
-    if (dropdown) {
-      dropdown.addEventListener('change', (event: Event) => {
-        const selectedValue = (event.target as HTMLSelectElement).value;
-        console.log('Selected value:', selectedValue);
-      });
-    } else {
-      console.error('Dropdown element not found.');
-    }
-
-  }
-
-  GetSelectedValue(event: Event) {
-    const selectedValue = (event.target as HTMLSelectElement).value;
-
-    // Perform sorting based on the selected value
-    if (selectedValue === 'priceLowToHigh') {
-      this.filteredHousesdetails.sort((a, b) => a.house.price - b.house.price);
-    } else if (selectedValue === 'priceHighToLow') {
-      this.filteredHousesdetails.sort((a, b) => b.house.price - a.house.price);
-    }
-    else if (selectedValue === 'all') {
-
-      this.resetToDefaultOrder();
-    }
-
-    console.log('Sorted houses:', this.filteredHousesdetails);
-  }
-
-  resetToDefaultOrder() {
-    this.dataService.getFilterData$.subscribe({
-      next: (mes) => {
-        this.loadHouseByTypeIdData(mes.houseTypeId)
-        this.houseTypeName = mes.houseTypeName;
-      }, error(err) {
-        console.log(JSON.stringify(err.error))
-
-      },
-    })
+  ngOnDestroy(){
+    this.filteredHousesdetails = [];
   }
 
   cachedDatas:any[]=[];
   loadHouseByTypeIdData(houseTypeId: any): void {
-
-
+    
     this.indexeddbService.getDecriptedData('data')
     .then((data: CachedData | any) => {
       if (!data) {
@@ -94,6 +101,15 @@ export class FilterViewComponent implements OnInit {
       }
   
       let filteredHouses: any[] = [];
+
+      if(houseTypeId == 'all'){
+       
+        filteredHouses = data;
+        console.log("filterdd House + " + filteredHouses)
+        this.filteredHousesdetails = filteredHouses;
+        this.isLoading = false;
+        return;
+      }
   
       if (Array.isArray(data)) {
         // If data is an array
@@ -112,6 +128,7 @@ export class FilterViewComponent implements OnInit {
       }
   
       this.filteredHousesdetails = filteredHouses;
+      this.isLoading = false;
       return filteredHouses;
     })
     .catch((error) => {
@@ -140,12 +157,7 @@ export class FilterViewComponent implements OnInit {
 
  
 
-  getShortDescription(description: string): string {
-    if (description.length > this.maxDescriptionLength) {
-      return description.slice(0, this.maxDescriptionLength).trim() + '...';
-    }
-    return description;
-  }
+ 
 
   toggleLike(houseId: string): void {
     // Check if the user is logged in through the service
@@ -179,5 +191,30 @@ export class FilterViewComponent implements OnInit {
       console.error('Back button element not found.');
     }
   }
+  
+
+
+
+
+
+  private  fetchHouseData(loadRequest: { maxId: string; location: string }): void {
+    
+  
+    this.housedataservece.fetchHouseDataByLocation(loadRequest).subscribe({
+      next: async (response) => {
+
+       this.filteredHousesdetails = response.data;
+        const lowestId = Math.min(...response.data.map((item: { house: { id: number } }) => item.house.id));
+        sessionStorage.setItem("lastId", lowestId.toString());
+        this.isLoading = false;
+        
+      },
+      error: (error) => {
+        console.error('Error loading house data:', error);
+        //this.isLoading = false;
+      },
+    });
+  }
+
   
 }

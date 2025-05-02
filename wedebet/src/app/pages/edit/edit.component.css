@@ -20,18 +20,7 @@
     gap: 20px;
   }
   
-  .form-section {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-section h2 {
-    margin-bottom: 10px;
-    color: #555;
-  }
-  
+
   label {
     display: flex;
     flex-direction: column;
@@ -112,3 +101,6 @@
     background-color: #45a049;
   }
   
+
+
+ 

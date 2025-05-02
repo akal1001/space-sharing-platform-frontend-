@@ -4,7 +4,7 @@
     <!-- Property Header Group -->
     <section class="form-section">
       <h3>Property Information</h3>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="header">Header:</label>
         <select id="header" name="header" [(ngModel)]="property.HouseTypeId" required>
           <option value="" disabled>Select a property type</option>
@@ -12,21 +12,71 @@
             {{ option.houseTypeName }}
           </option>
         </select>
-      </div>
+      </div> -->
 
-      <div *ngIf="property.HouseTypeId === '812828b7f3214274a1515e54f6446072'" class="form-group">
+      <!-- <div *ngIf="property.HouseTypeId === '812828b7f3214274a1515e54f6446072'" class="form-group">
         <label for="type">Enter property type:</label>
-        <input type="text" id="type" name="type" [(ngModel)]="property.HouseTypeName" required />
+        <input type="text"  [formControl]="searchControl" (input)="sharedInputValidator.onInputChange($event, 25, 'property_type')" id="type" name="type" [(ngModel)]="property.HouseTypeName" required />
+        <div *ngIf="submitted && !property.HouseTypeName" class="text-danger">
+          Property type is required.
+        </div>
+        <ul *ngIf="(headerOptions | async) && displayOptions">
+          <li *ngFor="let option of headerOptions | async" (click)="onOptionSelected(option)">
+            {{ option }}
+          </li>
+        </ul>
+        <div *ngIf="sharedInputValidator.exceededLimits['property_type']" class="text-danger">Exceeds maximum length!</div>
+        <div *ngIf="submitted && !property.HouseTypeName" class="text-danger">Property type is required.</div>
+      </div> -->
+      <!-- *ngIf="property.HouseTypeId === '812828b7f3214274a1515e54f6446072'" -->
+      <div class="form-group">
+        <label for="type">Title of your post</label>
+        <input type="text"
+               id="type"
+               name="type"
+               class="form-control"
+               [formControl]="headerSrchControl"
+               [(ngModel)]="property.HouseTypeName"
+               (focus)="headerdisplayOptions = true"
+               (input)="sharedInputValidator.onInputChange($event, 30, 'property_type')"
+               autocomplete="off"
+               required />
+      
+        <ul *ngIf="(headerFilteredOptions | async)?.length && headerdisplayOptions" class="dropdown-list">
+          <li *ngFor="let option of headerFilteredOptions | async"
+              (click)="onHeaderOptionSelected(option)">
+            {{ option.houseTypeName }}
+          </li>
+        </ul>
+        <ul *ngIf="displayOptions" class="dropdown-list">
+          <li *ngFor="let option of headerFilteredOptions | async"
+              (click)="onHeaderOptionSelected(option)">
+            {{ option.houseTypeName }}
+          </li>
+          <!-- <li *ngIf="(headerFilteredOptions | async)?.length === 0">
+            <em>No matching types found</em>
+          </li> -->
+        </ul>
+        
+      
+        <div *ngIf="sharedInputValidator.exceededLimits['property_type']" class="text-danger">
+          Exceeds maximum length!
+        </div>
         <div *ngIf="submitted && !property.HouseTypeName" class="text-danger">
           Property type is required.
         </div>
       </div>
+      
+      
+
+
+
 
       <div class="form-group">
         <label for="price">Price:</label>
         <input
           type="number"
-          (input)="sharedInputValidator.onInputChange($event, 5, 'price')"
+          (input)="sharedInputValidator.onInputChange($event, 10, 'price')"
           id="price"
           name="price"
           [(ngModel)]="property.Price"
@@ -52,18 +102,19 @@
     <section class="form-section">
       <h3>Address Information</h3>
       <div class="form-group">
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" (input)="sharedInputValidator.onInputChange($event, 50, 'address')" [(ngModel)]="property.Street" required />
+        <label for="address">Area/Neighborhood (Optional)</label>
+        <input type="text" id="address" name="address" (input)="sharedInputValidator.onInputChange($event, 50, 'address')" [(ngModel)]="property.Street" />
         <div *ngIf="sharedInputValidator.exceededLimits['address']" class="text-danger">Exceeds maximum length!</div>
-        <div *ngIf="submitted && !property.Street" class="text-danger">Address is required.</div>
+        <!-- <div *ngIf="submitted && !property.Street" class="text-danger">Address is required.</div> -->
       </div>
 
       <div>
-        <label for="country">Country:</label>
+        <label for="country">Country</label>
         <input 
           type="text" 
           id="country" 
           name="country" 
+         
           (input)="sharedInputValidator.onInputChange($event,15,'country')" 
           [formControl]="searchControl" 
           [(ngModel)]="property.Country" 
@@ -83,7 +134,7 @@
       
 
       <div class="form-group">
-        <label for="city">City:</label>
+        <label for="city">City</label>
         <input type="text" id="city" name="city" (input)="sharedInputValidator.onInputChange($event, 15, 'city')" [(ngModel)]="property.City" required />
         <div *ngIf="sharedInputValidator.exceededLimits['city']" class="text-danger">Exceeds maximum length!</div>
         <div *ngIf="submitted && !property.City" class="text-danger">City is required.</div>
@@ -101,7 +152,7 @@
     <section class="form-section">
       <h3>Contact Information</h3>
       <div class="form-group">
-        <label for="phone">Phone Number:</label>
+        <label for="phone">Phone Number</label>
         <input
           type="tel"
           id="phone"
@@ -120,7 +171,7 @@
   <section class="form-section">
     <h3>Image Upload</h3>
     <div class="form-group">
-      <label for="fileInput" class="upload-button">Upload Image:</label>
+      <label for="fileInput" class="upload-button">Upload Image</label>
       <input
         type="file"
         id="fileInput"
@@ -130,7 +181,7 @@
         class="file-input"
         required
       />
-      <p *ngIf="isUploading" class="loading-message">Image is uploading...</p>
+      <p *ngIf="isUploading" class="loading-message">Uploading...</p>
 
       <div class="image-container">
         <div *ngFor="let img of uploadedurls">
@@ -170,6 +221,10 @@
 
       <p *ngIf="submitted && !propertyForm.form.valid" class="text-danger">Please fill out the form correctly before submitting.</p>
     </div>
-    <p>{{ _message }}</p>
+    <div>
+      <!-- <p [style.color]="isSuccess ? 'green' : 'red'">{{ isSuccess }}</p> -->
+      <p [style.color]="isSuccess ? 'green' : 'red'">{{ _message }}</p>
+    </div>
+   
   </form>
 </div>

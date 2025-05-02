@@ -30,4 +30,5 @@ export interface House {
      contact?: Contact
      address?: Address;
      houseImageURL?: string;
+    
 }

@@ -3,87 +3,80 @@
   <!-- <div class="menu-container">
     <app-side-menu></app-side-menu>
   </div> -->
-  <div class="slideContainer" style="padding-top: 40px; padding-bottom: 40px;">
+  
+  <div class="slideContainer" style="padding-top: 30px; padding-bottom: 20px">
     <app-slide-buttons-view></app-slide-buttons-view>
   </div>
 
-  <div class="home-container">
-    <!-- <div *ngIf="isLoading" class="loading">
-      <h3>loading...</h3>
-     
-    </div> -->
-    <div *ngIf="housesDetails.length <=0" class="loading">
-      {{"loading..."}}
-      <h3 >{{prompt}}</h3>
-    </div>
-    <div class="property-item" *ngFor="let d of housesDetails" >
-      <img [src]="d.images[0].imageUrl" (click)="navigateTo(d,'detail', d.house.houseId)" alt="Property Image" class="property-image">
-      <div class="property-info">
-        <p><b>{{ d.house.header }}</b>  </p>
-        <!-- <p>{{ d.address.state }}</p> -->
-        <p>{{ d.address.city }}</p>
-        <!-- <p>{{ d.house.description }}</p> -->
-        <!-- <div class="description-container">
-          <p class="description-text">
-            {{ getShortDescription(d.house.description) }}
-            <span *ngIf="d.house.description.length > maxDescriptionLength" class="more-link">more</span>
-          </p>
-        </div> -->
-        <!-- <p>Posted on: <small>{{ d.house.datePosted| date: 'MMM dd, yyyy, hh:mm a' }}</small></p> -->
-        <p>Posted on: <small>{{ d.house.datePosted| date: 'MMM dd, yyyy' }}</small></p>
-        <!-- <i class="fas fa-heart"></i> -->
-        <div class="property-meta">
-          <span class="property-images">
-            <!-- <i class="fas fa-camera"></i>  -->
-            {{ d.images.length }} Photos
-          </span>
-          <span class="property-images" id="{{d.house.houseId}}" (click)="toggleLike(d.house.houseId)">
-            <i [class]="likedHouses[d.house.houseId] ? 'fas fa-heart liked' : 'far fa-heart not-liked'"></i>
-          </span>
-          
-          <span class="property-price">
-            {{ d.house.price | currency: 'USD' : 'symbol' : '1.0-0' }}
-          </span>
-        </div>
-
-        
-      </div>
+  <!-- <div class="slideWrapper">
+    <button class="arrow arrow-left" (click)="slideLeft()">&lt;</button>
+  
+    <div class="slideContainer" #slider>
+      <app-slide-buttons-view></app-slide-buttons-view>
     </div>
   
-  <!-- <div class="property-item-new" *ngFor="let d of housesDetails" >
-    <img [src]="d.images[0].imageUrl" (click)="navigateTo(d,'detail')" alt="Property Image" class="property-image-new">
-    <div class="property-info">
-      <h4>{{ d.house.header }}</h4>
-    
-      <p>{{ d.address.city }}</p>
-   
-      <div class="description-container">
-        <p class="description-text">
-          {{ getShortDescription(d.house.description) }}
-          <span *ngIf="d.house.description.length > maxDescriptionLength" class="more-link">more</span>
-        </p>
-      </div>
-      
-      <p>Posted on: <small>{{ d.house.datePosted| date: 'MMM dd, yyyy' }}</small></p>
-     
-      <div class="property-meta">
-        <span class="property-images">
-         
-          {{ d.images.length }} Photos
-        </span>
-        <span class="property-images" id="{{d.house.houseId}}" (click)="toggleLike(d.house.houseId)">
-          <i [class]="likedHouses[d.house.houseId] ? 'fas fa-heart liked' : 'far fa-heart not-liked'"></i>
-        </span>
-        
-        <span class="property-price">
-          {{ d.house.price | currency: 'USD' : 'symbol' : '1.0-0' }}
-        </span>
-      </div>
-
-      
-    </div>
+    <button class="arrow arrow-right" (click)="slideRight()">&gt;</button>
   </div> -->
   
-   
-  </div>
   
+
+ 
+  
+
+   <div *ngIf="isLoading===true" class="loading">
+
+    <h3 >{{"loading"}}</h3>
+  </div>
+  <div *ngIf="isLoading===false" class="home-container">
+    <div class="property-item" *ngFor="let d of housesDetails">
+      
+      <img 
+        [src]="d.images[0].imageUrl" 
+        (click)="navigateTo(d, 'detail', d.house.houseId)" 
+        alt="Property Image" 
+        class="property-image"
+      />
+  
+      <div class="property-info" >
+        <div class="property-header" >
+          <h3 class="property-title">{{ d.house.header}}</h3>
+          <div class="property-actions">
+            <span class="property-price">{{ "$ " + d.house.price }}</span>
+            <i
+              id="{{ d.house.houseId }}"
+              (click)="toggleLike(d.house.houseId)"
+              [ngClass]="{
+                'fas': d.isLiked,
+                'far': !d.isLiked,
+                'fa-heart': true,
+                'liked': d.isLiked,
+                'not-liked': !d.isLiked,
+                'like-icon': true
+              }"
+            ></i>
+          </div>
+          
+        </div>
+  
+        <div class="description-container">
+          <p *ngIf="d.house.description.length >translator.getMaxDescriptionLength(d.house.description)" class="description-text">
+           
+            {{ translator.getShortDescription(d.house.description) }}
+            <span 
+              *ngIf="d.house.description.length > translator.getMaxDescriptionLength(d.house.description)" 
+              class="more-link"
+              (click)="navigateTo(d, 'detail', d.house.houseId)">
+              more
+            </span>
+          </p>
+          <p class="property-address">
+            {{ d.address.street }},
+            {{ d.address.city }},
+            {{ d.address.state || 'N/A' }}
+           
+          </p>
+        </div>
+      </div>
+  
+    </div>
+  </div>

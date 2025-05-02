@@ -3,13 +3,15 @@
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" [(ngModel)]="loginModel.username" name="username" required>
+        <input type="text" id="username" [(ngModel)]="loginModel.username" name="username" (input)="sharedInputValidator.onInputChange($event,20,'username')" required>
       </div>
+      <div *ngIf="sharedInputValidator.exceededLimits['username']" class="text-danger">Exceeds maximum length!</div>
       
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" [(ngModel)]="loginModel.userpassword" name="password" required>
+        <input type="password" id="password" [(ngModel)]="loginModel.userpassword" name="password" (input)="sharedInputValidator.onInputChange($event,20,'password')" required>
       </div>
+      <div *ngIf="sharedInputValidator.exceededLimits['password']" class="text-danger">Exceeds maximum length!</div>
       
       <button class="a-btn1" type="submit" [disabled]="!loginForm.valid">Login</button>
     </form>

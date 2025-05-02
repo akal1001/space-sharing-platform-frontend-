@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { APP_CONFIG } from '../app.config';
 import { HttpClient } from '@angular/common/http';
-import { catchError, from, Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { catchError, count, from, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { HouseDataRequest } from '../interfaces/house-data-request';
 import { ApikeyusertokenService } from './apikeyusertoken.service';
 import { IndexeddbService } from './indexeddb.service';
@@ -30,6 +30,27 @@ export class HouseDataService {
       })
     );
   }
+
+
+  fetchLocationWithMaxIdManually(Country: any, region: any, city: any): Observable<any> {
+    const countryValue = Country?.name || Country;
+    const regionValue = region?.name || region;
+    const cityValue = city?.name || city;
+    
+    return this.apikeyusertokenService.createHeaders(false).pipe(
+      switchMap((headers) => {
+        const url = `${this.apiUrl}locationWithMaxId_Manually?Country=${encodeURIComponent(countryValue)}&region=${encodeURIComponent(regionValue)}&city=${encodeURIComponent(cityValue)}`;
+        return this.httpClient.get<any>(url, { headers });
+      }),
+      catchError((error) => {
+        console.error('Error fetching location:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+    
+  
+  
 
   fetchHouseDataByLocation(loadRequest: { maxId: string; location: string }): Observable<any> {
     return this.apikeyusertokenService.createHeaders(false).pipe(
@@ -177,7 +198,7 @@ export class HouseDataService {
       })
     );
   }
-  getHousesByLocation(pageNumber: number, pageSize: number): Observable<any> {
+  getHousesByLocation(pageNumber: number, pageSize: number, token:string): Observable<any> {
    
     return from(this.indexeddbService.getDecriptedData('location')).pipe(
       switchMap((data) => {
@@ -185,7 +206,7 @@ export class HouseDataService {
         
           const storedLocation = data; // Assuming `data` has a `data` property
          
-          return this.fetchHouses(storedLocation, pageNumber, pageSize);
+          return this.fetchHouses(storedLocation, pageNumber, pageSize, token);
        
         } else {
           console.warn('No data found in IndexedDB cache.');
@@ -199,9 +220,9 @@ export class HouseDataService {
     );
   }
   
-  private fetchHouses(location: any, pageNumber: number, pageSize: number): Observable<any> {
+  private fetchHouses(location: any, pageNumber: number, pageSize: number, token:string): Observable<any> {
     
-    const url = `${this.apiUrl}getHoussByLocationPage?lastId=${pageNumber}&pageSize=${pageSize}`;
+    const url = `${this.apiUrl}getHoussByLocationPage?lastId=${pageNumber}&pageSize=${pageSize}&token=${token}`;
     return this.apikeyusertokenService.createHeaders(false).pipe(
       switchMap((headers) => {
         return this.httpClient.post<any>(url, location, { headers });

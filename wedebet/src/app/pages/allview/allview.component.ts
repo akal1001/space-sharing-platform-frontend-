@@ -3,6 +3,7 @@ import { HouseDataService } from '../../services/houseData.service';
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
 import { IndexeddbService } from '../../services/indexeddb.service';
+import { Translator } from '../../Classes/translator';
 @Component({
   selector: 'app-allview',
   standalone: true,
@@ -12,7 +13,7 @@ import { IndexeddbService } from '../../services/indexeddb.service';
 })
 export class AllviewComponent implements OnInit{
 
-    constructor( private housedataserveice:HouseDataService,  private indexeddbService: IndexeddbService) {
+    constructor(private indexedDbService: IndexeddbService, private housedataserveice:HouseDataService,  private indexeddbService: IndexeddbService) {
    
      }
   data:any;   
@@ -27,39 +28,30 @@ export class AllviewComponent implements OnInit{
   }
   toggleExpand(item: any) {
     item.expanded = !item.expanded;
+  
   }
   GetCountryRegionCity(country: any, state: any, city: any) {
-    this.indexeddbService.deleteCacheData("location")
-    this.indexeddbService.deleteCacheData("maxId")
-    //this.indexeddbService.deleteCacheData("Type")
+    var tr = new Translator();
+ 
+    if(tr.isAmharicString(country.name)){
+      country = tr.countryMap[country.name];
+    }
+   
+    this.housedataserveice.fetchLocationWithMaxIdManually(country,state,city).subscribe(response=>{
+     
+      console.log("response : " + JSON.stringify(response))
+      sessionStorage.setItem("allLocations",JSON.stringify(response.locations));
 
-    sessionStorage.removeItem("IslocationChanged");
-    this.housedataserveice.GetHouseMaxId().subscribe({
-      next: (apiResponse) => {
-        // Now create the response object after getting the max ID
-        const response = {
-          success: true,
-          data: apiResponse.data, // Assuming API response structure
-          location: {
-            country: country.name,
-            region: state.name,
-            city: city.name
-          }
-        };
+      this.indexedDbService.saveDataAndEncrypted('location', response.location);
+      this.indexedDbService.saveDataAndEncrypted('maxId', response.data);
 
-  
-        console.log(response);
 
-        this.indexeddbService.saveDataAndEncrypted("location", response.location);
-        this.indexeddbService.saveDataAndEncrypted("maxId", response.data);
-      //  this.indexeddbService.saveDataAndEncrypted("Type", types);
-       
-        sessionStorage.setItem("IslocationChanged","true")
-      },
-      error: (err) => {
-        console.error("Error fetching max ID:", err);
-      }
-    });
+      sessionStorage.setItem("locChanged","yes");
+      
+    })
   }
-  
+
+
+
+
 }

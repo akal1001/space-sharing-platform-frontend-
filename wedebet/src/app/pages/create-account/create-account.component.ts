@@ -4,6 +4,7 @@ import { FormsModule, FormBuilder, ReactiveFormsModule, FormGroup, Validators } 
 import { NgFor, NgIf, NgClass } from '@angular/common';
 import { AccountService } from '../../services/account.service';
 import { Router } from '@angular/router';
+import { SharedInputValidator } from '../../services/SharedInputValidator';
 
 @Component({
   selector: 'app-create-account',
@@ -24,7 +25,7 @@ export class CreateAccountComponent {
   isSuccess: boolean = false;
 
   messageClass: string = '';
-  constructor(private accountService: AccountService, private router:Router) {
+  constructor(public sharedInputValidator:SharedInputValidator,private accountService: AccountService, private router:Router) {
 
   }
 

@@ -13,6 +13,7 @@ import { EditComponent } from './pages/edit/edit.component';
 import { MainComponent } from './pages/main/main.component';
 import { FilterViewComponent } from './pages/filter-view/filter-view.component';
 import { AllviewComponent } from './pages/allview/allview.component';
+import { AmeharicComponent } from './pages/ameharic/ameharic.component';
 
 
 
@@ -30,6 +31,8 @@ export const routes: Routes = [
    { path: 'account', component: AccountComponent },
    { path: 'edit', component: EditComponent },
    { path: 'filterView', component: FilterViewComponent },
-   { path: 'allview', component: AllviewComponent }
+   { path: 'allview', component: AllviewComponent },
+   { path: 'ameharic', component: AmeharicComponent }
+   
  ];
  

@@ -1,72 +1,66 @@
 
-<!-- <div class="home-container" >
-  <button class="back-button" >
-    &#8592;
-  </button>
-  <h1>{{ houseTypeName }}</h1>
-</div> -->
+<div *ngIf="isLoading===true" class="loading">
 
-  <!-- <div class="filter-container header">
-   
-    <div class="header-content">
-      <button class="back-button" >
-        &#8592;
-      </button>
-      <h1>{{ houseTypeName }}</h1>
-      <p class="subtitle">Explore the best houses based on your selection</p>
-      <select class="filter-dropdown" (change)="GetSelectedValue($event)">
-        <option value="all">All</option>
-        <option value="priceLowToHigh">Price: Low to High</option>
-        <option value="priceHighToLow">Price: High to Low</option>
-      
-      </select>
-    </div>
-  </div>   -->
+  <h3 >{{"loading"}}</h3>
+</div>
+<div *ngIf="isLoading===false" class="home-container">
+  <div class="property-item" *ngFor="let d of filteredHousesdetails">
+    
+    <img 
+      [src]="d.images[0].imageUrl" 
+      (click)="navigateTo(d, 'detail', d.house.houseId)" 
+      alt="Property Image" 
+      class="property-image"
+    />
 
+    <div class="property-info" >
+      <div class="property-header" >
+        <h3 class="property-title">{{ d.house.header}}</h3>
+        <div class="property-actions">
+          <span class="property-price">{{ "$ " + d.house.price }}</span>
+          <i
+            id="{{ d.house.houseId }}"
+            (click)="toggleLike(d.house.houseId)"
+            [ngClass]="{
+              'fas': d.isLiked,
+              'far': !d.isLiked,
+              'fa-heart': true,
+              'liked': d.isLiked,
+              'not-liked': !d.isLiked,
+              'like-icon': true
+            }"
+          ></i>
+        </div>
+      </div>
 
-
-
-<div class="home-container">
-  
-  <div class="property-item" *ngFor="let d of filteredHousesdetails" >
-    <img [src]="d.images[0].imageUrl" (click)="navigateTo(d,'detail', d.house.houseId)" alt="Property Image" class="property-image">
-    <div class="property-info">
-      <!-- <h4>{{ d.house.header }}</h4> -->
-      <p><b> {{ d.house.header }}<span class="property-price">{{ "$ " + d.house.price }}</span></b></p> 
-      <!-- <p>{{ d.address.city }}</p> -->
-      <!-- <p>{{ d.house.description }}</p> -->
       <div class="description-container">
-        <p class="description-text">
-          {{ getShortDescription(d.house.description) }}
-          <span *ngIf="d.house.description.length > maxDescriptionLength" class="more-link"(click)="navigateTo(d,'detail', d.house.houseId)">more</span>
+        <p  class="description-text">
+         
+          {{ translator.getShortDescription(d.house.description) }}
+          <span 
+            *ngIf="d.house.description.length > translator.getMaxDescriptionLength(d.house.description)" 
+            class="more-link"
+            (click)="navigateTo(d, 'detail', d.house.houseId)">
+            more
+          </span>
         </p>
-        <p style="font-weight: bold;">
-          {{ d.address.street }}, 
-          {{ d.address.city }}, 
-          {{ d.address.state || 'N/A' }} 
-          {{ d.address.zipCode || '' }}, 
-          {{ d.address.country || 'N/A' }}
+        <p class="property-address">
+          {{ d.address.street }},
+          {{ d.address.city }},
+          {{ d.address.state || 'N/A' }}
+         
         </p>
       </div>
-      <!-- <p>Posted on: <small>{{ d.house.datePosted| date: 'MMM dd, yyyy, hh:mm a' }}</small></p> -->
-   
-      <!-- <i class="fas fa-heart"></i> -->
-      <div class="property-meta">
-        <span class="property-images">
-          <!-- <i class="fas fa-camera"></i>  -->
-          {{ d.images.length }} Photos
-        </span>
-        <p>Posted on: <small>{{ d.house.datePosted| date: 'MMM dd, yyyy' }}</small></p>
-        <span class="property-images" id="{{d.house.houseId}}" (click)="toggleLike(d.house.houseId)">
-          <i [class]="likedHouses[d.house.houseId] ? 'fas fa-heart liked' : 'far fa-heart not-liked'"></i>
-        </span>
-<!--         
-        <span class="property-price">
-          {{ d.house.price | currency: 'USD' : 'symbol' : '1.0-0' }}
-        </span> -->
-      </div>
-
-      
     </div>
+
   </div>
 </div>
+
+
+
+
+
+
+
+
+ 

@@ -30,9 +30,14 @@ export const Somee_Config = {
 }
 
 
+// export const API_key_Config = {
+//   keyName:'X-API-KEY',
+//   value:'my-secret-api-key'
+// }
+
 export const API_key_Config = {
-  keyName:'X-API-KEY',
-  value:'my-secret-api-key'
+  keyName:'x-app-tag',
+  value:'wrx6tU8KyQpUTh5p4fXrFF1aPhOctU87KyQpUTh5p4fXrFF1aPhOctU8'
 }
 
 export const Cryptokey_Config = {
@@ -41,7 +46,7 @@ export const Cryptokey_Config = {
 }
 
 export const OpneAI_API_Config = {
-  key:'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',
+  key:'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',
   apiUrl :'https://api.openai.com/v1/chat/completions'
 }
 

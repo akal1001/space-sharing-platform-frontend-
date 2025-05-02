@@ -159,7 +159,9 @@ body {
 
 @media (min-width: 1024px) {
   .scrollable-container, .image-text-container {
-    margin-left: 190px;
-    margin-right: 190px;
+    margin-left: 180px;
+    margin-right: 180px;
+    margin-bottom: 0;
+   
   }
 }

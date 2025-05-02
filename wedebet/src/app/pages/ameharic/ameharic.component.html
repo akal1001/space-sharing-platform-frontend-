@@ -1,0 +1,18 @@
+<div class="container">
+    <h1>Amharic to Latin Transliteration</h1>
+  
+    <label for="amharicInput">Enter Amharic Text:</label>
+    <input 
+      type="text" 
+      id="amharicInput" 
+      [(ngModel)]="amharicInput" 
+     
+      placeholder="Type Amharic characters"
+      class="form-control" 
+    />
+    <input type="button" (click)="transliterate()" name="convert">
+    <div *ngIf="latinOutput">
+      <p><strong>Latin Representation:</strong> {{ latinOutput }}</p>
+      
+    </div>
+  </div>

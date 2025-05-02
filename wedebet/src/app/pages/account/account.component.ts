@@ -62,7 +62,7 @@ export class AccountComponent implements OnInit {
   MyPosts(): void {
     
     this.isLoading = true;
-    this.housedataSrvice.GetUserPost(this.pageNumber, 15).subscribe({
+    this.housedataSrvice.GetUserPost(this.pageNumber, 300).subscribe({
       next: (response) => {
         this.isLoading = false;
         if (response.data) {
@@ -82,8 +82,19 @@ export class AccountComponent implements OnInit {
 
   logout() {
 
+    sessionStorage.clear();
+    localStorage.clear();
+   
+    
+    this.indexeddbService.deleteCacheData('faveIds').then(() => {
+      console.log('Delete operation completed.');
+    }).catch(error => {
+      console.error('Error during delete operation:', error);
+    });
+    
+
     localStorage.removeItem('v');
-    localStorage.removeItem('_v');
+  
     window.location.reload();
     //this.router.navigate(['/login']);
 
@@ -161,6 +172,9 @@ export class AccountComponent implements OnInit {
   navigateTo(data: any, targetRoute: string, id:string): void {
     this.dataService.setData(data);
     this.dataService.navToWithId(targetRoute, id);
+  }
+  clearLoc(){
+    sessionStorage.removeItem("locChanged")
   }
 
 }

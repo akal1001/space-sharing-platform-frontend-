@@ -5,7 +5,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
 import { DataService } from '../../DataServices/data.service';
-import { SearchResultComponent } from '../search-result/search-result.component';
+
 import { AccountService } from '../../services/account.service';
 import { NavigationService } from '../../services/navigation.service';
 
@@ -15,7 +15,7 @@ import { NavigationService } from '../../services/navigation.service';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NgIf, FormsModule, SearchResultComponent],
+  imports: [NgIf, FormsModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

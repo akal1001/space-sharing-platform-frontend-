@@ -3,9 +3,10 @@
     <form (ngSubmit)="onSubmit()" #accountForm="ngForm">
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" [(ngModel)]="accountModel.username" name="username" required>
+        <input type="text" id="username" [(ngModel)]="accountModel.username" name="username" 
+        required (input)="sharedInputValidator.onInputChange($event,20,'username')">
       </div>
-      
+      <div *ngIf="sharedInputValidator.exceededLimits['username']" class="text-danger">Exceeds maximum length!</div>
       <div class="form-group">
         <label for="email">Email</label>
         <input 
@@ -15,24 +16,29 @@
           name="email" 
           required
           #email="ngModel"
+          (input)="sharedInputValidator.onInputChange($event,20,'email')"
         />
         <div *ngIf="email.invalid && email.touched" class="error-message">
           Please enter a valid email address.
         </div>
       </div>
+      <div *ngIf="sharedInputValidator.exceededLimits['email']" class="text-danger">Exceeds maximum length!</div>
   
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" [(ngModel)]="accountModel.password" name="password" required>
+        <input type="password" id="password" [(ngModel)]="accountModel.password" name="password" required 
+        (input)="sharedInputValidator.onInputChange($event,20,'password')">
       </div>
-  
+      <div *ngIf="sharedInputValidator.exceededLimits['password']" class="text-danger">Exceeds maximum length!</div>
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" [(ngModel)]="accountModel.confirmPassword" name="confirmPassword" required>
+        <input type="password" id="confirmPassword" [(ngModel)]="accountModel.confirmPassword" name="confirmPassword" required
+        (input)="sharedInputValidator.onInputChange($event,20,'confirmPassword')">
         <div *ngIf="accountForm.submitted && accountModel.password !== accountModel.confirmPassword" class="error-message">
           Passwords must match!
         </div>
       </div>
+      <div *ngIf="sharedInputValidator.exceededLimits['confirmPassword']" class="text-danger">Exceeds maximum length!</div>
       
       <button class="a-btn1" type="submit" [disabled]="!accountForm.valid || accountModel.password !== accountModel.confirmPassword">Create</button>
      
