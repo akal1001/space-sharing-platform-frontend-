@@ -732,4 +732,10 @@ export class Translator {
       getMaxDescriptionLength(description: string): number {
         return this.isAmharic(description[0]) ? 90 : 100;
       }
+
+
+      public getTitleClass(header: string): string {
+   
+        return  this.isAmharic(header) ? 'A-title' : 'E-title';
+      }
 }

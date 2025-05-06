@@ -18,10 +18,10 @@
   <!-- Property Details -->
   <div class="property-details">
     <div class="property-info">
-      <p><b>{{ houeseDetail.house.header }}</b>
-        <span class="property-price">{{ "$ " + houeseDetail.house.price }}</span>
-      </p>
-      <p>{{ houeseDetail.house.description }}</p>
+      <h3 [ngClass]="this.translator.getTitleClass(houeseDetail.house.header)">{{ houeseDetail.house.header}}</h3>
+      <span>{{ "$ " + houeseDetail.house.price }}</span>
+    
+      <p class="description-text">{{ houeseDetail.house.description }}</p>
       <p><b>{{ houeseDetail.address.street }}, 
         {{ houeseDetail.address.city }}, 
         {{ houeseDetail.address.state }} 

@@ -1,6 +1,6 @@
-<div class="login-container">
+<div class="inputs-container">
     <h2>Login</h2>
-    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <form (ngSubmit)="onSubmit()" #propertyForm="ngForm">
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" [(ngModel)]="loginModel.username" name="username" (input)="sharedInputValidator.onInputChange($event,20,'username')" required>
@@ -13,7 +13,17 @@
       </div>
       <div *ngIf="sharedInputValidator.exceededLimits['password']" class="text-danger">Exceeds maximum length!</div>
       
-      <button class="a-btn1" type="submit" [disabled]="!loginForm.valid">Login</button>
+     
+      <button
+      type="submit"
+      [disabled]="hasExceededLimits() || !propertyForm.form.valid"
+      [ngClass]="{
+        'btn-primary': !hasExceededLimits() && propertyForm.form.valid,
+        'btn-disabled': hasExceededLimits() || !propertyForm.form.valid
+      }"
+      class="btn">
+      Submit
+    </button>
     </form>
   
     <div class="create-account-option">

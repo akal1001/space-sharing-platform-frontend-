@@ -39,7 +39,7 @@
   
       <div class="property-info" >
         <div class="property-header" >
-          <h3 class="property-title">{{ d.house.header}}</h3>
+          <h3  [ngClass]="this.translator.getTitleClass(d.house.header)">{{ d.house.header}}</h3>
           <div class="property-actions">
             <span class="property-price">{{ "$ " + d.house.price }}</span>
             <i
@@ -70,8 +70,8 @@
             </span>
           </p>
           <p class="property-address">
-            {{ d.address.street }},
-            {{ d.address.city }},
+            {{ d.address.street }}
+            {{ d.address.city }}
             {{ d.address.state || 'N/A' }}
            
           </p>

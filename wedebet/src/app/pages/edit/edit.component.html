@@ -4,7 +4,7 @@
   <form class="edit-form" (submit)="onSave()"  #propertyForm="ngForm" enctype="multipart/form-data">
     <!-- Property Details -->
     <section class="form-section">
-      <h3>Property Information</h3>
+      <!-- <h3>Property Information</h3> -->
       <label>
         Title of your post
         <input class="input" type="text" disabled [(ngModel)]="data.house.header" name="header" (input)="sharedInputValidator.onInputChange($event,30,'header')" />
@@ -25,7 +25,7 @@
 
     <!-- Address Details -->
     <section class="form-section">
-      <h3>Address Information</h3>
+      <!-- <h3>Address Information</h3> -->
       <label>
         Country
         <input class="input" type="text" disabled [(ngModel)]="data.address.country" name="country"(input)="sharedInputValidator.onInputChange($event,20,'country')" />
@@ -50,7 +50,7 @@
 
     <!-- Contact Details -->
     <section class="form-section">
-      <h3>Contact Information</h3>
+      <!-- <h3>Contact Information</h3> -->
       <label>
         Phone
         <input class="input" type="text" [(ngModel)]="data.contact.phone" name="phone" (input)="sharedInputValidator.onInputChange($event,15,'phone')"/>
@@ -60,7 +60,7 @@
 
     <!-- Images -->
     <section class="form-section">
-      <h3>Images</h3>
+      <h3>upload Images</h3>
       <div *ngFor="let img of data.images; let i = index" class="image-container">
         <img class="edit-image" [src]="img.imageUrl" *ngIf="img.imageUrl" alt="Uploaded Image" />
         <button type="button" class="btn-delete" (click)="deleteImage(img._key,img.imageId,i)">Remove</button>
@@ -70,7 +70,7 @@
         <button type="button" class="btn-delete" (click)="deleteImage(img._key,img.imageId,i)">Remove</button>
       </div>
       <label class="upload-label">
-          <p>Image {{uploadMessage}}</p>
+          <p>{{uploadMessage}}</p>
         <input type="file" (change)="onImageChange($event)" multiple class="input upload-input" />
       </label>
   
@@ -84,7 +84,7 @@
     </div>
     <div class="form-actions">
      
-      <button type="submit"  class="btn-save">Save</button>
+      <button  type="submit"  class="btn">Save</button>
     </div>
   </form>
 </div>

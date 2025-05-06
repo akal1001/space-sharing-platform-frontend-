@@ -9,7 +9,7 @@ import { SharedInputValidator } from '../../services/SharedInputValidator';
 @Component({
   selector: 'app-create-account',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf],
+  imports: [FormsModule,NgClass, ReactiveFormsModule, NgIf],
   templateUrl: './create-account.component.html',
   styleUrl: './create-account.component.css'
 })
@@ -63,5 +63,8 @@ export class CreateAccountComponent {
   }
   onNavigateToLogin(): void {
     this.router.navigate(['/login']);
+  }
+  hasExceededLimits(): boolean {
+    return Object.values(this.sharedInputValidator.exceededLimits).some((limitExceeded) => limitExceeded);
   }
 }

@@ -1,50 +1,374 @@
-/* You can add global styles to this file, and also import other style files */
-body{
-    
-    padding: 0%;
-    margin: 0%;
-
-    font-family: 'Noto Sans Ethiopic', sans-serif;
+/*========================
+  Global Styles
+========================*/
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Noto Sans Ethiopic', sans-serif;
 }
 
+/*========================
+  Typography
+========================*/
+h1, h2, h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: gray;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+/* Title Variants */
+.A-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  color: #333;
+  margin: 0;
+  flex: 1;
+  text-align: left;
+}
+
+.E-title {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  color: #333;
+  margin: 0;
+  flex: 1;
+  text-align: left;
+}
+
+.property-price {
+  font-size: 1.1rem;
+  color: black;
+  margin: 0;
+}
+
+.description-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5em;
+  min-height: 3.5em;
+  white-space: normal;
+  text-align: justify;
+  font-family: 'Noto Sans Ethiopic', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  color: gray;
+  flex-grow: 1;
+}
+
+/*========================
+  Form Section
+========================*/
+.form-section {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.inputs-container {
+  max-width: 350px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+}
+
+/*========================
+  Buttons
+========================*/
+.btn,
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* .btn:hover {
+  background-color: #0056b3;
+} */
+
+.btn-primary:hover {
+  background-color: #45a049;
+}
+
+/*========================
+  Validation / Feedback
+========================*/
+.invalid-feedback {
+  color: red;
+  font-size: 0.85em;
+}
+
+.is-invalid {
+  border-color: red;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+}
+
+.error-message,
+.text-danger {
+  color: red;
+  font-weight: bold;
+}
+
+/*========================
+  Like / Dislike
+========================*/
 .liked {
-    color: gray !important;
+  color: gray !important;
+}
+
+.not-liked {
+  color: #ccc !important;
+}
+
+/*========================
+  Loading Spinner
+========================*/
+.loading {
+  display: flex !important;
+  position: absolute;
+  height: 50% !important;
+  width: 100% !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/*========================
+  Misc
+========================*/
+.image-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+
+
+
+.btn-disabled {
+  background-color: #d6d6d6; /* Light gray for disabled state */
+  color: #a0a0a0;          /* Dimmed text color */
+  cursor: not-allowed;     /* Indicate the button is not clickable */
+  width: 100%;
+  height: 40px;
+}
+
+.upload-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+ 
+  border-radius: 8px;
+  margin-top: 20px;
+
+}
+
+
+
+
+/* === Home & Filter Shared Styles === */
+
+.menu-container {
+  display: none;
+}
+
+.home-container {
+  width: 100%;
+  margin: 0;
+  padding: 30px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.property-item {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 1%;
+}
+
+.property-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.property-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+}
+
+.property-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.like-icon {
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.property-info {
+  padding: 3%;
+}
+
+.description-container {
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.property-address {
+  font-weight: bold;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #444;
+  margin-top: 0.5rem;
+}
+
+.more-link {
+  color: rgb(144, 144, 215);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.arrow {
+  display: none; /* hide all by default for now */
+}
+
+/* === Responsive Layouts === */
+
+/* === Responsive Layouts === */
+
+/* Phones - Portrait */
+@media (max-width: 480px) and (orientation: portrait) {
+  .property-item {
+    width: 100%;
   }
-  
-  .not-liked {
-    color: #ccc !important;
+
+  .property-image {
+    height: 250px;
   }
 
-.loading{
-    display: flex !important;
-    height: 50% !important;
-    position: absolute;
-     justify-content: center !important; 
-      align-items: center !important;
-       width: 100% !important;
-        /* height: 50vh; */
-      
-       
+  .description-text {
+    width: 100%;
+  }
+}
 
-    }
-    .text-danger{
-        color: red;
-      }
+/* Phones - Landscape */
+@media (max-width: 844px) and (orientation: landscape) {
+  .property-item {
+    width: calc(32% - 0.5rem);
+  }
+}
 
-      h1, h2, h3 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: gray;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        text-transform: uppercase;
-        font-weight: 300;
-      }
-      
-      .form-section {
-        background-color: #fff;
-        padding: 15px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-      }
-      
+/* Tablets - General Portrait */
+@media (min-width: 481px) and (max-width: 1023px) and (orientation: portrait) {
+  .property-item {
+    width: calc(49.33% - 0.5rem);
+  }
+}
+
+/* Tablets - General Landscape */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
+  .property-item {
+    width: calc(32.33% - 0.5rem);
+  }
+}
+
+/* iPad Pro 11" - Portrait */
+@media (min-device-width: 834px) and (max-device-width: 834px) and (orientation: portrait) {
+  .property-item {
+    width: calc(32.33% - 0.5rem);
+  }
+}
+
+/* iPad Pro - 11"/12.9" - Landscape */
+@media (min-device-width: 834px) and (orientation: landscape),
+       (min-device-width: 1024px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .property-item {
+    width: calc(30.33% - 0.5rem);
+  }
+}
+
+/* Desktop and Up */
+@media (min-width: 1025px) {
+  .menu-container {
+    display: block;
+    position: fixed;
+    height: 100vh;
+    width: 250px;
+    overflow-y: auto;
+  }
+
+  .home-container {
+    margin: 0 200px;
+    gap: 1.2rem;
+    width: auto;
+  }
+
+  .property-item {
+    width: calc(30.33% - 0.5rem);
+  }
+
+  .slideContainer {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../DataServices/data.service';
 import { HouseDataService } from '../../services/houseData.service';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
 import { HouseDetail } from '../../interfaces/house-detail';
 import { House } from '../../interfaces/house';
 import { Address } from '../../interfaces/address';
 import { Contact } from '../../interfaces/contact';
-import { ActivatedRoute } from '@angular/router';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { Translator } from '../../Classes/translator';
+import { of } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 @Component({
   selector: 'app-detail',
   standalone: true,
-  imports: [NgIf,NgFor],
+  imports: [NgIf,NgFor, NgClass],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.css'
 })
@@ -26,44 +28,73 @@ export class DetailComponent implements OnInit {
     images: [] ,
     isLiked:false
   };
-
+translator:Translator = new Translator();
   IsDetailData:boolean = false;
   
     // Placeholder for house data
-  constructor(private dataService: DataService,private route: ActivatedRoute, private housedataserveice:HouseDataService) {
+  constructor(private dataService: DataService,private route: ActivatedRoute,private router: Router, private housedataserveice:HouseDataService) {
 
   }
-  ngOnInit(): void {
-    console.log("house detail empty " + this.houeseDetail.images.length);
+
+  async ngOnInit(): Promise<void> {
     const id = this.route.snapshot.paramMap.get('id');
     console.log('Received ID:', id);
-
-    
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    this.dataService.data$.subscribe(house => {
-     
-     
-      this.houeseDetail = house
-      this.selectedImage = this.houeseDetail.images[0].imageUrl;
-      //console.log(this.houeseDetail)
-
+    // Load data from API first and also try to load from cache concurrently
+    this.loadPostDetails(id);
+    await this.loadFromApi(id);
     
-    })
-
-    this.housedataserveice.houseDetail(id).subscribe(response => 
-      {
-        //alert(response)
-        this.houeseDetail = response.data
-        if(this.houeseDetail.images.length>0){
-          this.IsDetailData = true;
-        }
-          
-       this.selectedImage =  this.houeseDetail?.images[0].imageUrl || null;
-       // this.houeeDetail = data.data;
-       
-       //console.log("house detail widdata " + this.houeseDetail.images.length);
-      });
   }
+  
+  private async loadPostDetails(id: string | null): Promise<void> {
+    // Attempt to load data from local cache
+    this.dataService.data$.pipe(take(1)).subscribe(house => {
+      //alert("call");
+  
+      if (house && house.images?.length > 0) {
+        // If cache data is available, use it immediately
+        console.log("Loaded from local service (cache)", house);
+        this.houeseDetail = house;
+        this.selectedImage = house.images[0].imageUrl;
+        this.IsDetailData = true;
+      } else {
+        console.log("No cached data available.");
+      }
+    });
+  }
+  
+  private loadFromApi(id: string | null): Promise<void> {
+    console.log('Loading post from API:', id);
+  
+    return new Promise((resolve, reject) => {
+      this.housedataserveice.houseDetail(id).subscribe({
+        next: (response) => {
+          if (response?.data && response.data.images?.length > 0) {
+            console.log("Loaded from API", response.data);
+            this.houeseDetail = response.data;
+            this.selectedImage = response.data.images[0].imageUrl;
+            this.IsDetailData = true;
+            resolve();
+          } else {
+            console.warn("No data found. Redirecting to main.");
+            this.router.navigate(['/main']);
+            reject('No data found');
+          }
+        },
+        error: (error) => {
+          console.error("API error. Redirecting to main.", error);
+          this.router.navigate(['/main']);
+          reject('API error');
+        }
+      });
+    });
+  }
+  
+  
+  
+
+
+
   updateMainImage(imageUrl: string) {
     this.selectedImage = imageUrl;
   }

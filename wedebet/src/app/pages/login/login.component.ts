@@ -20,7 +20,7 @@ import { SharedInputValidator } from '../../services/SharedInputValidator';
   standalone: true,
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  imports: [FormsModule,NgIf, ReactiveFormsModule],
+  imports: [FormsModule,NgIf,NgClass, ReactiveFormsModule],
 })
 export class LoginComponent implements OnInit  {
 
@@ -87,6 +87,9 @@ export class LoginComponent implements OnInit  {
         console.log('Login request completed.');
       },
     });
+  }
+  hasExceededLimits(): boolean {
+    return Object.values(this.sharedInputValidator.exceededLimits).some((limitExceeded) => limitExceeded);
   }
 
 

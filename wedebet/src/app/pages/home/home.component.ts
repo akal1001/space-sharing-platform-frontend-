@@ -63,7 +63,10 @@ export class HomeComponent implements OnInit {
   }
 
 
- 
+  // public getTitleClass(header: string): string {
+   
+  //   return  this.translator.isAmharic(header) ? 'A-title' : 'E-title';
+  // }
 
 
 
