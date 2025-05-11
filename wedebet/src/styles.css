@@ -89,6 +89,7 @@ input, textarea {
   padding: 8px;
   box-sizing: border-box;
   border: 1px solid #ddd;
+  color: gray;
 }
 
 textarea {
@@ -306,6 +307,16 @@ textarea {
   .description-text {
     width: 100%;
   }
+  input, textarea {
+    /* width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd; */
+    font-size: large;
+   
+   
+  }
+  
 }
 
 /* Phones - Landscape */
@@ -313,6 +324,16 @@ textarea {
   .property-item {
     width: calc(32% - 0.5rem);
   }
+  input, textarea {
+    /* width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd; */
+    font-size: large;
+   
+   
+  }
+
 }
 
 /* Tablets - General Portrait */
@@ -371,4 +392,26 @@ textarea {
     padding-top: 0;
     padding-bottom: 0;
   }
+}
+
+.thumbnail {
+  width: 150px;
+  height: 100px;
+} 
+
+
+.btn-delete {
+  background-color: #e74c3c;
+  width: auto;
+  height: 30px;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
 }

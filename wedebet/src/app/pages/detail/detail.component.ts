@@ -21,7 +21,7 @@ import { switchMap, take } from 'rxjs/operators';
 export class DetailComponent implements OnInit {
   selectedImage: string | null = null;
   //houeseDetail!: HouseDetail;
-  houeseDetail: HouseDetail = {
+  d: HouseDetail = {
     house: {} as House, 
     address: {} as Address, 
     contact: {} as Contact, 
@@ -54,7 +54,7 @@ translator:Translator = new Translator();
       if (house && house.images?.length > 0) {
         // If cache data is available, use it immediately
         console.log("Loaded from local service (cache)", house);
-        this.houeseDetail = house;
+        this.d = house;
         this.selectedImage = house.images[0].imageUrl;
         this.IsDetailData = true;
       } else {
@@ -71,7 +71,7 @@ translator:Translator = new Translator();
         next: (response) => {
           if (response?.data && response.data.images?.length > 0) {
             console.log("Loaded from API", response.data);
-            this.houeseDetail = response.data;
+            this.d = response.data;
             this.selectedImage = response.data.images[0].imageUrl;
             this.IsDetailData = true;
             resolve();
@@ -89,6 +89,27 @@ translator:Translator = new Translator();
       });
     });
   }
+
+  housesDetails: HouseDetail[] = []; // Initialize as empty array
+  userSavedhouseIds: string[] = []; // should be fetched from backend or service
+  toggleLike(houseId: string): void {
+    this.housedataserveice.AddUserSelectionPost(houseId).subscribe({
+      next: () => {
+        // Update local state after successful request
+        const house = this.housesDetails.find(h => h.house.houseId === houseId);
+        if (house) {
+          house.isLiked = !house.isLiked;
+        }
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          alert("Please log in to access this feature.");
+        } else {
+          console.error("Error while liking the house:", err);
+        }
+      },
+    });
+  }
   
   
   
@@ -100,6 +121,6 @@ translator:Translator = new Translator();
   }
 
   callPhone() {
-    window.location.href = `tel:${this.houeseDetail.contact.phone}`;
+    window.location.href = `tel:${this.d.contact.phone}`;
   }
 }

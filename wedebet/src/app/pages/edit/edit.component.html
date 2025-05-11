@@ -1,78 +1,109 @@
-<div class="edit-container">
+<div class="edit-container upload-form-container">
   <!-- <h1>Edit Property Details</h1> -->
 
   <form class="edit-form" (submit)="onSave()"  #propertyForm="ngForm" enctype="multipart/form-data">
     <!-- Property Details -->
     <section class="form-section">
       <!-- <h3>Property Information</h3> -->
-      <label>
-        Title of your post
-        <input class="input" type="text" disabled [(ngModel)]="data.house.header" name="header" (input)="sharedInputValidator.onInputChange($event,30,'header')" />
-      </label>
-      <div *ngIf="sharedInputValidator.exceededLimits['header']" class="text-danger">Exceeds maximum length!</div>
-      <label>
-        Price
+       <div class="form-group">
+        <label for="header">
+          Title of your post </label>
+          <input class="input" type="text" disabled [(ngModel)]="data.house.header" name="header" (input)="sharedInputValidator.onInputChange($event,30,'header')" />
+       
+        <div *ngIf="sharedInputValidator.exceededLimits['header']" class="text-danger">Exceeds maximum length!</div>
+  
+       </div>
+         
+      <div class="form-group">
+        <label for="price">Price:</label>
         <input class="input" type="number" [(ngModel)]="data.house.price" name="price"  (input)="sharedInputValidator.onInputChange($event,10,'price')" />
-      </label>
+      
       <div *ngIf="sharedInputValidator.exceededLimits['price']" class="text-danger">Exceeds maximum length!</div>
      
-      <label>
-        Description:
-        <textarea class="input" [(ngModel)]="data.house.description" name="description" (input)="sharedInputValidator.onInputChange($event,245,'description')"></textarea>
-      </label>
+  
+      </div>
+      <div class="form-group">
+      <label for="description">Description:</label>
+        
+        <textarea class="input" [(ngModel)]="data.house.description" name="description" rows="4" (input)="sharedInputValidator.onInputChange($event,245,'description')"></textarea>
+      
       <div *ngIf="sharedInputValidator.exceededLimits['description']" class="text-danger">Exceeds maximum length!</div>
+    </div>
     </section>
+   
 
     <!-- Address Details -->
     <section class="form-section">
-      <!-- <h3>Address Information</h3> -->
-      <label>
-        Country
-        <input class="input" type="text" disabled [(ngModel)]="data.address.country" name="country"(input)="sharedInputValidator.onInputChange($event,20,'country')" />
-      </label>
-      <div *ngIf="sharedInputValidator.exceededLimits['country']" class="text-danger">Exceeds maximum length!</div>
-      <label>
-        City
-        <input class="input" type="text" [(ngModel)]="data.address.city" name="city" (input)="sharedInputValidator.onInputChange($event,20,'city')"/>
-      </label>
-      <div *ngIf="sharedInputValidator.exceededLimits['city']" class="text-danger">Exceeds maximum length!</div>
-      <label>
-        State
-        <input class="input" type="text" [(ngModel)]="data.address.state" name="state" (input)="sharedInputValidator.onInputChange($event,20,'state')"/>
-      </label>
-      <div *ngIf="sharedInputValidator.exceededLimits['state']" class="text-danger">Exceeds maximum length!</div>
-      <label>
-        Street
+      <div class="form-group">
+        <label for="address">Area/Neighborhood (Optional)</label>
         <input class="input" type="text" [(ngModel)]="data.address.street" name="street" (input)="sharedInputValidator.onInputChange($event,50,'street')"/>
-      </label>
-      <div *ngIf="sharedInputValidator.exceededLimits['street']" class="text-danger">Exceeds maximum length!</div>
-    </section>
+      
+        <div *ngIf="sharedInputValidator.exceededLimits['street']" class="text-danger">Exceeds maximum length!</div>
+
+      </div>
+      <!-- <h3>Address Information</h3> -->
+       <div class="form-group" >
+        <label for="country">Country</label>
+        <input class="input" type="text" disabled [(ngModel)]="data.address.country" name="country"(input)="sharedInputValidator.onInputChange($event,20,'country')" />
+      
+      <div *ngIf="sharedInputValidator.exceededLimits['country']" class="text-danger">Exceeds maximum length!</div>
+
+       </div>
+
+       <div class="form-group" >
+      
+        <label for="city">City</label>
+        <input class="input" type="text" [(ngModel)]="data.address.city" name="city" (input)="sharedInputValidator.onInputChange($event,20,'city')"/>
+    
+        <div *ngIf="sharedInputValidator.exceededLimits['city']" class="text-danger">Exceeds maximum length!</div>
+       </div>
+
+        <div class="form-group">
+          <label for="state">State/Region:</label>
+     
+          <input class="input" type="text" [(ngModel)]="data.address.state" name="state" (input)="sharedInputValidator.onInputChange($event,20,'state')"/>
+        
+        <div *ngIf="sharedInputValidator.exceededLimits['state']" class="text-danger">Exceeds maximum length!</div>
+    
+        </div>
+    
+           </section>
 
     <!-- Contact Details -->
     <section class="form-section">
       <!-- <h3>Contact Information</h3> -->
-      <label>
-        Phone
-        <input class="input" type="text" [(ngModel)]="data.contact.phone" name="phone" (input)="sharedInputValidator.onInputChange($event,15,'phone')"/>
-      </label>
-      <div *ngIf="sharedInputValidator.exceededLimits['phone']" class="text-danger">Exceeds maximum length!</div>
-    </section>
+       <div class="form-group">
+
+
+        <label for="phone">
+          Phone</label>
+          <input class="input" type="text" [(ngModel)]="data.contact.phone" name="phone" (input)="sharedInputValidator.onInputChange($event,15,'phone')"/>
+        
+        <div *ngIf="sharedInputValidator.exceededLimits['phone']" class="text-danger">Exceeds maximum length!</div>
+  
+       </div>
+
+      
+          </section>
 
     <!-- Images -->
     <section class="form-section">
       <h3>upload Images</h3>
-      <div *ngFor="let img of data.images; let i = index" class="image-container">
-        <img class="edit-image" [src]="img.imageUrl" *ngIf="img.imageUrl" alt="Uploaded Image" />
-        <button type="button" class="btn-delete" (click)="deleteImage(img._key,img.imageId,i)">Remove</button>
+      <div class="form-group">
+        <div *ngFor="let img of data.images; let i = index" class="image-container">
+          <img class="thumbnail" [src]="img.imageUrl" *ngIf="img.imageUrl" alt="Uploaded Image" />
+          <button type="button" class="btn-delete" (click)="deleteImage(img._key,img.imageId,i)">Remove</button>
+        </div>
+        <div *ngFor="let img of images; let i = index" class="image-container">
+          <img class="thumbnail" [src]="img.imageUrl" *ngIf="img.imageUrl" alt="Uploaded Image" />
+          <button type="button" class="btn-delete" (click)="deleteImage(img._key,img.imageId,i)">Remove</button>
+        </div>
+        <label class="upload-label">
+            <p>{{uploadMessage}}</p>
+          <input type="file" (change)="onImageChange($event)" multiple class="input upload-input" />
+        </label>
       </div>
-      <div *ngFor="let img of images; let i = index" class="image-container">
-        <img class="edit-image" [src]="img.imageUrl" *ngIf="img.imageUrl" alt="Uploaded Image" />
-        <button type="button" class="btn-delete" (click)="deleteImage(img._key,img.imageId,i)">Remove</button>
-      </div>
-      <label class="upload-label">
-          <p>{{uploadMessage}}</p>
-        <input type="file" (change)="onImageChange($event)" multiple class="input upload-input" />
-      </label>
+     
   
     </section>
 

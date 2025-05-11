@@ -108,7 +108,7 @@
         <!-- <div *ngIf="submitted && !property.Street" class="text-danger">Address is required.</div> -->
       </div>
 
-      <div>
+      <div  class="form-group">
         <label for="country">Country</label>
         <input 
           type="text" 
@@ -184,27 +184,13 @@
       <p *ngIf="isUploading" class="loading-message">Uploading...</p>
 
       <div class="image-container">
-        <div *ngFor="let img of uploadedurls">
-          <img class="uploaded-image" [src]="img.url" *ngIf="img" alt="Uploaded Image">
+        <div *ngFor="let img of uploadedurls" >
+          <img class="thumbnail" [src]="img.url" *ngIf="img" alt="Uploaded Image">
         </div>
       </div>
     </div>
   </section>
 
-    <!-- <div class="form-actions">
-      <button
-        type="submit"[disabled]="
-        sharedInputValidator.exceededLimits['price'] || 
-        sharedInputValidator.exceededLimits['description'] || 
-        sharedInputValidator.exceededLimits['address'] || 
-        sharedInputValidator.exceededLimits['city'] || 
-        sharedInputValidator.exceededLimits['state'] || 
-        sharedInputValidator.exceededLimits['country'] || 
-        sharedInputValidator.exceededLimits['phone']"
-        class="btn btn-primary"
-      >
-        Submit
-      </button> -->
 
       <div class="form-actions">
         <button

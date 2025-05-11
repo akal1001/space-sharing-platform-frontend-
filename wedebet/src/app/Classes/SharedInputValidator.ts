@@ -1,9 +1,10 @@
-import { Injectable } from "@angular/core";
+// import { Injectable } from "@angular/core";
 
-@Injectable({
-  providedIn: 'root'    
-})
+// @Injectable({
+//   providedIn: 'root'    
+// })
 export class SharedInputValidator {
+    constructor(){}
     inputValues: { [key: string]: string } = {};  // Store input values by input id
     exceededLimits: { [key: string]: boolean } = {}; // Track if any input exceeds the limit
     inputLengths: { [key: string]: number } = {}; // Store input lengths by id

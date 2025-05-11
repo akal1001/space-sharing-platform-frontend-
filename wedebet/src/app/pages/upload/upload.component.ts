@@ -11,7 +11,7 @@ import { Housetype } from '../../interfaces/housetype';
 import { Router } from '@angular/router';
 import { FileUploadService } from '../../services/file-upload.service';
 import { debounceTime, map, Observable, of, startWith } from 'rxjs';
-import { SharedInputValidator } from '../../services/SharedInputValidator'
+import { SharedInputValidator } from '../../Classes/SharedInputValidator'
 
 @Component({
   selector: 'app-upload',
@@ -30,7 +30,7 @@ export class UploadComponent implements OnInit {
   _message: any;
   isSuccess: boolean = false;
   //isUploading: boolean = false;
-
+ sharedInputValidator: SharedInputValidator;
 
   searchControl = new FormControl('');
   options: string[] = [
@@ -422,7 +422,10 @@ export class UploadComponent implements OnInit {
 
 
 
-  constructor(public sharedInputValidator: SharedInputValidator, private http: HttpClient, private fileUploadService: FileUploadService, private router: Router, private houseDataService: HouseDataService, private accountService: AccountService) {
+  constructor(private http: HttpClient, private fileUploadService: FileUploadService, private router: Router, private houseDataService: HouseDataService, private accountService: AccountService) {
+   
+    this.sharedInputValidator = new SharedInputValidator();
+   
     this.houseTypes();
     const localDateTime = new Date().toLocaleString();
   }
@@ -754,9 +757,9 @@ export class UploadComponent implements OnInit {
           console.log('Upload successful:', response);
 
           // Process each uploaded file and store its URL
-          for (let i = 0; i < response.files.length; i++) {
-            const imageUrl = response.files[i].fileUrl;
-            const key = response.files[i]._Key;
+          for (let i = 0; i < response.data.length; i++) {
+            const imageUrl = response.data[i].fileUrl;
+            const key = response.data[i]._Key;
 
             let imgFil = { "_key": key, "url": imageUrl };
             this.uploadedurls.push(imgFil);
@@ -767,7 +770,7 @@ export class UploadComponent implements OnInit {
             console.log("Image Infos: ", this.property.ImageInfos);
 
             // If it's the last file, set the uploading flag to false
-            if (i === response.files.length - 1) {
+            if (i === response.data.length - 1) {
               this.isUploading = false;  // Set the flag to false after the last file is uploaded
             }
           }

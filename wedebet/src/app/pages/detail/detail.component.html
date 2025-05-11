@@ -1,40 +1,65 @@
-<div *ngIf="!IsDetailData" class="loading-container">
-  <p>Loading...</p>
+<div *ngIf="!IsDetailData" class="loading">
+  <h3 >{{"loading"}}</h3>
 </div>
 
-<div *ngIf="IsDetailData" class="property-layout">
-  <!-- Property Images -->
-  <div class="property-images">
-    <div class="property-image-gallery">
+<div class="home-container">
+  <div *ngIf="IsDetailData" class="property-item">
+    <!-- Property Images -->
+    <div class="property-images">
       <img
-        *ngIf="selectedImage"
-        [src]="selectedImage"
-        alt="Main Property Image"
-        class="main-image"
-      />
+          *ngIf="selectedImage"
+          [src]="selectedImage"
+          alt="Main Property Image"
+          class="property-image"
+        />
     </div>
-  </div>
-
-  <!-- Property Details -->
-  <div class="property-details">
+  
+    <!-- Property Details -->
     <div class="property-info">
-      <h3 [ngClass]="this.translator.getTitleClass(houeseDetail.house.header)">{{ houeseDetail.house.header}}</h3>
-      <span>{{ "$ " + houeseDetail.house.price }}</span>
+      <div class="property-header" >
+        <h3  [ngClass]="this.translator.getTitleClass(d.house.header)">{{ d.house.header}}</h3>
+        <div class="property-actions">
+          <span class="property-price">{{ "$ " + d.house.price }}</span>
+          <i
+            id="{{ d.house.houseId }}"
+            (click)="toggleLike(d.house.houseId)"
+            [ngClass]="{
+              'fas': d.isLiked,
+              'far': !d.isLiked,
+              'fa-heart': true,
+              'liked': d.isLiked,
+              'not-liked': !d.isLiked,
+              'like-icon': true
+            }"
+          ></i>
+        </div>
+       
+        
+      </div>
+      <div class="description-container">
+        <p  class="description-text">
+         
+         {{d.house.description}}
+        </p>
+        <p class="property-address">
+          {{ d.address.street }}
+          {{ d.address.city }}
+          {{ d.address.state || 'N/A' }}
+         
+        </p>
+      </div>
+      <div class="description-container">
+       
+        <p class="property-address">Contact: 
+          <a [href]="'tel:' + d.contact.phone">{{ d.contact.phone }}</a>
+        </p>  
+       
+      </div>
     
-      <p class="description-text">{{ houeseDetail.house.description }}</p>
-      <p><b>{{ houeseDetail.address.street }}, 
-        {{ houeseDetail.address.city }}, 
-        {{ houeseDetail.address.state }} 
-        {{ houeseDetail.address.zipCode }}, 
-        {{ houeseDetail.address.country }}</b>
-      </p>
-      <p>Contact: 
-        <a [href]="'tel:' + houeseDetail.contact.phone">{{ houeseDetail.contact.phone }}</a>
-      </p>  
-    </div>
+   <div *ngIf="d.images.length>1">
+    <p>Image gallery</p>
+    <img class="property-image" *ngFor="let i of d.images" [src]="i.imageUrl" alt="Property Image" />
   </div>
- <div *ngIf="houeseDetail.images.length>1" class="all-imgs">
-  <p>Image gallery</p>
-  <img *ngFor="let i of houeseDetail.images" [src]="i.imageUrl" alt="Property Image" />
-</div>
+  </div>
+  
 </div>

@@ -9,7 +9,7 @@ import { DataService } from '../../DataServices/data.service';
 import { AccountService } from '../../services/account.service';
 import { User } from '../../interfaces/user';
 import { LoginResponse } from '../../interfaces/login-response';
-import { SharedInputValidator } from '../../services/SharedInputValidator';
+import { SharedInputValidator } from '../../Classes/SharedInputValidator';
 
 
 
@@ -23,15 +23,18 @@ import { SharedInputValidator } from '../../services/SharedInputValidator';
   imports: [FormsModule,NgIf,NgClass, ReactiveFormsModule],
 })
 export class LoginComponent implements OnInit  {
-
+  user:User={};
+  _message:any;
+  isSuccess: boolean = false;
+   sharedInputValidator:SharedInputValidator;
   //constructor(private router: Router, private dataService: DataService) {}
-  constructor(public sharedInputValidator:SharedInputValidator,private dataService: DataService, private router: Router, private accountService: AccountService) { }
+  constructor(private dataService: DataService, private router: Router, private accountService: AccountService) {
+    this.sharedInputValidator = new SharedInputValidator();
+   }
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-   user:User={};
-   _message:any;
-   isSuccess: boolean = false;
+
   navigateToCreateAccount() 
   {
     this.router.navigate(['/createAccount']);

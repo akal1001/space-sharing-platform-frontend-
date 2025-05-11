@@ -10,7 +10,8 @@ import { HouseDetail } from '../../interfaces/house-detail';
 import { FileUploadService } from '../../services/file-upload.service';
 import { S3Service } from '../../services/s3.service';
 import { Image } from '../../interfaces/image';
-import { SharedInputValidator } from '../../services/SharedInputValidator';
+import { SharedInputValidator } from '../../Classes/SharedInputValidator';
+
 
 @Component({
   selector: 'app-edit',
@@ -27,13 +28,14 @@ export class EditComponent {
   isUploading: boolean = false;
   uploadMessage: string = "";
   images: Image[] = [];
-  
+  sharedInputValidator:SharedInputValidator;
   @ViewChild('propertyForm') propertyForm!: NgForm; // Use ViewChild to reference the form
   
     submitted = false;
 
-  constructor(public sharedInputValidator:SharedInputValidator,private dataService: DataService, private s3Service: S3Service, private fileUploadService: FileUploadService, private houseDataService: HouseDataService, private accountService: AccountService) {
+  constructor(private dataService: DataService, private s3Service: S3Service, private fileUploadService: FileUploadService, private houseDataService: HouseDataService, private accountService: AccountService) {
 
+    this.sharedInputValidator = new SharedInputValidator();
   }
 
   ngOnInit(): void {
@@ -498,9 +500,9 @@ export class EditComponent {
           console.log('Upload successful:', response);
 
           // Process each uploaded file and store its URL
-          for (let i = 0; i < response.files.length; i++) {
-            const imageUrl = response.files[i].fileUrl;
-            const key = response.files[i]._Key;
+          for (let i = 0; i < response.data.length; i++) {
+            const imageUrl = response.data[i].fileUrl;
+            const key = response.data[i]._Key;
 
             const newImage: Image = {
               imageId: '',
@@ -513,7 +515,7 @@ export class EditComponent {
 
             this.images.push(newImage);
 
-            if (i === response.files.length - 1) {
+            if (i === response.data.length - 1) {
               this.isUploading = false;
               this.uploadMessage = "";
             }

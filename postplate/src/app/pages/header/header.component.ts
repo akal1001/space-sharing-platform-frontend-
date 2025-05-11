@@ -144,4 +144,9 @@ export class HeaderComponent implements OnInit {
   navigateToHome() {
     this.router.navigate(['/home']);
   }
+
+  naveToRecipt(){
+   
+    this.router.navigate(['/recipe']);
+  }
 }

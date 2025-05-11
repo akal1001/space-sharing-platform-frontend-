@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DataService } from '../../data-services/data.service';
 
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-side-menu',
@@ -10,7 +11,7 @@ import { DataService } from '../../data-services/data.service';
   styleUrl: './side-menu.component.css'
 })
 export class SideMenuComponent {
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService, private router:Router) {}
 
   onContactClick() {
     const contactData = 'This is contact data'; 
@@ -23,5 +24,9 @@ export class SideMenuComponent {
     const isChecked = (event.target as HTMLInputElement).checked;
     console.log(`Option: ${option}, Checked: ${isChecked}`);
     // Add your custom logic here
+  }
+  naveToRecipt(){
+   
+    this.router.navigate(['recipe']);
   }
 }

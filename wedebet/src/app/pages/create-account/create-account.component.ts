@@ -4,7 +4,7 @@ import { FormsModule, FormBuilder, ReactiveFormsModule, FormGroup, Validators } 
 import { NgFor, NgIf, NgClass } from '@angular/common';
 import { AccountService } from '../../services/account.service';
 import { Router } from '@angular/router';
-import { SharedInputValidator } from '../../services/SharedInputValidator';
+import { SharedInputValidator } from '../../Classes/SharedInputValidator';
 
 @Component({
   selector: 'app-create-account',
@@ -14,7 +14,7 @@ import { SharedInputValidator } from '../../services/SharedInputValidator';
   styleUrl: './create-account.component.css'
 })
 export class CreateAccountComponent {
-
+  sharedInputValidator:SharedInputValidator;
   _message: any;
   accountModel = {
     username: '',
@@ -25,8 +25,8 @@ export class CreateAccountComponent {
   isSuccess: boolean = false;
 
   messageClass: string = '';
-  constructor(public sharedInputValidator:SharedInputValidator,private accountService: AccountService, private router:Router) {
-
+  constructor(private accountService: AccountService, private router:Router) {
+    this.sharedInputValidator = new SharedInputValidator();
   }
 
   onSubmit() {
