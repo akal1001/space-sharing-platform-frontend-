@@ -1,27 +1,95 @@
-# Wedebet
+# Space Sharing Rental Platform – Frontend (Angular)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+## Overview
+This repository contains the **frontend web application** for the Space Sharing Rental Platform, built using **Angular**.
 
-## Development server
+The frontend provides a user-friendly interface for browsing rental spaces, creating and managing listings, saving favorites, and interacting with a backend REST API. It enhances the user experience by automatically displaying region-relevant listings and contextual city information.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## Tech Stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Framework:** Angular  
+- **Language:** TypeScript  
+- **UI Technologies:** HTML, CSS  
+- **API Communication:** RESTful APIs  
+- **Authentication:** Token-based authentication (via backend API)  
+- **External Services:** Ipinfo (IP-based geolocation), OpenAI  
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## My Role
+I built this frontend application **end-to-end as a solo developer**.
 
-## Running unit tests
+My responsibilities included:
+- Designing and implementing the user interface using Angular
+- Integrating frontend components with backend REST APIs
+- Implementing authentication flows and protected routes
+- Managing application state and user interactions
+- Integrating external services for location-aware and AI-generated content
+- Ensuring responsive and user-friendly design
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## Key Features
+- User registration and login
+- Create, update, and delete rental space listings
+- Save favorite listings for quick access
+- Responsive UI optimized for different screen sizes
+- **Location-aware search** using IP-based geolocation (Ipinfo) to display listings relevant to the user’s **country, state, and city**
+- **Hierarchical region filtering** based on country → state → city
+- **Contextual city information display** by passing location data to OpenAI to generate basic, user-friendly descriptions of the area
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+---
 
-## Further help
+## Architecture
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**High-level flow:**  
+Angular Frontend → Backend REST API (separate repository) → AWS Lambda → SQL Server  
+
+The frontend is implemented as a **single-page application (SPA)** that communicates with the backend through HTTP requests and dynamically updates content based on user location and API responses.
+
+---
+
+## Backend API
+This frontend consumes a **separate backend REST API** built with **.NET Core** and deployed using **AWS serverless services**.
+
+> Note: This repository focuses exclusively on frontend functionality.
+
+---
+
+## Setup & Running the Project
+- This project is **not configured for local execution**.
+- The application requires backend API endpoints to be available.
+- Environment-specific configuration (such as API base URLs) is required.
+
+> This repository is intended to demonstrate frontend architecture, UI design, API integration, and external service usage rather than provide a runnable demo.
+
+---
+
+## Demo & Media
+- Live demo: Not available  
+- Screenshots: Not available  
+
+---
+
+## Key Learnings
+- Building modular and maintainable Angular applications
+- Integrating frontend applications with RESTful backend services
+- Managing authentication and protected routes in Angular
+- Implementing **location-aware filtering** using IP-based geolocation and hierarchical region data
+- Integrating **OpenAI** to generate contextual, location-based content for improved user experience
+- Structuring a scalable SPA for real-world applications
+
+---
+
+## Future Improvements
+- Improve UI/UX design and accessibility
+- Add advanced filtering and sorting options
+- Enhance performance and loading behavior
+- Introduce caching for location and AI-generated content
+
+---
+
+## Final Notes
+This project demonstrates practical frontend development using Angular, real-world API integration, location-aware UX design, and responsible use of AI-generated content.
